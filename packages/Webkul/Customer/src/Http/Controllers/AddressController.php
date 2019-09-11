@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\CustomerAddressRepository;
 use Auth;
-use DB;
 
 /**
  * Customer controlller for the customer basically for the tasks of customers which will
@@ -50,15 +49,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-
-        
-        $user_id = auth()->guard('customer')->user()->id;
-
-        $coffee = DB::table('coffee_subscription')->where('user_id', $user_id)->first();
-
-        return view($this->_config['view'],[
-            'coffee' => $coffee
-        ])->with('addresses', $this->customer->addresses);
+        return view($this->_config['view'])->with('addresses', $this->customer->addresses);
     }
 
     /**

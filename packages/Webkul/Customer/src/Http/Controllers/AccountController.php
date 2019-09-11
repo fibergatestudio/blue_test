@@ -26,7 +26,7 @@ class AccountController extends Controller
      */
     protected $_config;
     protected $customer;
-    protected $address; 
+    protected $address;
 
 
     public function __construct(CustomerRepository $customer, CustomerAddressRepository $address)

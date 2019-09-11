@@ -49,7 +49,7 @@
 
                                     <div class="row">
                                         <span class="title">
-                                            {{ __('admin::app.sales.orders.order-date') }}11
+                                            {{ __('admin::app.sales.orders.order-date') }}
                                         </span>
 
                                         <span class="value">

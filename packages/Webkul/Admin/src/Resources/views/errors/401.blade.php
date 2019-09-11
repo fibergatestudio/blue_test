@@ -13,7 +13,7 @@
             <div class="error-box"  style="width: 50%">
 
                 <div class="error-title" style="font-size: 100px;color: #5E5E5E">
-                    {{ __('admin::app.error.401.name') }} 
+                    {{ __('admin::app.error.401.name') }}
                 </div>
 
                 <div class="error-messgae" style="font-size: 24px;color: #5E5E5E; margin-top: 40px;">

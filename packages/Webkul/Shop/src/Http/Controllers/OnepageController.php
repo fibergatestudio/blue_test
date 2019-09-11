@@ -8,14 +8,10 @@ use Webkul\Shipping\Facades\Shipping;
 use Webkul\Payment\Facades\Payment;
 use Webkul\Checkout\Http\Requests\CustomerAddressForm;
 use Webkul\Sales\Repositories\OrderRepository;
-use Webkul\Customer\Repositories\CustomerRepository;
-use Webkul\Discount\Helpers\CouponAbleRule as Coupon;
-use Webkul\Discount\Helpers\NonCouponAbleRule as NonCoupon;
-use Webkul\Discount\Helpers\ValidatesDiscount;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Auth;
-use DB;
+use Webkul\Discount\Helpers\Cart\CouponAbleRule as Coupon;
+use Webkul\Discount\Helpers\Cart\NonCouponAbleRule as NonCoupon;
+use Webkul\Discount\Helpers\Cart\ValidatesDiscount;
+
 /**
  * Chekout controller for the customer and guest for placing order
  *
@@ -56,8 +52,6 @@ class OnepageController extends Controller
      */
     protected $validatesDiscount;
 
-    protected $customer;
-
     /**
      * Create a new controller instance.
      *
@@ -68,8 +62,7 @@ class OnepageController extends Controller
         OrderRepository $orderRepository,
         Coupon $coupon,
         NonCoupon $nonCoupon,
-        ValidatesDiscount $validatesDiscount,
-        CustomerRepository $customer
+        ValidatesDiscount $validatesDiscount
     )
     {
         $this->coupon = $coupon;
@@ -79,8 +72,6 @@ class OnepageController extends Controller
         $this->orderRepository = $orderRepository;
 
         $this->validatesDiscount = $validatesDiscount;
-
-        $this->customer = $customer;
 
         $this->_config = request('_config');
     }
@@ -95,6 +86,7 @@ class OnepageController extends Controller
         if (Cart::hasError())
             return redirect()->route('shop.checkout.cart.index');
 
+        // $this->nonCoupon->apply();
         $this->nonCoupon->apply();
 
         Cart::collectTotals();
@@ -111,20 +103,8 @@ class OnepageController extends Controller
     {
         $cart = Cart::getCart();
 
-        $points = DB::table('loyality_program')->first();
-
-        $customer = $this->customer->find(auth()->guard('customer')->user()->id);
-
-        $exchange_rate = DB::table('currencies')->where('code', 'HUF')->first();
-        $exch_id = $exchange_rate->id;
-
-        //dd($exch_id);
-
-        $convert_rate = DB::table('currency_exchange_rates')->where('target_currency', $exch_id)->first();
-
-
         return response()->json([
-                'html' => view('shop::checkout.total.summary', compact('cart','points','customer','convert_rate'))->render()
+                'html' => view('shop::checkout.total.summary', compact('cart'))->render()
             ]);
     }
 
@@ -184,8 +164,6 @@ class OnepageController extends Controller
 
         $this->nonCoupon->apply();
 
-        $this->nonCoupon->checkOnShipping(Cart::getCart());
-
         Cart::collectTotals();
 
         $cart = Cart::getCart();
@@ -212,46 +190,11 @@ class OnepageController extends Controller
 
         $cart = Cart::getCart();
 
-
-        $points_to_remove = $cart->points;
-
-        if($points_to_remove > '0'){
-
-            $cust = DB::table('customers')->where('id', $cart['customer_id'])->first();
-            $current_points = $cust->points;
-    
-            $new_points = $current_points - $points_to_remove;
-    
-            DB::table('customers')
-            ->where('id', $cart['customer_id'])
-            ->limit(1)
-            ->update(['points' => $new_points ]);
-    
-    
-            if ($redirectUrl = Payment::getRedirectUrl($cart)) {
-                return response()->json([
-                    'success' => true,
-                    'redirect_url' => $redirectUrl
-                ]);
-            }
-
-        } else {
-            //Get Current PayoutPercentage
-
-            $points_to_user = DB::table('customers')->where('id', $cart['customer_id'])->first();
-
-            $loyality_settings = DB::table('loyality_program')->first();
-            $percentage = $loyality_settings->payout_percentage;
-
-            $points = $points_to_user->points;
-            $points_to_add = ($orderItem->price) * ($percentage / 100);
-            $converted_points = floor($points_to_add);
-            $item_price = $points + $converted_points; 
-
-            DB::table('customers')
-            ->where('id', $data['customer_id'])
-            ->limit(1)
-            ->update(['points' => $item_price ]);
+        if ($redirectUrl = Payment::getRedirectUrl($cart)) {
+            return response()->json([
+                'success' => true,
+                'redirect_url' => $redirectUrl
+            ]);
         }
 
         $order = $this->orderRepository->create(Cart::prepareDataForOrder());
@@ -287,7 +230,7 @@ class OnepageController extends Controller
     {
         $cart = Cart::getCart();
 
-        $this->validatesDiscount->validate($cart);
+        $this->validatesDiscount->validate();
 
         if (! $cart->shipping_address) {
             throw new \Exception(trans('Please check shipping address.'));
@@ -339,7 +282,6 @@ class OnepageController extends Controller
 
         return $result;
     }
-    
 
     /**
      * Initiates the removal of couponable cart rule

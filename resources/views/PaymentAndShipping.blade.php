@@ -1,1 +1,0 @@
-<b>PaymentAndShipping</b>

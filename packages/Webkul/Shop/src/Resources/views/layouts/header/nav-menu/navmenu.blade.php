@@ -13,54 +13,6 @@ foreach (app('Webkul\Category\Repositories\CategoryRepository')->getVisibleCateg
 
 <category-nav categories='@json($categories)' url="{{url()->to('/')}}"></category-nav>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/MainPage') }}">Main Page</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/') }}">Online Shop</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/coffeesubscription') }}">Coffee Subscription</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/bluebox') }}">Blue Box</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/faq') }}">FAQ</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/contacts') }}">Contacts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/basketbox') }}">Basket/Box</a>
-      </li>
-
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/products/supertest') }}">TestProduct</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
 {!! view_render_event('bagisto.shop.layout.header.category.after') !!}
 
 

@@ -58,11 +58,6 @@
                 @csrf()
 
                 <input name="_method" type="hidden" value="PUT">
-                                <!-- BLUEBOX CHECKBOX -->
-                                <!-- <div class="control-group boolean">
-                                    <label for="bluebox" class="required"> BLUEBOX </label> 
-                                    <input type="checkbox" id="bluebox" name="bluebox" class="control" >
-                                </div> -->
 
                 @foreach ($product->attribute_family->attribute_groups as $attributeGroup)
 
@@ -143,8 +138,6 @@
 
                                     @endif
 
-                                    
-
                                 @endforeach
 
                                 {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.' . $attributeGroup->name . '.controls.after', ['product' => $product]) !!}
@@ -157,6 +150,7 @@
 
                 @endforeach
 
+                @include ('admin::catalog.products.accordians.channels')
 
                 {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.inventories.before', ['product' => $product]) !!}
 

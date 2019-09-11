@@ -21,34 +21,16 @@ return [
         'name' => 'shop::app.layouts.reviews',
         'route' =>'customer.reviews.index',
         'sort' => 3
-    ], 
-    // [
-    //     'key' => 'account.wishlist',
-    //     'name' => 'shop::app.layouts.wishlist',
-    //     'route' =>'customer.wishlist.index',
-    //     'sort' => 4
-    // ],
-     [
+    ], [
+        'key' => 'account.wishlist',
+        'name' => 'shop::app.layouts.wishlist',
+        'route' =>'customer.wishlist.index',
+        'sort' => 4
+    ], [
         'key' => 'account.orders',
         'name' => 'shop::app.layouts.orders',
         'route' =>'customer.orders.index',
         'sort' => 5
-    ], [
-        'key' => 'account.refer',
-        'name' => 'shop::app.layouts.refer',
-        'route' =>'customer.referfriend.index',
-        'sort' => 6
-    ], [
-        'key' => 'account.subscription',
-        'name' => 'shop::app.layouts.subscription',
-        'route' =>'customer.subscription.index',
-        'sort' => 7
-    ]
-    , [
-        'key' => 'account.changepassword',
-        'name' => 'shop::app.layouts.changepassword',
-        'route' =>'customer.changepassword.index',
-        'sort' => 8
     ]
 
 ];

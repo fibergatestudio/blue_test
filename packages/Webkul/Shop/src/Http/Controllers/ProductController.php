@@ -8,8 +8,6 @@ use Webkul\Product\Repositories\ProductRepository as Product;
 use Webkul\Product\Repositories\ProductAttributeValueRepository as ProductAttributeValue;
 use Illuminate\Support\Facades\Storage;
 
-use DB;
-
 /**
  * Product controller
  *
@@ -64,16 +62,11 @@ class ProductController extends Controller
      */
     public function index($slug)
     {
-
-        $points = DB::table('loyality_program')->first();
-
-        //dd($points);
-
         $product = $this->product->findBySlugOrFail($slug);
 
         $customer = auth()->guard('customer')->user();
 
-        return view($this->_config['view'], compact('product','customer','points'));
+        return view($this->_config['view'], compact('product','customer'));
     }
 
     /**
