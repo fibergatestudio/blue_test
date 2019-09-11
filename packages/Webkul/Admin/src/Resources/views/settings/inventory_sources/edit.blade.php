@@ -27,9 +27,6 @@
             <div class="page-content">
                 <div class="form-container">
                     @csrf()
-
-                    {!! view_render_event('bagisto.admin.settings.inventory.edit.before') !!}
-
                     <input name="_method" type="hidden" value="PUT">
 
                     <accordian :title="'{{ __('admin::app.settings.inventory_sources.general') }}'" :active="true">
@@ -134,7 +131,6 @@
                         </div>
                     </accordian>
 
-                    {!! view_render_event('bagisto.admin.settings.inventory.edit.after') !!}
                 </div>
             </div>
         </form>

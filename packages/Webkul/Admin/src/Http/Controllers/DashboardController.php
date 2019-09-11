@@ -12,6 +12,9 @@ use Webkul\Sales\Repositories\OrderItemRepository as OrderItem;
 use Webkul\Customer\Repositories\CustomerRepository as Customer;
 use Webkul\Product\Repositories\ProductInventoryRepository as ProductInventory;
 
+use App\LoyalityProgram;
+use Redirect;
+
 /**
  * Dashboard controller
  *
@@ -120,6 +123,163 @@ class DashboardController extends Controller
         return ($current - $previous) / $previous * 100;
     }
 
+    // public function loyality()
+    // {
+    //     return view($this->_config['view']);
+    // }
+    public function clients()
+    {
+        return view($this->_config['view']);
+    }
+    // LOYALITY 
+    public function loyality()
+    {
+        // Total Customers Points
+        $total_customers_points = DB::table('customers')->sum('points');
+        // Total Customers Used Points
+        $total_customers_used_points = DB::table('customers')->sum('used_points');
+        //Loyality Settings
+        $loyality_settings = DB::table('loyality_program')->first();
+        // Points Value
+        $points_value = $loyality_settings->points_value;
+        // Pyaout Percentage
+        $payout_percentage = $loyality_settings->payout_percentage;
+
+        return view($this->_config['view'],
+        [
+            'total_customers_points' => $total_customers_points,
+            'total_customers_used_points' => $total_customers_used_points,
+            'points_value' => $points_value,
+            'payout_percentage' => $payout_percentage,
+        ]);
+    }
+    public function apply_percentage(Request $request){
+
+        $table_check = DB::table('loyality_program')->first();
+
+        if($table_check){
+
+            DB::table('loyality_program')
+                ->limit(1)
+                ->update(['payout_percentage' => $request->payout_percentage]);
+
+        } else {
+
+            $loyal_settings = new LoyalityProgram();
+            $loyal_settings->payout_percentage = $request->payout_percentage;
+            $loyal_settings->save();
+            
+        }
+
+        return back();
+    }
+    public function apply_points_value(Request $request){
+
+        $table_check = DB::table('loyality_program')->first();
+
+        if($table_check){
+
+            DB::table('loyality_program')
+                ->limit(1)
+                ->update(['points_value' => $request->points_value]);
+
+        } else {
+
+            $loyal_settings = new LoyalityProgram();
+            $loyal_settings->points_value = $request->points_value;
+            $loyal_settings->save();
+            
+        }
+
+
+        return back();
+    }
+
+    public function voucher()
+    {
+        return view($this->_config['view']);
+    }
+    public function pages()
+    {
+
+        $pages = DB::table('pages')->get();
+
+        return view($this->_config['view'],[
+            'pages' => $pages,
+        ]);
+    }
+        public function createPage(){
+
+            return view($this->_config['view']);
+        }
+
+        public function editPage($page_id){
+
+            $page = DB::table('pages')->where('id', $page_id)->first();
+
+            return view($this->_config['view'],[
+                'page_id' => $page_id,
+                'page' => $page,
+            ]);
+        }
+
+        public function editPageApply(Request $request){
+
+            $page_id = $request->page_id;
+
+            //dd($page_id);
+
+            $page_slug = $request->page_slug;
+            $page_title = $request->page_title;
+            $page_body = $request->page_body;
+            $meta_title = $request->meta_title;
+            $meta_descr = $request->meta_descr;
+            $meta_keys = $request->meta_keys;
+    
+            //dd($page_slug,$meta_keys);
+
+            //$test = DB::table('pages')->where('slug', $page_id)->limit(1);
+
+            // dd($page_id);
+            // DB::table('pages')->where('id', '1')->update([ 'title' => 'KAPPA']);
+
+    
+            DB::table('pages')->where('id', '=', $page_id)
+            ->limit(1)
+            ->update([
+                'slug' => $page_slug,
+                'title' => $page_title,
+                'body' => $page_body,
+                'meta_title' => $meta_title,
+                'meta_descr' => $meta_descr,
+                'meta_keys' => $meta_keys
+            ]);
+
+            // DB::table('loyality_program')
+            //     ->limit(1)
+            //     ->update(['payout_percentage' => $request->payout_percentage]);
+
+
+            return Redirect::to('/admin/pages');
+        }
+
+        public function deletePage($page_id){
+
+            //dd($page_id);
+
+            // $deletePage = DB::table('pages')->where('id', $page_id)->first();
+            // $deletePage->delete();
+
+            DB::table('pages')->where('id', $page_id)->delete();
+
+            return back();
+        }
+
+    public function bluebox()
+    {
+        return view($this->_config['view']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -141,13 +301,18 @@ class DashboardController extends Controller
                 'progress' => $this->getPercentageChange($previous, $current)
             ],
             'total_sales' =>  [
-                'previous' => $previous = $this->previousOrders()->sum('base_grand_total'),
-                'current' => $current = $this->currentOrders()->sum('base_grand_total'),
+                'previous' => $previous = $this->previousOrders()->sum('sub_total'),
+                'current' => $current = $this->currentOrders()->sum('sub_total'),
                 'progress' => $this->getPercentageChange($previous, $current)
             ],
             'avg_sales' =>  [
-                'previous' => $previous = $this->previousOrders()->avg('base_grand_total'),
-                'current' => $current = $this->currentOrders()->avg('base_grand_total'),
+                'previous' => $previous = $this->previousOrders()->avg('sub_total'),
+                'current' => $current = $this->currentOrders()->avg('sub_total'),
+                'progress' => $this->getPercentageChange($previous, $current)
+            ],
+            'avg_points' => [
+                'previous' => $previous = $this->previousPoints()->avg('points'),
+                'current' => $current = $this->currentPoints()->avg('points'),
                 'progress' => $this->getPercentageChange($previous, $current)
             ],
             'top_selling_categories' => $this->getTopSellingCategories(),
@@ -165,7 +330,19 @@ class DashboardController extends Controller
             $statistics['sale_graph']['formated_total'][] = core()->formatBasePrice($total);
         }
 
-        return view($this->_config['view'], compact('statistics'))->with(['startDate' => $this->startDate, 'endDate' => $this->endDate]);
+        // here
+        // Total Customers Points
+        $total_customers_points = DB::table('customers')->sum('points');
+        // Total Customers Used Points
+        $total_customers_used_points = DB::table('customers')->sum('used_points');
+
+        return view($this->_config['view'], compact('statistics'))->with(
+            [
+            'startDate' => $this->startDate, 
+            'endDate' => $this->endDate,
+            'total_customers_points' => $total_customers_points,
+            'total_customers_used_points' => $total_customers_used_points,
+            ]);
     }
 
     /**
@@ -291,6 +468,23 @@ class DashboardController extends Controller
     }
 
     private function getCustomersBetweenDates($start, $end)
+    {
+        return $this->customer->scopeQuery(function ($query) use ($start, $end) {
+            return $query->where('customers.created_at', '>=', $start)->where('customers.created_at', '<=', $end);
+        });
+    }
+
+    private function previousPoints()
+    {
+        return $this->getPointsBetweenDate($this->lastStartDate, $this->lastEndDate);
+    }
+
+    private function currentPoints()
+    {
+        return $this->getPointsBetweenDate($this->startDate, $this->endDate);
+    }
+
+    private function getPointsBetweenDate($start, $end)
     {
         return $this->customer->scopeQuery(function ($query) use ($start, $end) {
             return $query->where('customers.created_at', '>=', $start)->where('customers.created_at', '<=', $end);

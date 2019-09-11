@@ -102,7 +102,7 @@ return [
     |
     */
 
-    'currency' => 'USD',
+    'currency' => 'HUF',
 
     /*
     |--------------------------------------------------------------------------
@@ -244,8 +244,7 @@ return [
         Webkul\Sales\Providers\SalesServiceProvider::class,
         Webkul\Tax\Providers\TaxServiceProvider::class,
         Webkul\API\Providers\APIServiceProvider::class,
-        Webkul\Discount\Providers\DiscountServiceProvider::class,
-        Webkul\CMS\Providers\CMSServiceProvider::class
+        Webkul\Discount\Providers\DiscountServiceProvider::class
     ],
 
     /*
@@ -303,6 +302,6 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Concord' => Konekt\Concord\Facades\Concord::class,
-        'Helper'  => Konekt\Concord\Facades\Helper::class
+        'Helper'  => Konekt\Concord\Facades\Helper::class,
     ],
 ];

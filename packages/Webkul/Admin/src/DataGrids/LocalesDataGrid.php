@@ -19,7 +19,7 @@ class LocalesDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('locales')->addSelect('id', 'code', 'name', 'direction');
+        $queryBuilder = DB::table('locales')->addSelect('id', 'code', 'name');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -47,15 +47,6 @@ class LocalesDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'name',
             'label' => trans('admin::app.datagrid.name'),
-            'type' => 'string',
-            'searchable' => true,
-            'sortable' => true,
-            'filterable' => true
-        ]);
-
-        $this->addColumn([
-            'index' => 'direction',
-            'label' => trans('admin::app.datagrid.direction'),
             'type' => 'string',
             'searchable' => true,
             'sortable' => true,

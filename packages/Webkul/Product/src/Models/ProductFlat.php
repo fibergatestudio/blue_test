@@ -14,14 +14,6 @@ class ProductFlat extends Model implements ProductFlatContract
     public $timestamps = false;
 
     /**
-     * Get the product attribute family that owns the product.
-     */
-    public function getAttributeFamilyAttribute()
-    {
-        return $this->product->attribute_family;
-    }
-
-    /**
      * Get the product that owns the attribute value.
      */
     public function product()
@@ -34,7 +26,7 @@ class ProductFlat extends Model implements ProductFlatContract
      */
     public function variants()
     {
-        return $this->hasMany(static::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     /**
@@ -112,7 +104,7 @@ class ProductFlat extends Model implements ProductFlatContract
      */
     public function getReviewsAttribute()
     {
-        return $this->reviews()->get();
+        return $this->images()->get();
     }
 
     /**

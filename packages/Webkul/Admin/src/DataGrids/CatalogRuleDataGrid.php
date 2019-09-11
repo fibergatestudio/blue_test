@@ -21,7 +21,7 @@ class CatalogRuleDataGrid extends DataGrid
     {
         $queryBuilder = DB::table('catalog_rules')
                 ->select('id')
-                ->addSelect('id', 'name', 'starts_from', 'ends_till', 'status', 'end_other_rules', 'action_code');
+                ->addSelect('id', 'name', 'starts_from', 'ends_till', 'priority', 'status', 'end_other_rules', 'action_type');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -41,7 +41,7 @@ class CatalogRuleDataGrid extends DataGrid
             'index' => 'name',
             'label' => trans('admin::app.datagrid.name'),
             'type' => 'string',
-            'searchable' => true,
+            'searchable' => false,
             'sortable' => true,
             'filterable' => true
         ]);
@@ -49,7 +49,7 @@ class CatalogRuleDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'starts_from',
             'label' => trans('admin::app.datagrid.starts-from'),
-            'type' => 'datetime',
+            'type' => 'date',
             'searchable' => false,
             'sortable' => true,
             'filterable' => true
@@ -58,7 +58,16 @@ class CatalogRuleDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'ends_till',
             'label' => trans('admin::app.datagrid.ends-till'),
-            'type' => 'datetime',
+            'type' => 'date',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true
+        ]);
+
+        $this->addColumn([
+            'index' => 'priority',
+            'label' => trans('admin::app.datagrid.priority'),
+            'type' => 'number',
             'searchable' => false,
             'sortable' => true,
             'filterable' => true
@@ -95,12 +104,19 @@ class CatalogRuleDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index' => 'action_code',
+            'index' => 'action_type',
             'label' => 'Action Type',
             'type' => 'string',
-            'searchable' => true,
+            'searchable' => false,
             'sortable' => true,
-            'filterable' => true
+            'filterable' => true,
+            'wrapper' => function ($value) {
+                foreach(config('pricerules.catalog.actions') as $key => $action) {
+                    if ($value->action_type == $key) {
+                        return trans($action);
+                    }
+                }
+            }
         ]);
     }
 

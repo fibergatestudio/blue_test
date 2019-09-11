@@ -339,11 +339,10 @@
                             this.formURL(this.columnOrAlias, this.stringCondition, this.stringValue, label)
                         } else if (this.type == 'number') {
                             indexConditions = true;
-
                             if (this.filterIndex == this.columnOrAlias && (this.numberValue == 0 || this.numberValue < 0)) {
-                                indexConditions = false;
+                                    indexConditions = false;
 
-                                alert('{{__('ui::app.datagrid.zero-index')}}');
+                                    alert('{{__('ui::app.datagrid.zero-index')}}');
                             }
 
                             if(indexConditions)
@@ -404,6 +403,12 @@
                         for(i in this.filters) {
                             if (this.filters[i].column == 'sort') {
                                 this.currentSort = this.filters[i].val;
+
+                                // if (this.currentSort = 'asc') {
+                                //     this.currentSortIcon = this.sortUpIcon;
+                                // } else {
+                                //     this.currentSortIcon = this.sortDownIcon;
+                                // }
                             }
                         }
                     },
@@ -606,8 +611,8 @@
                         }
 
                         for(i = 0; i < moreSplitted.length; i++) {
-                            col = moreSplitted[i][0].replace(']', '').split('[')[0];
-                            cond = moreSplitted[i][0].replace(']', '').split('[')[1]
+                            col = moreSplitted[i][0].replace(']','').split('[')[0];
+                            cond = moreSplitted[i][0].replace(']','').split('[')[1]
                             val = moreSplitted[i][1];
 
                             label = 'cannotfindthislabel';
@@ -685,7 +690,7 @@
                                     i = 0;
                                     for(currentId in this.gridCurrentData.data[currentData]) {
                                         if (i==0)
-                                            this.dataIds.push(this.gridCurrentData.data[currentData][this.filterIndex]);
+                                            this.dataIds.push(this.gridCurrentData.data[currentData][currentId]);
 
                                         i++;
                                     }

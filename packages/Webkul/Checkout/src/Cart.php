@@ -313,10 +313,6 @@ class Cart {
 
         $weight = ($product->type == 'configurable' ? $childProduct->weight : $product->weight);
 
-        if (gettype($weight)) {
-            $weight = floatval($weight);
-        }
-
         $parentData = [
             'sku' => $product->sku,
             'quantity' => $data['quantity'],
@@ -810,10 +806,10 @@ class Cart {
             $cart->discount_amount += $item->discount_amount;
             $cart->base_discount_amount += $item->base_discount_amount;
 
-            $cart->grand_total = (float) $cart->grand_total + $item->total + $item->tax_amount - $item->discount_amount;
-            $cart->base_grand_total = (float) $cart->base_grand_total + $item->base_total + $item->base_tax_amount - $item->base_discount_amount;
+            $cart->grand_total = (float) $cart->grand_total + $item->total + $item->tax_amount - $item->discount_amount - $cart->points_converted;
+            $cart->base_grand_total = (float) $cart->base_grand_total + $item->base_total + $item->base_tax_amount - $item->base_discount_amount - $cart->points_converted;
 
-            $cart->sub_total = (float) $cart->sub_total + $item->total;
+            $cart->sub_total = (float) $cart->sub_total + $item->total - $cart->points_converted;
             $cart->base_sub_total = (float) $cart->base_sub_total + $item->base_total;
 
             $cart->tax_total = (float) $cart->tax_total + $item->tax_amount;
@@ -940,35 +936,27 @@ class Cart {
                     'country' => $shippingAddress->country,
                 ])->orderBy('tax_rate', 'desc')->get();
 
-            if (count( $taxRates) > 0) {
-                foreach ($taxRates as $rate) {
-                    $haveTaxRate = false;
+            foreach ($taxRates as $rate) {
+                $haveTaxRate = false;
 
-                    if (! $rate->is_zip) {
-                        if ($rate->zip_code == '*' || $rate->zip_code == $shippingAddress->postcode) {
-                            $haveTaxRate = true;
-                        }
-                    } else {
-                        if ($shippingAddress->postcode >= $rate->zip_from && $shippingAddress->postcode <= $rate->zip_to) {
-                            $haveTaxRate = true;
-                        }
+                if (! $rate->is_zip) {
+                    if ($rate->zip_code == '*' || $rate->zip_code == $shippingAddress->postcode) {
+                        $haveTaxRate = true;
                     }
-
-                    if ($haveTaxRate) {
-                        $item->tax_percent = $rate->tax_rate;
-                        $item->tax_amount = ($item->total * $rate->tax_rate) / 100;
-                        $item->base_tax_amount = ($item->base_total * $rate->tax_rate) / 100;
-
-                        $item->save();
-                        break;
+                } else {
+                    if ($shippingAddress->postcode >= $rate->zip_from && $shippingAddress->postcode <= $rate->zip_to) {
+                        $haveTaxRate = true;
                     }
                 }
-            } else {
-                $item->tax_percent = 0;
-                $item->tax_amount = 0;
-                $item->base_tax_amount = 0;
 
-                $item->save();
+                if ($haveTaxRate) {
+                    $item->tax_percent = $rate->tax_rate;
+                    $item->tax_amount = ($item->total * $rate->tax_rate) / 100;
+                    $item->base_tax_amount = ($item->base_total * $rate->tax_rate) / 100;
+
+                    $item->save();
+                    break;
+                }
             }
         }
     }
@@ -1136,13 +1124,9 @@ class Cart {
             $data['quantity'] = 1;
             $data['product'] = $product->id;
 
-            \Event::fire('checkout.cart.add.before', $product->id);
-
             $result = $this->add($product->id, $data);
 
             if ($result) {
-                \Event::fire('checkout.cart.add.after', $result);
-
                 return 1;
             } else {
                 return 0;
@@ -1207,6 +1191,9 @@ class Cart {
      */
     public function proceedToBuyNow($id, $quantity)
     {
+
+        //dd($id);
+
         $product = $this->product->findOneByField('id', $id);
 
         if ($product->type == 'configurable') {

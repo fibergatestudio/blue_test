@@ -9,12 +9,12 @@ use Webkul\Product\Repositories\ProductReviewRepository as ProductReview;
 use Webkul\Customer\Models\Customer;
 use Auth;
 use Hash;
+use DB;
 
 /**
- * Customer controlller for the customer basically for the tasks of customers which will be
- * done after customer authentication.
+ * Customer controlller for the customer basically for the tasks of customers which will be done after customer authentication.
  *
- * @author  Prashant Singh <prashant.singh852@webkul.com>
+ * @author    Prashant Singh <prashant.singh852@webkul.com>
  * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
  */
 class CustomerController extends Controller
@@ -70,7 +70,11 @@ class CustomerController extends Controller
     {
         $customer = $this->customer->find(auth()->guard('customer')->user()->id);
 
-        return view($this->_config['view'], compact('customer'));
+        //dd($customer);
+
+        $address = DB::table('customer_addresses')->where('customer_id', $customer->id)->first();
+
+        return view($this->_config['view'],[ 'address' => $address ], compact('customer'));
     }
 
     /**

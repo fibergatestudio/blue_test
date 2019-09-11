@@ -38,7 +38,7 @@ class CustomerGroupDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'code',
             'label' => 'Code',
-            'type' => 'string',
+            'type' => 'number',
             'searchable' => false,
             'sortable' => true,
             'filterable' => true

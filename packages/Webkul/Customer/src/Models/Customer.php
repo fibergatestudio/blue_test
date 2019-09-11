@@ -29,19 +29,6 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
     }
 
     /**
-     * Email exists or not
-     */
-    public function emailExists($email) {
-        $results =  $this->where('email', $email);
-
-        if ($results->count() == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * Get the customer group that owns the customer.
      */
     public function group()

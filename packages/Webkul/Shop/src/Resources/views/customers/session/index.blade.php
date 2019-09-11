@@ -8,7 +8,7 @@
 
     <div class="auth-content">
         <div class="sign-up-text">
-            {{ __('shop::app.customer.login-text.no_account') }} - <a href="{{ route('customer.register.index') }}">{{ __('shop::app.customer.login-text.title') }}</a>
+            {{ __('shop::app.customer.login-text.no_account') }} - here <a href="{{ route('customer.register.index') }}">{{ __('shop::app.customer.login-text.title') }}</a>
         </div>
 
         {!! view_render_event('bagisto.shop.customers.login.before') !!}
@@ -51,6 +51,7 @@
         </form>
 
         {!! view_render_event('bagisto.shop.customers.login.after') !!}
+
     </div>
 
 @endsection

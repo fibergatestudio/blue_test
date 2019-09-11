@@ -1,4 +1,4 @@
-<div class="aside-nav">
+<div style="margin-top: 60px;"class="aside-nav">
     <ul>
         @if (request()->route()->getName() != 'admin.configuration.index')
             <?php $keys = explode('.', $menu->currentKey);  ?>

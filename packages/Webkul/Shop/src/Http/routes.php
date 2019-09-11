@@ -42,11 +42,17 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         Route::post('checkout/check/coupons', 'Webkul\Shop\Http\Controllers\OnepageController@applyCoupon')->name('shop.checkout.check.coupons');
 
         Route::post('checkout/remove/coupon', 'Webkul\Shop\Http\Controllers\OnepageController@removeCoupon')->name('shop.checkout.remove.coupon');
+        
 
     //Cart Items Add
     Route::post('checkout/cart/add/{id}', 'Webkul\Shop\Http\Controllers\CartController@add')->defaults('_config', [
         'redirect' => 'shop.checkout.cart.index'
     ])->name('cart.add');
+
+    //Cart Update Points
+    Route::post('checkout/cart/update_points', 'Webkul\Shop\Http\Controllers\CartController@update_points')->defaults('_config', [
+        'view' => 'shop::checkout.cart.index'
+    ])->name('cart.update_points');
 
     //Cart Items Add Configurable for more
     Route::get('checkout/cart/addconfigurable/{slug}', 'Webkul\Shop\Http\Controllers\CartController@addConfigurable')->name('cart.add.configurable');
@@ -251,6 +257,24 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                     'view' => 'shop::customers.account.wishlist.wishlist'
                 ])->name('customer.wishlist.index');
 
+                /* Refer route */
+                //Customer Refer
+                Route::get('refer', 'Webkul\Shop\Http\Controllers\OrderController@index')->defaults('_config', [
+                    'view' => 'shop::customers.account.referfriend.index'
+                ])->name('customer.referfriend.index');
+
+                /* Subscribition route */
+                //Customer Subscribition
+                Route::get('subscription', 'Webkul\Shop\Http\Controllers\OrderController@index')->defaults('_config', [
+                    'view' => 'shop::customers.account.subscription.index'
+                ])->name('customer.subscription.index');
+
+                /* Change Password route */
+                //Customer Change Password
+                Route::get('changepassword', 'Webkul\Customer\Http\Controllers\CustomerController@edit')->defaults('_config', [
+                    'view' => 'shop::customers.account.changepassword.index'
+                ])->name('customer.changepassword.index');
+
                 /* Orders route */
                 //Customer orders(listing)
                 Route::get('orders', 'Webkul\Shop\Http\Controllers\OrderController@index')->defaults('_config', [
@@ -286,8 +310,6 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         });
     });
     //customer routes end here
-
-    Route::get('pages/{slug}', 'Webkul\CMS\Http\Controllers\Shop\PagePresenterController@presenter')->name('shop.cms.page');
 
     Route::fallback('Webkul\Shop\Http\Controllers\HomeController@notFound');
 });
