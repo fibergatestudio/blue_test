@@ -54,8 +54,6 @@ class SubscriptionController extends Controller
 
     /**
      * Subscribes email to the email subscription list
-     *
-     * @return Redirect
      */
     public function subscribe()
     {

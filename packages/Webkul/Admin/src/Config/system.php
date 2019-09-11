@@ -8,7 +8,7 @@ return [
     ], [
         'key' => 'catalog.products',
         'name' => 'admin::app.admin.system.products',
-        'sort' => 2
+        'sort' => 1,
     ], [
         'key' => 'catalog.products.review',
         'name' => 'admin::app.admin.system.review',

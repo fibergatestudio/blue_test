@@ -53,7 +53,6 @@ class CategoryRepository extends Repository
                 foreach ($model->translatedAttributes as $attribute) {
                     if (isset($data[$attribute])) {
                         $data[$locale->code][$attribute] = $data[$attribute];
-                        $data[$locale->code]['locale_id'] = $locale->id;
                     }
                 }
             }
@@ -62,10 +61,6 @@ class CategoryRepository extends Repository
         $category = $this->model->create($data);
 
         $this->uploadImages($data, $category);
-
-        if (isset($data['attributes'])) {
-            $category->filterableAttributes()->sync($data['attributes']);
-        }
 
         Event::fire('catalog.category.create.after', $category);
 
@@ -93,7 +88,7 @@ class CategoryRepository extends Repository
      */
     public function getRootCategories()
     {
-        return $this->getModel()->where('parent_id', NULL)->get();
+        return $this->model::withDepth()->having('depth', '=', 0)->get();
     }
 
     /**
@@ -167,10 +162,6 @@ class CategoryRepository extends Repository
 
         $this->uploadImages($data, $category);
 
-        if (isset($data['attributes'])) {
-            $category->filterableAttributes()->sync($data['attributes']);
-        }
-
         Event::fire('catalog.category.update.after', $id);
 
         return $category;
@@ -222,7 +213,7 @@ class CategoryRepository extends Repository
         }
     }
 
-    public function getPartial($columns = null)
+    public function getPartial()
     {
         $categories = $this->model->all();
         $trimmed = array();
@@ -231,8 +222,7 @@ class CategoryRepository extends Repository
             if ($category->name != null || $category->name != "") {
                 $trimmed[$key] = [
                     'id' => $category->id,
-                    'name' => $category->name,
-                    'slug' => $category->slug
+                    'name' => $category->name
                 ];
             }
         }

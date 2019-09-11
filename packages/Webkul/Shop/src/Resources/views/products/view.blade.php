@@ -7,6 +7,7 @@
 @section('seo')
     <meta name="description" content="{{ trim($product->meta_description) != "" ? $product->meta_description : str_limit(strip_tags($product->description), 120, '') }}"/>
     <meta name="keywords" content="{{ $product->meta_keywords }}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 @stop
 
 @section('content-wrapper')
@@ -20,7 +21,13 @@
                 <div class="form-container">
                     @csrf()
 
+                    @if(empty($customer))
+
+                    @else
                     <input type="hidden" name="product" value="{{ $product->product_id }}">
+                    <input type="hidden" name="points" value="" class="input value1">
+                    <input type="hidden" name="customer_id" value="{{ $customer->id }}" class="input value1">
+                    @endif
 
                     @include ('shop::products.view.gallery')
 
@@ -34,9 +41,41 @@
 
                         @include ('shop::products.price', ['product' => $product])
 
+
+                        <?php  
+
+                        $points_price = $product->special_price / $points->points_value; 
+                        $converted_price = core()->currency($product->price);
+                        
+                        ?>
+
+                        <div style="font-size: 20px;" class="control-group">
+
+                            @if(empty($customer))
+
+                            @else
+
+                                <!-- Current Loyality Points: <b>{{ $customer->points }}</b><br> -->
+                                Price in points: <b> 
+                                <?php 
+                                //echo $points_price;
+                                
+                                echo number_format((float)$points_price, 2, '.', '');
+                                ?>
+                                </b><br>
+                                <input type="hidden" name="points" class="control quantity-change" value="0" min="0" max="<?php echo $points_price; ?>" placeholder="Enter Amount of Points">
+
+                                <!-- <b>Buy with Points?</b><br>
+                                <input class="control" id="points" type="number" placeholder="Enter Amount"><br>
+                                <b>Final Price:</b><br>
+                                <input type="number" class="control" id="result"  disabled> -->
+                            @endif
+
+                        </div>
+
                         @include ('shop::products.view.stock', ['product' => $product])
 
-                        {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!}
+                        {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!} 
 
                         <div class="description">
                             {!! $product->short_description !!}
@@ -99,12 +138,14 @@
 
         @include ('shop::products.view.up-sells')
 
+
     </section>
 
     {!! view_render_event('bagisto.shop.products.view.after', ['product' => $product]) !!}
 @endsection
 
 @push('scripts')
+
 
     <script type="text/x-template" id="product-view-template">
         <form method="POST" id="product-form" action="{{ route('cart.add', $product->product_id) }}" @click="onSubmit($event)">

@@ -1,4 +1,4 @@
-<div class="navbar-left">
+<div style="top: 110px !important;" class="navbar-left">
     <ul class="menubar">
         @foreach ($menu->items as $menuItem)
             <li class="menu-item {{ $menu->getActive($menuItem) }}">

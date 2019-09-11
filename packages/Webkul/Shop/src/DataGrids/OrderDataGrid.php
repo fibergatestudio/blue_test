@@ -20,7 +20,7 @@ class OrderDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('orders as order')
-                ->addSelect('order.id', 'order.status', 'order.created_at', 'order.grand_total', 'order.order_currency_code')
+                ->addSelect('order.id', 'order.status', 'order.created_at', 'order.grand_total')
                 ->where('customer_id', auth()->guard('customer')->user()->id);
 
         $this->setQueryBuilder($queryBuilder);
@@ -49,13 +49,10 @@ class OrderDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'grand_total',
             'label' => trans('shop::app.customer.account.order.index.total'),
-            'type' => 'number',
+            'type' => 'price',
             'searchable' => true,
             'sortable' => true,
-            'filterable' => true,
-            'wrapper' => function ($value) {
-                return core()->formatPrice($value->grand_total, $value->order_currency_code);
-            }
+            'filterable' => true
         ]);
 
         $this->addColumn([

@@ -1,37 +1,5 @@
 @inject ('attributeRepository', 'Webkul\Attribute\Repositories\AttributeRepository')
 
-@inject ('productFlatRepository', 'Webkul\Product\Repositories\ProductFlatRepository')
-
-@inject ('productRepository', 'Webkul\Product\Repositories\ProductRepository')
-
-<?php
-    $filterAttributes = [];
-
-    if (isset($category)) {
-        $products = $productRepository->getAll($category->id);
-
-        if (count($category->filterableAttributes) > 0 && count($products)) {
-            $filterAttributes = $category->filterableAttributes;
-        } else {
-            $categoryProductAttributes = $productFlatRepository->getCategoryProductAttribute($category->id);
-
-            if ($categoryProductAttributes) {
-                foreach ($attributeRepository->getFilterAttributes() as $filterAttribute) {
-                    if (in_array($filterAttribute->id, $categoryProductAttributes)) {
-                        $filterAttributes[] = $filterAttribute;
-                    } else  if ($filterAttribute ['code'] == 'price') {
-                        $filterAttributes[] = $filterAttribute;
-                    }
-                }
-
-                $filterAttributes = collect($filterAttributes);
-            }
-        }
-    } else {
-        $filterAttributes = $attributeRepository->getFilterAttributes();
-    }
-?>
-
 <div class="layered-filter-wrapper">
 
     {!! view_render_event('bagisto.shop.products.list.layered-nagigation.before') !!}
@@ -115,7 +83,7 @@
 
             data: function() {
                 return {
-                    attributes: @json($filterAttributes),
+                    attributes: @json($attributeRepository->getFilterAttributes()),
                     appliedFilters: {}
                 }
             },
@@ -176,7 +144,7 @@
                             0,
                             0
                         ],
-                        max: {{ isset($category) ? core()->convertPrice($productFlatRepository->getCategoryProductMaximumPrice($category->id)) : core()->convertPrice($productFlatRepository->getProductMaximumPrice()) }},
+                        max: 500,
                         processStyle: {
                             "backgroundColor": "#FF6472"
                         },
@@ -190,7 +158,7 @@
 
             created: function () {
                 if (!this.index)
-                    this.active = false;
+                    this.active = true;
 
                 if (this.appliedFilterValues && this.appliedFilterValues.length) {
                     this.appliedFilters = this.appliedFilterValues;

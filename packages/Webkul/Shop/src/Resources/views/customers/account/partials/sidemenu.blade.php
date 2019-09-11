@@ -14,7 +14,7 @@
                             <a href="{{ $subMenuItem['url'] }}">
                                 {{ trans($subMenuItem['name']) }}
                             </a>
-
+ 
                             <i class="icon angle-right-icon"></i>
                         </li>
                     @endforeach

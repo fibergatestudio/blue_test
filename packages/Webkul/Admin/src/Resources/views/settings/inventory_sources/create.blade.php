@@ -28,8 +28,6 @@
                 <div class="form-container">
                     @csrf()
 
-                    {!! view_render_event('bagisto.admin.settings.inventory.create.before') !!}
-
                     <accordian :title="'{{ __('admin::app.settings.inventory_sources.general') }}'" :active="true">
                         <div slot="body">
 
@@ -132,7 +130,6 @@
                         </div>
                     </accordian>
 
-                    {!! view_render_event('bagisto.admin.settings.inventory.create.after') !!}
                 </div>
             </div>
         </form>

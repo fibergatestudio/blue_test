@@ -9,20 +9,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 /**
  * Subscriber Mail class
  *
- * @author  Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
- *
+ * @author    Prashant Singh <prashant.singh852@webkul.com>
  * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
  */
 class SubscriptionEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $subscriptionData;
-
     public function __construct($subscriptionData) {
         $this->subscriptionData = $subscriptionData;
     }
-
     /**
      * Build the message.
      *
@@ -31,8 +27,7 @@ class SubscriptionEmail extends Mailable
     public function build()
     {
         return $this->to($this->subscriptionData['email'])
-                ->from(env('SHOP_MAIL_FROM'))
-                ->subject('subscription email')
-                ->view('shop::emails.customer.subscription-email')->with('data', ['content' => 'You Are Subscribed', 'token' => $this->subscriptionData['token']]);
+            ->subject('subscription email')
+            ->view('shop::emails.customer.subscription-email')->with('data', ['content' => 'You Are Subscribed', 'token' => $this->subscriptionData['token']]);
     }
 }

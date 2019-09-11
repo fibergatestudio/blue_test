@@ -23,7 +23,39 @@
             <label class="right">{{ core()->currency($cart->base_tax_total) }}</label>
         </div>
     @endif
+    <!-- LOYALITY POINTS -->
 
+    <?php 
+
+    $used_points = $cart->points;
+
+    $point_miltipl = $used_points * $points->points_value;
+
+    $points_price = $cart->sub_total / $points->points_value; 
+
+
+
+    if($customer->points < $points_price){
+
+        $max_points = $customer->points; 
+
+    } else {
+
+        $max_points = $cart->sub_total / $points->points_value; 
+
+    }
+    
+    ?>
+        <div class="item-detail">
+            <label>{{ __('Input use points') }}</label>
+            <label class="right">{{ $cart->points }} </label>
+  
+        </div>
+        <div class="item-detail">
+            <label>{{ __('Points (Converted)') }}</label>
+            <label class="right"> {{ core()->currency($cart->points_converted) }}</label>
+        </div>
+    <!-- END LOYALITY POINTS -->
 
     <div class="item-detail" id="discount-detail" @if ($cart->discount_amount && $cart->discount_amount > 0) style="display: block;" @else style="display: none;" @endif>
         <label>
@@ -40,9 +72,24 @@
     <div class="payable-amount" id="grand-total-detail">
         <label>{{ __('shop::app.checkout.total.grand-total') }}</label>
         <label class="right" id="grand-total-amount-detail">
-            {{ core()->currency($cart->base_grand_total) }}
+            {{ core()->currency($cart->base_grand_total) }} <!-- base_grand_total -->
         </label>
-    </div>
+    </div> 
+
+        <hr>
+        <div class="item-detail">
+            @if(Route::current()->getName() == 'shop.checkout.cart.index')
+            <p>You Points: <b><?php echo $customer_points; ?></b></p><br>
+            <form style="display: flex;" action="{{ route('cart.update_points') }}" method="POST">
+            @csrf()
+                <input type="hidden" name="cart_id" value="{{ $cart->id }}">
+                <input style="width: 100%;" type="number" min="0" max="<?php echo $final_points ?>" name="new_points" placeholder="{{ $cart->points }}" value="{{ $cart->points }}">
+
+                <button type="submit" class="btn">Update Points</button>
+            </form>
+            @endif
+        </div>
+
 
     <div @if (! request()->is('checkout/cart')) v-if="parseInt(discount)" @endif>
         @if (! request()->is('checkout/cart'))
