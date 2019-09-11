@@ -104,7 +104,7 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('countries/{id}', 'ResourceController@get')->defaults('_config', [
             'repository' => 'Webkul\Core\Repositories\CountryRepository',
             'resource' => 'Webkul\API\Http\Resources\Core\Country'
-        ]);
+        ]); 
 
         Route::get('country-states', 'CoreController@getCountryStateGroup');
 

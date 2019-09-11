@@ -127,15 +127,66 @@
 
             </div>
 
+            <div class="dashboard-stats">
+                <div class="dashboard-card">
+                    <div class="title">
+                        Total Generated Points
+                    </div>
+
+                    <div class="data">
+                    {{ $total_customers_points }}
+                        <span class="progress">
+                            @if ($statistics['avg_points']['progress'] < 0)
+                                <span class="icon graph-down-icon"></span>
+                                {{ __('admin::app.dashboard.decreased', [
+                                        'progress' => -number_format($statistics['avg_points']['progress'], 1)
+                                    ])
+                                }}
+                            @else
+                                <span class="icon graph-up-icon"></span>
+                                {{ __('admin::app.dashboard.increased', [
+                                        'progress' => number_format($statistics['avg_points']['progress'], 1)
+                                    ])
+                                }}
+                            @endif
+                        </span>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="title">
+                        Total Used Points
+                    </div>
+
+                    <div class="data">
+                    {{ $total_customers_used_points }}
+                        <span class="progress">
+                            @if ($statistics['avg_points']['progress'] < 0)
+                                <span class="icon graph-down-icon"></span>
+                                {{ __('admin::app.dashboard.decreased', [
+                                        'progress' => -number_format($statistics['avg_points']['progress'], 1)
+                                    ])
+                                }}
+                            @else
+                                <span class="icon graph-up-icon"></span>
+                                {{ __('admin::app.dashboard.increased', [
+                                        'progress' => number_format($statistics['avg_points']['progress'], 1)
+                                    ])
+                                }}
+                            @endif
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div class="graph-stats">
 
                 <div class="left-card-container graph">
-                    <div class="card" style="overflow: hidden;">
+                    <div class="card">
                         <div class="card-title" style="margin-bottom: 30px;">
                             {{ __('admin::app.dashboard.sales') }}
                         </div>
 
-                        <div class="card-info" style="height: 100%;">
+                        <div class="card-info">
 
                             <canvas id="myChart" style="width: 100%; height: 87%"></canvas>
 

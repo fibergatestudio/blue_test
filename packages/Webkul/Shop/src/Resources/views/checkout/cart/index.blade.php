@@ -50,6 +50,35 @@
                                             {{ core()->currency($item->base_price) }}
                                         </div>
 
+                                        <div class="">
+                                        <?php  
+
+                                        $points_price = $item->special_price; 
+                                        $converted_price = $item->base_price / $points->points_value;
+                                        $customer_points = $customer->points;
+
+
+
+                                        $quantity_price = ($item->base_price / $points->points_value) * $item->quantity;
+
+                                        if($quantity_price > $customer_points){
+
+                                            $final_points = $customer_points;
+
+                                        } else {
+
+                                            $final_points = ($item->base_price / $points->points_value) * $item->quantity;
+                                        }
+
+                                        // echo $points_price;
+                                        //echo $converted_price;
+
+                                        ?>
+
+
+                                            <p style="font-size: 20px;">Price in points: <b> <?php echo $converted_price ?> </b></p>
+                                        </div>
+
                                         {!! view_render_event('bagisto.shop.checkout.cart.item.price.after', ['item' => $item]) !!}
 
 
@@ -71,6 +100,13 @@
 
                                         <div class="misc">
                                             <div class="control-group" :class="[errors.has('qty[{{$item->id}}]') ? 'has-error' : '']">
+                                                <!-- <div class="wrap">
+                                                    <label for="points[{{$item->id}}]">{{ __('Points to USE') }}</label>
+
+                                                    <input type="text" class="control quantity-change" id="points-quantity{{ $key
+                                                    }}" name="points[{{$item->id}}]" value="" style="border-right: none; border-left: none; border-radius: 0px;" readonly>
+
+                                                </div> -->
                                                 <div class="wrap">
                                                     <label for="qty[{{$item->id}}]">{{ __('shop::app.checkout.cart.quantity.quantity') }}</label>
 
@@ -86,12 +122,12 @@
                                             </div>
 
                                             <span class="remove">
-                                                <a href="{{ route('shop.checkout.cart.remove', $item->id) }}" onclick="removeLink('{{ __('shop::app.checkout.cart.cart-remove-action') }}')">{{ __('shop::app.checkout.cart.remove-link') }}</a></span>
+                                                <a href="{{ route('shop.checkout.cart.remove', $item->id) }}" onclick="removeLink('Do you really want to do this?')">{{ __('shop::app.checkout.cart.remove-link') }}</a></span>
 
                                             @auth('customer')
                                                 <span class="towishlist">
                                                     @if ($item->parent_id != 'null' ||$item->parent_id != null)
-                                                        <a href="{{ route('shop.movetowishlist', $item->id) }}" onclick="removeLink('{{ __('shop::app.checkout.cart.cart-remove-action') }}')">{{ __('shop::app.checkout.cart.move-to-wishlist') }}</a>
+                                                        <a href="{{ route('shop.movetowishlist', $item->id) }}" onclick="removeLink('Do you really want to do this?')">{{ __('shop::app.checkout.cart.move-to-wishlist') }}</a>
                                                     @else
                                                         <a href="{{ route('shop.movetowishlist', $item->child->id) }}" onclick="removeLink('{{ __('shop::app.checkout.cart.cart-remove-action') }}')">{{ __('shop::app.checkout.cart.move-to-wishlist') }}</a>
                                                     @endif

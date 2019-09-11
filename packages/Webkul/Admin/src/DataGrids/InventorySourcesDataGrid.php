@@ -56,7 +56,7 @@ class InventorySourcesDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'priority',
             'label' => trans('admin::app.datagrid.priority'),
-            'type' => 'number',
+            'type' => 'string',
             'searchable' => true,
             'sortable' => true,
             'filterable' => true

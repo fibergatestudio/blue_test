@@ -24,7 +24,7 @@ class AuthTest extends TestCase
      */
     public function testCustomerLoginPage()
     {
-        config(['app.url' => 'http://prashant.com']);
+        config(['app.url' => 'http://127.0.0.1:8000']);
 
         $response = $this->get('/customer/login');
 
@@ -33,9 +33,8 @@ class AuthTest extends TestCase
         $response->assertViewIs('shop::customers.session.index');
     }
 
-    public function testCustomerResgistrationPage()
-    {
-        config(['app.url' => 'http://prashant.com']);
+    public function testCustomerResgistrationPage() {
+        config(['app.url' => 'http://127.0.0.1:8000']);
 
         $response = $this->get('/customer/register');
 
@@ -65,12 +64,11 @@ class AuthTest extends TestCase
         $this->assertEquals($created->id, $created->id);
     }
 
-    public function testCustomerLogin()
-    {
-        config(['app.url' => 'http://prashant.com']);
+    public function testCustomerLogin() {
+        config(['app.url' => 'http://127.0.0.1:8000']);
 
         $customers = app(Customer::class);
-        $customer = $customers->findOneByField('email', 'john@doe.net');
+        $customer = $customers->findOneByField('email', 'prashant@webkul.com');
 
         $response = $this->post('/customer/login', [
             'email' => $customer->email,
@@ -86,7 +84,7 @@ class AuthTest extends TestCase
         public function willNotLoginWithWrongCredentials()
         {
             $customers = app(Customer::class);
-            $customer = $customers->findOneByField('email', 'john@doe.net');
+            $customer = $customers->findOneByField('email', 'prashant@webkul.com');
 
             $response = $this->from(route('login'))->post(route('customer.session.create'),
                         [
@@ -116,6 +114,8 @@ class AuthTest extends TestCase
         public function allowsCustomerToLogout()
         {
             $customer = auth()->guard('customer')->user();
+
+            // dd('logout test', $customer);
 
             $this->get(route('customer.session.destroy'));
 

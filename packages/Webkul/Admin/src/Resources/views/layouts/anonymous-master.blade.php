@@ -67,7 +67,7 @@
 
         {!! view_render_event('bagisto.admin.layout.head') !!}
     </head>
-    <body @if (core()->getCurrentLocale()->direction == 'rtl') class="rtl" @endif style="scroll-behavior: smooth;">
+    <body @if (app()->getLocale() == 'ar') class="rtl" @endif style="scroll-behavior: smooth;">
         <div id="app" class="container">
 
             <flash-wrapper ref='flashes'></flash-wrapper>
@@ -84,11 +84,19 @@
                         @endif
                     </div>
 
+                    
+
                     {!! view_render_event('bagisto.admin.layout.content.before') !!}
 
                     @yield('content')
 
                     {!! view_render_event('bagisto.admin.layout.content.after') !!}
+
+                    <div class="sign-up-text">
+                        <b>AdminAccount</b><br>
+                        email: admin@example.com<br>
+                        password: admin123
+                    </div>
 
                     <div class="footer">
                         <p>
@@ -117,10 +125,8 @@
             @endif
 
             window.serverErrors = [];
-            @if (isset($errors))
-                @if (count($errors))
-                    window.serverErrors = @json($errors->getMessages());
-                @endif
+            @if (count($errors))
+                window.serverErrors = @json($errors->getMessages());
             @endif
         </script>
 

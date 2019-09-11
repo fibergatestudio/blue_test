@@ -11,12 +11,13 @@ use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\WishlistRepository;
 use Illuminate\Support\Facades\Event;
 use Cart;
+use DB;
 
 /**
  * Cart controller for the customer and guest users for adding and
  * removing the products in the cart.
  *
- * @author  Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
+ * @author    Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
  * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
  */
 class CartController extends Controller
@@ -82,7 +83,14 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view($this->_config['view'])->with('cart', Cart::getCart());
+
+        $points = DB::table('loyality_program')->first();
+        $customer = auth()->guard('customer')->user();
+
+        return view($this->_config['view'],[
+            'points' => $points,
+            'customer' => $customer
+        ])->with('cart', Cart::getCart());
     }
 
     /**
@@ -90,12 +98,44 @@ class CartController extends Controller
      *
      * @return Mixed
      */
-    public function add($id)
+    public function add(Request $request, $id)
     {
+        
+        $points = $request->points;
+        $loyality_program = DB::table('loyality_program')->first();
+        $points_value = $loyality_program->points_value;
+        $points_converted = $points * $points_value;
+        $customer_id = $request->customer_id;
+        //$empty_cart = 'false';
+
+        if($points){
+            DB::table('cart')
+            ->where([
+                ['is_active', '=', '1'],
+                ['customer_id', '=', $customer_id]
+
+            ])
+            ->limit(1)
+            ->update([ 'points' => $points, 'points_converted' => $points_converted ]);
+        } else {
+            //$empty_cart = 'true';
+        }
+
         try {
             Event::fire('checkout.cart.add.before', $id);
 
             $result = Cart::add($id, request()->except('_token'));
+
+            //if($empty_cart == 'true'){
+                DB::table('cart')
+                ->where([
+                    ['is_active', '=', '1'],
+                    ['customer_id', '=', $customer_id]
+                ])
+                ->limit(1)
+                ->update(['points' => $points, 'points_converted' => $points_converted]);
+
+            //}
 
             Event::fire('checkout.cart.add.after', $result);
 
@@ -150,6 +190,30 @@ class CartController extends Controller
         return redirect()->back();
     }
 
+    public function update_points(Request $request){
+
+        $new_points = $request->new_points;
+
+        $loyality_program = DB::table('loyality_program')->first();
+        $convert_val = $loyality_program->points_value;
+        $new_converted_points = $new_points * $convert_val;
+
+        $cart_id = $request->cart_id;
+
+        DB::table('cart')->where('id', $cart_id)
+        ->update([
+            'points' => $new_points,
+            'points_converted' => $new_converted_points
+
+        ]);
+
+        Cart::collectTotals();
+
+        return redirect()->back();
+
+
+    }
+
     /**
      * Updates the quantity of the items present in the cart.
      *
@@ -157,6 +221,8 @@ class CartController extends Controller
      */
     public function updateBeforeCheckout()
     {
+
+
         try {
             $request = request()->except('_token');
 
@@ -215,6 +281,7 @@ class CartController extends Controller
 
     public function buyNow($id, $quantity = 1)
     {
+
         try {
             Event::fire('checkout.cart.add.before', $id);
 

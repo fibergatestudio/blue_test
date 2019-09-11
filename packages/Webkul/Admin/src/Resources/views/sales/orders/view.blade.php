@@ -259,7 +259,7 @@
                                                         @endif
                                                     </td>
 
-                                                    <td>{{ core()->formatBasePrice($item->base_price) }}</td>
+                                                    <td>{{ core()->currency($item->base_price) }}</td>
 
                                                     <td>
                                                         <span class="qty-row">
@@ -279,17 +279,17 @@
                                                         </span>
                                                     </td>
 
-                                                    <td>{{ core()->formatBasePrice($item->base_total) }}</td>
+                                                    <td>{{ core()->currency($item->base_total) }}</td>
 
                                                     <td>{{ $item->tax_percent }}%</td>
 
-                                                    <td>{{ core()->formatBasePrice($item->base_tax_amount) }}</td>
+                                                    <td>{{ core()->currency($item->base_tax_amount) }}</td>
 
                                                     @if ($order->base_discount_amount > 0)
-                                                        <td>{{ core()->formatBasePrice($item->base_discount_amount) }}</td>
+                                                        <td>{{ core()->currency($item->base_discount_amount) }}</td>
                                                     @endif
 
-                                                    <td>{{ core()->formatBasePrice($item->base_total + $item->base_tax_amount - $item->base_discount_amount) }}</td>
+                                                    <td>{{ core()->currency($item->base_total + $item->base_tax_amount - $item->base_discount_amount) }}</td>
                                                 </tr>
                                             @endforeach
                                     </table>
@@ -299,7 +299,7 @@
                                     <tr>
                                         <td>{{ __('admin::app.sales.orders.subtotal') }}</td>
                                         <td>-</td>
-                                        <td>{{ core()->formatBasePrice($order->base_sub_total) }}</td>
+                                        <td>{{ core()->currency($order->base_sub_total) }}</td>
                                     </tr>
 
                                     <tr>
@@ -308,42 +308,58 @@
                                         <td>{{ core()->formatBasePrice($order->base_shipping_amount) }}</td>
                                     </tr>
 
+                                    <!-- Points -->
+                                    <?php 
+                                    
+                                        $discounted_price = $order->base_grand_total;
+                                        $base_price = $order->base_sub_total;
+                                        $discount = $base_price - $discounted_price;
+                                    
+                                    ?>
+                                    <tr>
+                                        <td>{{ __('Points Discount') }}</td>
+                                        <td>-</td>
+                                        <td>{{ core()->currency($discount) }}</td>
+                                    </tr>
+
+                                    <!-- End Points -->
+
                                     @if ($order->base_discount_amount > 0)
                                         <tr>
                                             <td>{{ __('admin::app.sales.orders.discount') }}</td>
                                             <td>-</td>
-                                            <td>-{{ core()->formatBasePrice($order->base_discount_amount) }}</td>
+                                            <td>-{{ core()->currency($order->base_discount_amount) }}</td>
                                         </tr>
                                     @endif
 
                                     <tr class="border">
                                         <td>{{ __('admin::app.sales.orders.tax') }}</td>
                                         <td>-</td>
-                                        <td>{{ core()->formatBasePrice($order->base_tax_amount) }}</td>
+                                        <td>{{ core()->currency($order->base_tax_amount) }}</td>
                                     </tr>
 
                                     <tr class="bold">
                                         <td>{{ __('admin::app.sales.orders.grand-total') }}</td>
                                         <td>-</td>
-                                        <td>{{ core()->formatBasePrice($order->base_grand_total) }}</td>
+                                        <td>{{ core()->currency($order->base_grand_total) }}</td>
                                     </tr>
 
                                     <tr class="bold">
                                         <td>{{ __('admin::app.sales.orders.total-paid') }}</td>
                                         <td>-</td>
-                                        <td>{{ core()->formatBasePrice($order->base_grand_total_invoiced) }}</td>
+                                        <td>{{ core()->currency($order->base_grand_total_invoiced) }}</td>
                                     </tr>
 
                                     <tr class="bold">
                                         <td>{{ __('admin::app.sales.orders.total-refunded') }}</td>
                                         <td>-</td>
-                                        <td>{{ core()->formatBasePrice($order->base_grand_total_refunded) }}</td>
+                                        <td>{{ core()->currency($order->base_grand_total_refunded) }}</td>
                                     </tr>
 
                                     <tr class="bold">
                                         <td>{{ __('admin::app.sales.orders.total-due') }}</td>
                                         <td>-</td>
-                                        <td>{{ core()->formatBasePrice($order->base_total_due) }}</td>
+                                        <td>{{ core()->currency($order->base_total_due) }}</td>
                                     </tr>
                                 </table>
 
@@ -406,7 +422,7 @@
                                     <th>{{ __('admin::app.sales.shipments.id') }}</th>
                                     <th>{{ __('admin::app.sales.shipments.date') }}</th>
                                     <th>{{ __('admin::app.sales.shipments.order-id') }}</th>
-                                    <th>{{ __('admin::app.sales.shipments.order-date') }}</th>
+                                    <th>{{ __('admin::app.sales.shipments.order-date') }}11</th>
                                     <th>{{ __('admin::app.sales.shipments.customer-name') }}</th>
                                     <th>{{ __('admin::app.sales.shipments.total-qty') }}</th>
                                     <th>{{ __('admin::app.sales.shipments.action') }}</th>

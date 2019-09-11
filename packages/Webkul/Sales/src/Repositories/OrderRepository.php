@@ -78,6 +78,7 @@ class OrderRepository extends Repository
             } else {
                 unset($data['channel']);
             }
+            
 
             $data['status'] = 'pending';
 
@@ -89,6 +90,12 @@ class OrderRepository extends Repository
 
             $order->addresses()->create($data['billing_address']);
 
+            //dd($data['items']);
+            //Customer ID
+            // $cus_id = $data['customer']->id;
+            // $points_to_user = DB::table('customers')->where('id', $cus_id)->first();
+
+
             foreach ($data['items'] as $item) {
                 $orderItem = $this->orderItem->create(array_merge($item, ['order_id' => $order->id]));
 
@@ -96,8 +103,39 @@ class OrderRepository extends Repository
                     $orderItem->child = $this->orderItem->create(array_merge($item['child'], ['order_id' => $order->id, 'parent_id' => $orderItem->id]));
                 }
 
+                //ADDING POINTS
+                    // //Get Current PayoutPercentage
+                    // $loyality_settings = DB::table('loyality_program')->first();
+                    // $percentage = $loyality_settings->payout_percentage;
+
+                    // $points = $points_to_user->points;
+                    // $points_to_add = ($orderItem->price) * ($percentage / 100);
+                    // $converted_points = floor($points_to_add);
+                    // $item_price = $points + $converted_points; 
+
+                    // DB::table('customers')
+                    // ->where('id', $data['customer_id'])
+                    // ->limit(1)
+                    // ->update(['points' => $item_price ]);
+                //END ADDING POINTS
+
                 $this->orderItem->manageInventory($orderItem);
             }
+
+
+                        
+            // Points
+
+            // $cus_id = $data['customer']->id;
+            // $points_to_user = DB::table('customers')->where('id', $cus_id)->first();
+            // $points = $points_to_user->points;
+            // $new_points = $points + $points;
+
+            // DB::table('customers')
+            // ->where('id', $data['customer_id'])
+            // ->limit(1)
+            // ->update(['points' => $new_points]);
+
 
             Event::fire('checkout.order.save.after', $order);
         } catch (\Exception $e) {
@@ -173,7 +211,7 @@ class OrderRepository extends Repository
             $totalQtyCanceled += $item->qty_canceled;
         }
 
-        if ($totalQtyOrdered != ($totalQtyRefunded + $totalQtyCanceled) &&
+        if ($totalQtyOrdered != ($totalQtyRefunded + $totalQtyCanceled) && 
             $totalQtyOrdered == $totalQtyInvoiced + $totalQtyRefunded + $totalQtyCanceled &&
             $totalQtyOrdered == $totalQtyShipped + $totalQtyRefunded + $totalQtyCanceled)
             return true;
@@ -233,6 +271,7 @@ class OrderRepository extends Repository
 
         if ($this->isInCompletedState($order))
             $status = 'completed';
+
 
         if ($this->isInCanceledState($order))
             $status = 'canceled';

@@ -40,6 +40,7 @@
                 </ul>
             </div>
 
+
             <input type="hidden" name="up_sell[]" v-for='(product, index) in addedProducts.up_sells' v-if="(key == 'up_sells') && addedProducts.up_sells.length" :value="product.id"/>
 
             <input type="hidden" name="cross_sell[]" v-for='(product, index) in addedProducts.cross_sells' v-if="(key == 'cross_sells') && addedProducts.cross_sells.length" :value="product.id"/>

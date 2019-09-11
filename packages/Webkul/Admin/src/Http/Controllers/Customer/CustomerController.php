@@ -8,8 +8,6 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository as Customer;
 use Webkul\Customer\Repositories\CustomerGroupRepository as CustomerGroup;
 use Webkul\Core\Repositories\ChannelRepository as Channel;
-use Webkul\Admin\Mail\NewCustomerNotification;
-use Mail;
 
 /**
  * Customer controlller
@@ -110,19 +108,13 @@ class CustomerController extends Controller
 
         $data = request()->all();
 
-        $password = rand(100000,10000000);
+        $password = bcrypt(rand(100000,10000000));
 
-        $data['password'] = bcrypt($password);
+        $data['password'] = $password;
 
         $data['is_verified'] = 1;
 
-        $customer = $this->customer->create($data);
-
-        try {
-            Mail::queue(new NewCustomerNotification($customer, $password));
-        } catch (\Exception $e) {
-
-        }
+        $this->customer->create($data);
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Customer']));
 

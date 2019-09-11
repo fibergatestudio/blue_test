@@ -70,10 +70,7 @@
             <?php
                 $product = $item->product;
 
-                if ($product->type == "configurable")
-                    $productBaseImage = $productImageHelper->getProductBaseImage($item->child->product);
-                else
-                    $productBaseImage = $productImageHelper->getProductBaseImage($item->product);
+                $productBaseImage = $productImageHelper->getProductBaseImage($product);
             ?>
 
             <div class="item mb-5" style="margin-bottom: 5px;">

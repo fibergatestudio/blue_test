@@ -5,7 +5,6 @@ namespace Webkul\Category\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Webkul\Category\Repositories\CategoryRepository as Category;
-use Webkul\Attribute\Repositories\AttributeRepository as Attribute;
 use Webkul\Category\Models\CategoryTranslation;
 use Illuminate\Support\Facades\Event;
 
@@ -32,24 +31,14 @@ class CategoryController extends Controller
     protected $category;
 
     /**
-     * AttributeRepository object
-     *
-     * @var array
-     */
-    protected $attribute;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Category\Repositories\CategoryRepository       $category
-     * @param  use Webkul\Attribute\Repositories\AttributeRepository  $attribute
+     * @param  \Webkul\Category\Repositories\CategoryRepository  $category
      * @return void
      */
-    public function __construct(Category $category, Attribute $attribute)
+    public function __construct(Category $category)
     {
         $this->category = $category;
-
-        $this->attribute = $attribute;
 
         $this->_config = request('_config');
     }
@@ -73,9 +62,7 @@ class CategoryController extends Controller
     {
         $categories = $this->category->getCategoryTree(null, ['id']);
 
-        $attributes = $this->attribute->findWhere(['is_filterable' =>  1]);
-
-        return view($this->_config['view'], compact('categories', 'attributes'));
+        return view($this->_config['view'], compact('categories'));
     }
 
     /**
@@ -123,9 +110,7 @@ class CategoryController extends Controller
 
         $category = $this->category->findOrFail($id);
 
-        $attributes = $this->attribute->findWhere(['is_filterable' =>  1]);
-
-        return view($this->_config['view'], compact('category', 'categories', 'attributes'));
+        return view($this->_config['view'], compact('category', 'categories'));
     }
 
     /**
@@ -137,29 +122,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $locale = request()->get('locale') ?: app()->getLocale();
+        $locale = request()->get('locale') ?: app()->getLocale();
 
-            $this->validate(request(), [
-                $locale . '.slug' => ['required', new \Webkul\Core\Contracts\Validations\Slug, function ($attribute, $value, $fail) use ($id) {
-                    if (! $this->category->isSlugUnique($id, $value)) {
-                        $fail(trans('admin::app.response.already-taken', ['name' => 'Category']));
-                    }
-                }],
-                $locale . '.name' => 'required',
-                'image.*' => 'mimes:jpeg,jpg,bmp,png'
-            ]);
+        $this->validate(request(), [
+            $locale . '.slug' => ['required', new \Webkul\Core\Contracts\Validations\Slug, function ($attribute, $value, $fail) use ($id) {
+                if (! $this->category->isSlugUnique($id, $value)) {
+                    $fail(trans('admin::app.response.already-taken', ['name' => 'Category']));
+                }
+            }],
+            $locale . '.name' => 'required',
+            'image.*' => 'mimes:jpeg,jpg,bmp,png'
+        ]);
 
-            $this->category->update(request()->all(), $id);
+        $this->category->update(request()->all(), $id);
 
-            session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Category']));
+        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Category']));
 
-            return redirect()->route($this->_config['redirect']);
-        } catch(\Exception $e) {
-            session()->flash('error', trans($e->getMessage()));
-
-            return redirect()->back();
-        }
+        return redirect()->route($this->_config['redirect']);
     }
 
     /**
