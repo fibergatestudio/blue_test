@@ -55,7 +55,12 @@
 
                                         $points_price = $item->special_price; 
                                         $converted_price = $item->base_price / $points->points_value;
-                                        $customer_points = $customer->points;
+
+                                        if($customer){
+                                            $customer_points = $customer->points;
+                                        } else {
+                                            $customer_points = '0';
+                                        }
 
 
 

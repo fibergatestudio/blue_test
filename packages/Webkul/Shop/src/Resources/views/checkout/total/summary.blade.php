@@ -27,21 +27,27 @@
 
     <?php 
 
-    $used_points = $cart->points;
+    if($customer){
+        
+        $used_points = $cart->points;
 
-    $point_miltipl = $used_points * $points->points_value;
-
-    $points_price = $cart->sub_total / $points->points_value; 
-
-
-
-    if($customer->points < $points_price){
-
-        $max_points = $customer->points; 
+        $point_miltipl = $used_points * $points->points_value;
+    
+        $points_price = $cart->sub_total / $points->points_value; 
+    
+    
+    
+        if($customer->points < $points_price){
+    
+            $max_points = $customer->points; 
+    
+        } else {
+    
+            $max_points = $cart->sub_total / $points->points_value; 
+    
+        }
 
     } else {
-
-        $max_points = $cart->sub_total / $points->points_value; 
 
     }
     
@@ -79,7 +85,20 @@
         <hr>
         <div class="item-detail">
             @if(Route::current()->getName() == 'shop.checkout.cart.index')
-            <p>You Points: <b><?php echo $customer_points; ?></b></p><br>
+            <p>
+                You Points: <b>
+                <?php 
+                
+                if($customer_points){
+                    echo $customer_points; 
+                } else {
+                    echo 'NotLoggedIn'; 
+                }
+                
+                ?>
+                </b>
+            </p>
+            <br>
             <form style="display: flex;" action="{{ route('cart.update_points') }}" method="POST">
             @csrf()
                 <input type="hidden" name="cart_id" value="{{ $cart->id }}">

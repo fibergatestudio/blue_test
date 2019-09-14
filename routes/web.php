@@ -41,27 +41,33 @@ Route::get('/test', 'MenuController@test');
 
 //-- OTHER PAGES --//
 
-    //-- 404 Page --//
-    Route::get('/404', 'MenuController@Page404');
+        //-- About BB Group --//
+        Route::get('/aboutbb', 'MenuController@AboutBBGroup');
+        //-- About Our Cafe --//
+        Route::get('/aboutcafe', 'MenuController@AboutOurCafe');
+        //-- AboutUs --//
+        Route::get('/aboutus', 'MenuController@AboutUs');
 
     //-- TermsAndConditionsPrivacyPolicy --//
-    Route::get('/terms', 'MenuController@TermsAndConditionsPrivacyPolicy');
+    Route::get('/terms', 'MenuController@TermsAndConditions');
 
     //-- LoyaltyProgram --//
-    Route::get('/loyalty', 'MenuController@LoyaltyProgram');
+    Route::get('/loyality', 'MenuController@LoyaltyProgram');
         //Route::post()
+
+    //-- Tutorials --//
+    Route::get('/tutorials', 'MenuController@Tutorials');
+        //-- Tutorial Aeropress --//
+        Route::get('/tutorials/aeropress', 'MenuController@Aeropress');
 
     //-- PaymentAndShipping --//
     Route::get('/paymentandshipping', 'MenuController@PaymentAndShipping');
+    //-- Shipping --//
+    Route::get('/shipping', 'MenuController@Shipping');
 
-    //-- AboutUs --//
-    Route::get('/aboutus', 'MenuController@AboutUs');
 
     //-- OurCoffee --//
     Route::get('/ourcoffee', 'MenuController@OurCoffee');
-
-    //-- AboutBBGroup --//
-    Route::get('/aboutbbgroup', 'MenuController@AboutBBGroup');
 
     //-- For Businesses --//
     Route::get('/forbusinesses', 'MenuController@ForBusinesses');

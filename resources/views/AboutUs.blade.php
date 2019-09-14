@@ -11,7 +11,9 @@
                         <use xlink:href="#logo"></use>
                     </svg>
                 </a>
+                <nav class="nav header__nav nav_main">
                 @include('layouts.header_menu')
+                </nav>
                 <div class="header__lang-switcher lang lang_main">
                     <button class="lang__trigger">En
                         <svg>
@@ -34,16 +36,57 @@
                         </li>
                     </ul>
                 </div>
-                <a class="header__cart cart-link cart-link_main" href="shopping-cart.html">
-                    <svg class="cart-link__icon">
-                        <use xlink:href="#shopping-bag"></use>
-                    </svg><span class="cart-link__counter">2</span>
-                </a>
+                <div class="header__cart">
+                    <button class="cart-btn js-box-trigger cart-link_main" data-target-id="cartModal">
+                        <svg class="cart-btn__icon">
+                            <use xlink:href="#shopping-bag"></use>
+                        </svg><span class="cart-btn__counter">2</span>
+                    </button>
+                </div>
                 <div class="header__auth">
                     <a href="newsletter-subscription.html">Subscribe</a>
                     <button class="js-open-popup" data-popup-id="signin">Sign in</button>
                 </div>
             </div>
+            <!-- cart popup-->
+            <form class="cart-modal" id="cartModal">
+                <button class="cart-modal__close js-close-modal" type="button">
+                    <svg>
+                        <use xlink:href="#rounded-close"></use>
+                    </svg>
+                </button>
+                <h2 class="cart-modal__header">Cart (<span id="cartItems">2</span>)</h2>
+                <div class="cart-modal__list">
+                    <div class="cart-sm-product cart-modal__item">
+                        <div class="cart-sm-product__image">
+                            <img src="img/tmp/goods/green-sm.png" alt="Blue Bird Blend ">
+                        </div>
+                        <h3 class="cart-sm-product__title">Blue Bird Blend </h3><span class="cart-sm-product__price">2150 HUF</span>
+                    </div>
+                    <div class="cart-sm-product cart-modal__item">
+                        <div class="cart-sm-product__image">
+                            <img src="img/tmp/goods/coffee-machine.png" alt="Coffee Machine">
+                        </div>
+                        <h3 class="cart-sm-product__title">Coffee Machine</h3><span class="cart-sm-product__price">10 000 HUF</span>
+                    </div>
+                    <div class="cart-sm-product cart-modal__item">
+                        <div class="cart-sm-product__image">
+                            <img src="img/tmp/goods/cup.png" alt="Cup">
+                        </div>
+                        <h3 class="cart-sm-product__title">Cup</h3><span class="cart-sm-product__price">3 000 HUF</span>
+                    </div>
+                    <div class="cart-modal__price">
+                        <div class="cart-modal__row"><span class="cart-modal__label">Shipping:</span><span>Free</span>
+                        </div>
+                        <div class="cart-modal__row"><span class="cart-modal__label">Total:</span><span class="cart-modal__total">19 300 HUF</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-modal__buttons">
+                    <input class="button button_blue cart-modal__submit" type="submit" value="Make a purchase">
+                    <a class="cart-modal__back" href="#">Back to product list</a>
+                </div>
+            </form>
             <div class="header__row js-block-cnt">
                 <div class="header__content">
                     <div class="banner banner_bbc">
@@ -145,7 +188,7 @@
                 <div class="cafe-history__slider-row">
                     <div class="container">
                         <div class="cafe-history__slider swiper-container js-init-slider" data-options="history">
-                            <div class="swiper-wrapper">
+                            <div style="height: auto;" class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="cafe-history__slide">
                                         <div class="cafe-history__image">
@@ -254,11 +297,11 @@
                     </div>
                 </div>
                 <div class="gallery__container swiper-container js-init-slider" data-options="gallery">
-                    <div class="swiper-wrapper">
+                    <div style="height: auto;" class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="gallery__category">
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-1.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/big-image.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-1.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-1.jpg') }}" type="image/jpeg">
@@ -267,7 +310,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-2.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-2.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-2.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-2.jpg') }}" type="image/jpeg">
@@ -276,7 +319,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-3.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-3.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-3.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-3.jpg') }}" type="image/jpeg">
@@ -285,7 +328,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-4.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-4.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-4.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-4.jpg') }}" type="image/jpeg">
@@ -294,7 +337,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-5.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-5.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-5.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-5.jpg') }}" type="image/jpeg">
@@ -303,7 +346,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-6.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-6.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-6.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-6.jpg') }}" type="image/jpeg">
@@ -312,7 +355,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-7.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-7.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-7.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-7.jpg') }}" type="image/jpeg">
@@ -321,7 +364,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-8.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-8.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-8.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-8.jpg') }}" type="image/jpeg">
@@ -330,7 +373,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-9.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-9.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-9.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-9.jpg') }}" type="image/jpeg">
@@ -339,7 +382,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-10.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-10.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-10.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-10.jpg') }}" type="image/jpeg">
@@ -348,7 +391,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-11.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-11.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-11.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-11.jpg') }}" type="image/jpeg">
@@ -357,7 +400,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a href="img/tmp/gallery/gallery-img-12.jpg">
+                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-12.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-12.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-12.jpg') }}" type="image/jpeg">

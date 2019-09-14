@@ -49,15 +49,10 @@ class MenuController extends Controller
     }
 
     //-- PAGES --//
-    public function TermsAndConditionsPrivacyPolicy(){
+    public function TermsAndConditions(){
 
-        return view('TermsAndConditionsPrivacyPolicy');
+        return view('TermsAndConditions');
 
-    }
-    public function Page404(){
-
-        return view('Page404');
-        
     }
 
     public function LoyaltyProgram(){
@@ -68,8 +63,12 @@ class MenuController extends Controller
 
     public function PaymentAndShipping(){
 
-
         return view('PaymentAndShipping');
+    }
+
+    public function Shipping(){
+
+        return view('Shipping');
     }
 
     public function AboutUs(){
@@ -88,6 +87,12 @@ class MenuController extends Controller
 
     }
 
+    public function AboutOurCafe(){
+
+        return view('AboutOurCafe');
+
+    }
+
     public function ForBusinesses(){
 
         return view('ForBusinesses');
@@ -97,5 +102,18 @@ class MenuController extends Controller
 
         return view('BaristaTrainings');
     }
+
+    //-- Tutorials --//
+    public function Tutorials(){
+
+        return view('Tutorials');
+
+    }
+        //-- Tutorials - Aeropress --//
+        public function Aeropress(){
+
+            return view('tutorials.Aeropress');
+
+        }
 
 }

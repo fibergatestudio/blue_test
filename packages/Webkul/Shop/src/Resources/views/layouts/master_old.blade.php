@@ -9,10 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="content-language" content="{{ app()->getLocale() }}">
-    <link rel="stylesheet" href="{{ bagisto_asset('css/shop.css') }}"> <!-- Bagisto style -->
-    <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css') }}"> <!-- Bagisto style -->
-    <link href="{{ url('assets/css/libs.min.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ url('assets/css/main.css?1566387411001') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ bagisto_asset('css/shop.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css') }}">
 
     @if ($favicon = core()->getCurrentChannel()->favicon_url)
         <link rel="icon" sizes="16x16" href="{{ $favicon }}" />
@@ -32,11 +30,7 @@
 
 </head>
 
-    <header class="">
-    @include('layouts.header_menu')
-    </header>
-
-<body style="background-color: #f6fafc;" @if (app()->getLocale() == 'ar') class="rtl" @endif style="scroll-behavior: smooth;">
+<body @if (app()->getLocale() == 'ar') class="rtl" @endif style="scroll-behavior: smooth;">
 
     {!! view_render_event('bagisto.shop.layout.body.before') !!}
 
@@ -45,15 +39,15 @@
 
         <div class="main-container-wrapper">
 
-            <!-- {!! view_render_event('bagisto.shop.layout.header.before') !!}
+            {!! view_render_event('bagisto.shop.layout.header.before') !!}
 
             @include('shop::layouts.header.index')
 
-            {!! view_render_event('bagisto.shop.layout.header.after') !!} -->
+            {!! view_render_event('bagisto.shop.layout.header.after') !!}
 
             @yield('slider')
 
-            <div class="content-container">
+            <div style="margin-top: 110px !important;" class="content-container">
 
                 {!! view_render_event('bagisto.shop.layout.content.before') !!}
 
@@ -67,10 +61,19 @@
 
         {!! view_render_event('bagisto.shop.layout.footer.before') !!}
 
-        @include('layouts.footer')
+        @include('shop::layouts.footer.footer')
 
         {!! view_render_event('bagisto.shop.layout.footer.after') !!}
 
+        <div class="footer-bottom">
+            <p>
+                @if (core()->getConfigData('general.content.footer.footer_content'))
+                    {{ core()->getConfigData('general.content.footer.footer_content') }}
+                @else
+                    {{ trans('admin::app.footer.copy-right') }}
+                @endif
+            </p>
+        </div>
 
     </div>
 

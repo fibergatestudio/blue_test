@@ -6,7 +6,7 @@
     @if ($product->type == 'configurable')
         <span class="price-label">{{ __('shop::app.products.price-label') }}</span>
 
-        <span class="final-price">{{ core()->currency($priceHelper->getMinimalPrice($product)) }}</span>
+        <span id="final_price" class="final-price">{{ core()->currency($priceHelper->getMinimalPrice($product)) }}</span>
     @else
         @if ($priceHelper->haveSpecialPrice($product))
             <div class="sticker sale">

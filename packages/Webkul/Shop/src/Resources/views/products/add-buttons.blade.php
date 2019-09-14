@@ -14,7 +14,10 @@
                 <input type="hidden" name="product" value="{{ $product->product_id }}">
                 <input type="hidden" name="quantity" value="1">
                 <input type="hidden" value="false" name="is_configurable">
-                <button class="btn btn-lg btn-primary addtocart" {{ $product->haveSufficientQuantity(1) ? '' : 'disabled' }}>{{ __('shop::app.products.add-to-cart') }}</button>
+                    <div class="product-tile__buttons">
+                        <button class="button button_transparent" {{ $product->haveSufficientQuantity(1) ? '' : 'disabled' }}>{{ __('shop::app.products.add-to-cart') }}</button>
+                        <button class="button button_blue"{{ $product->haveSufficientQuantity(1) ? '' : 'disabled' }}>Add to Blue box</button>
+                    </div>
             </form>
 
             @include('shop::products.wishlist')

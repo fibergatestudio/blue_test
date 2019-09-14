@@ -42,8 +42,29 @@
 
 @section('header')
 <header class="header header_has-columns header_404">
-@include('layouts.header_menu')
+    @include('layouts.header_menu')
             <div class="header__row js-block-cnt">
+                <div class="header__content header__content_about">
+                    <div class="page-404">
+                        <div class="page-404__code">4
+                            <picture>
+                                <source srcset="{{ url('assets/img/404/zero-been.webp') }}" type="image/webp">
+                                <source srcset="{{ url('assets/img/404/zero-been.png') }}" type="image/png">
+                                <img src="{{ url('assets/img/404/zero-been.png') }}" alt="Picture alt text">
+                            </picture>4
+                        </div>
+                        <div class="page-404__desc">Oops! Page doesn’t found</div>
+                    </div>
+                    <div class="page-404__text">Try one of our services and get nice bonuses for the loyalty program!</div>
+                    <div class="page-404__btn-group">
+                        <a class="button button_blue page-404__button" href="catalog.html">Shop</a>
+                        <a class="button button_blue page-404__button" href="bluebox.html">Blue Box</a>
+                        <a class="button button_blue page-404__button" href="newsletter-subscription.html">subscription</a>
+                    </div>
+                </div>
+                <div class="header__picture header__picture_keep"></div>
+            </div>
+            <!-- <div class="header__row js-block-cnt">
                 <div class="header__content header__content_about">
                     <div class="page-404">
                         <div class="page-404__code">4
@@ -63,9 +84,9 @@
                     </div>
                 </div>
                 <div class="header__picture header__picture_keep"></div>
-            </div>
+            </div> -->
         </header>
-            <div class="scroll-panel">
+        <div class="scroll-panel">
             <a class="scroll-panel__logo" href="/">
                 <svg>
                     <use xlink:href="#logo"></use>

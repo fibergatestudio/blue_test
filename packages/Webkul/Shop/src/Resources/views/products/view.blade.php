@@ -11,13 +11,29 @@
 @stop
 
 @section('content-wrapper')
-
+<div class="page__content">
     {!! view_render_event('bagisto.shop.products.view.before', ['product' => $product]) !!}
 
     <section class="product-detail">
 
         <div class="layouter">
             <product-view>
+                        <ul class="breadcrumb page__breadcrumb">
+                            <li class="breadcrumb__item">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="breadcrumb__item">
+                                <a href="#">Shop</a>
+                            </li>
+                            <li class="breadcrumb__item">
+                                <a href="product-card.html">{{ $product->name }}</a>
+                            </li>
+                        </ul>
+                        <a class="back-button page__back-button" href="#">
+                            <svg>
+                                <use xlink:href="#long-arrow"></use>
+                            </svg>
+                        </a>
                 <div class="form-container">
                     @csrf()
 
@@ -29,17 +45,8 @@
                     <input type="hidden" name="customer_id" value="{{ $customer->id }}" class="input value1">
                     @endif
 
-                    @include ('shop::products.view.gallery')
 
                     <div class="details">
-
-                        <div class="product-heading">
-                            <span>{{ $product->name }}</span>
-                        </div>
-
-                        @include ('shop::products.review', ['product' => $product])
-
-                        @include ('shop::products.price', ['product' => $product])
 
 
                         <?php  
@@ -56,11 +63,11 @@
                             @else
 
                                 <!-- Current Loyality Points: <b>{{ $customer->points }}</b><br> -->
-                                Price in points: <b> 
+                                <!-- Price in points: <b>  -->
                                 <?php 
-                                //echo $points_price;
+
                                 
-                                echo number_format((float)$points_price, 2, '.', '');
+                                //echo number_format((float)$points_price, 2, '.', '');
                                 ?>
                                 </b><br>
                                 <input type="hidden" name="points" class="control quantity-change" value="0" min="0" max="<?php echo $points_price; ?>" placeholder="Enter Amount of Points">
@@ -72,34 +79,86 @@
                             @endif
 
                         </div>
+                        <section style="padding-top: 70px !important; outline: none; box-shadow: none;" class="product-card">
+                            <div id="app" class="product-card__row">
+                                <div class="product-card__image">
+                                @include ('shop::products.view.gallery')
+                                    <!-- <picture>
+                                        <source srcset="img/tmp/goods/coffee-product-card.webp" type="image/webp">
+                                        <source srcset="img/tmp/goods/coffee-product-card.png" type="image/png">
+                                        <img src="img/tmp/goods/coffee-product-card.png" alt="Picture alt text">
+                                    </picture> -->
+                                </div>
 
-                        @include ('shop::products.view.stock', ['product' => $product])
+                                <div class="product-card__info">
+                                    <h1 class="product-card__title">{{ $product->name }}</h1>
+                                    <div class="product-card__price">@include ('shop::products.price', ['product' => $product])</div>
+                                    <div id="total_price" style="font-size: 20px; color: #64dbd0; margin-top: -20px;" class="product-card__price"></div>
+                                    @include ('shop::products.view.stock', ['product' => $product])
+                                    <!-- <div class="product-card__quantity"><span>Quantity: </span>
+                                        <select class="js-init-styleselect" name="quantity_gram" value="250">
+                                            <option value="250" selected>250 g</option>
+                                            <option value="500">500 g</option>
+                                            <option value="1000">1000 g</option>
+                                        </select>
+                                    </div> -->
+                                    <?php 
+                                    
+                                    $prod_price = $product->price;
 
-                        {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!} 
+                                    //echo $prod_price;
+                                    
+                                    ?>
 
-                        <div class="description">
+                                    <input id="price" type="hidden" value="<?php echo $prod_price ?>">
+
+                                    
+                                    {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
+
+                                    <div class="quantity control-group" :class="[errors.has('quantity') ? 'has-error' : '']">
+
+                                        <label id="test" class="required">{{ __('shop::app.products.quantity') }}</label>
+
+                                        <input class="control quantity-change" value="-" style="width: 35px; border-radius: 3px 0px 0px 3px;" onclick="updateQunatity('remove')" readonly>
+
+                                        <input name="quantity" id="quantity" class="control quantity-change" value="1" v-validate="'required|numeric|min_value:1'" style="width: 60px; position: relative; margin-left: -4px; margin-right: -4px; border-right: none;border-left: none; border-radius: 0px;" data-vv-as="&quot;{{ __('shop::app.products.quantity') }}&quot;" readonly>
+
+                                        <input class="control quantity-change" value="+" style="width: 35px; padding: 0 12px; border-radius: 0px 3px 3px 0px;" onclick=updateQunatity('add') readonly>
+
+                                        <span class="control-error" v-if="errors.has('quantity')">@{{ errors.first('quantity') }}</span>
+                                    </div>
+
+                                    {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
+
+                                    @include ('shop::products.view.configurable-options')
+
+                                    <ul class="product-card__composition">
+                                        <li><strong>90% Arabica:</strong><span>Brasilia, Columbia, Guatemala.</span>
+                                        </li>
+                                        <li><strong>10% Robusta:</strong><span>Monsooned</span>
+                                        </li>
+                                    </ul>
+                                    <div class="product-card__notes">
+                                        <h2>Notes: </h2> <span>Honey, Dark chocolate, Hazelnut</span>
+                                    </div>
+                                    <div class="product-card__buttons">
+                                        <!-- <a href="{{ route('cart.add', $product->product_id) }}"><button class="button button_blue">Add to Cart</button></a>
+                                        <a href="{{ url('buynow/'.$product->product_id) }}"><button class="button button_blue">Buy</button></a> -->
+                                        <!-- @include ('shop::products.buy-now') -->
+                                        @include ('shop::products.add-to-cart')
+                                        <button class="button button_transparent">Add to Blue Box</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!}  -->
+
+                        <!-- <div class="description">
                             {!! $product->short_description !!}
-                        </div>
+                        </div> -->
 
-                        {!! view_render_event('bagisto.shop.products.view.short_description.after', ['product' => $product]) !!}
+                        <!-- {!! view_render_event('bagisto.shop.products.view.short_description.after', ['product' => $product]) !!} -->
 
-
-                        {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
-
-                        <div class="quantity control-group" :class="[errors.has('quantity') ? 'has-error' : '']">
-
-                            <label class="required">{{ __('shop::app.products.quantity') }}</label>
-
-                            <input class="control quantity-change" value="-" style="width: 35px; border-radius: 3px 0px 0px 3px;" onclick="updateQunatity('remove')" readonly>
-
-                            <input name="quantity" id="quantity" class="control quantity-change" value="1" v-validate="'required|numeric|min_value:1'" style="width: 60px; position: relative; margin-left: -4px; margin-right: -4px; border-right: none;border-left: none; border-radius: 0px;" data-vv-as="&quot;{{ __('shop::app.products.quantity') }}&quot;" readonly>
-
-                            <input class="control quantity-change" value="+" style="width: 35px; padding: 0 12px; border-radius: 0px 3px 3px 0px;" onclick=updateQunatity('add') readonly>
-
-                            <span class="control-error" v-if="errors.has('quantity')">@{{ errors.first('quantity') }}</span>
-                        </div>
-
-                        {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
 
                         @if ($product->type == 'configurable')
                             <input type="hidden" value="true" name="is_configurable">
@@ -107,39 +166,77 @@
                             <input type="hidden" value="false" name="is_configurable">
                         @endif
 
-                        @include ('shop::products.view.configurable-options')
+                        <!-- @include ('shop::products.view.attributes') -->
 
-                        {!! view_render_event('bagisto.shop.products.view.description.before', ['product' => $product]) !!}
-
-                        <accordian :title="'{{ __('shop::app.products.description') }}'" :active="true">
-                            <div slot="header">
-                                {{ __('shop::app.products.description') }}
-                                <i class="icon expand-icon right"></i>
-                            </div>
-
-                            <div slot="body">
-                                <div class="full-description">
-                                    {!! $product->description !!}
-                                </div>
-                            </div>
-                        </accordian>
-
-                        {!! view_render_event('bagisto.shop.products.view.description.before', ['product' => $product]) !!}
-
-                        @include ('shop::products.view.attributes')
-
-                        @include ('shop::products.view.reviews')
+                        <!-- @include ('shop::products.view.reviews') -->
                     </div>
                 </div>
             </product-view>
+            <div class="product-card__details product-details">
+                    <h2 class="product-details__title"><span>Product Details</span>
+                    </h2>
+                    <br>
+                    <ul class="product-details__list">
+                    <!-- {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!} 
+
+                    <div style="overflow-wrap: break-word;" class="description"> -->
+                        {!! $product->short_description !!}
+                    <!-- </div>
+
+                    {!! view_render_event('bagisto.shop.products.view.short_description.after', ['product' => $product]) !!} -->
+                    </ul>
+                </div>
         </div>
 
-        @include ('shop::products.view.related-products')
-
-        @include ('shop::products.view.up-sells')
+        <div class="goods goods_white">
+            <div class="container goods__container">
+                <h2 class="goods__title">You might also like</h2>
+                    <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
+                            <div class="swiper-wrapper">
+                            @include ('shop::products.view.related-products')
+                            </div>
+                        <div class="swiper-pagination goods__pagination"></div>
+                    </div>
+                <button class="slider-control slider-control_prev goods__control goods__control_prev">
+                    <svg>
+                        <use xlink:href="#slider-arrow"></use>
+                    </svg>
+                </button>
+                <button class="slider-control slider-control_next goods__control goods__control_next">
+                    <svg>
+                        <use xlink:href="#slider-arrow"></use>
+                    </svg>
+                </button>
+            </div>
+        </div> 
+        <div class="goods">
+            <div class="container goods__container">
+                <h2 class="goods__title">Reccomended</h2>
+                    <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
+                        <div class="swiper-wrapper">
+                            @include ('shop::products.view.up-sells')
+                        </div>
+                        <div class="swiper-pagination goods__pagination"></div>
+                    </div>
+                <button class="slider-control slider-control_prev goods__control goods__control_prev">
+                    <svg>
+                        <use xlink:href="#slider-arrow"></use>
+                    </svg>
+                </button>
+                <button class="slider-control slider-control_next goods__control goods__control_next">
+                    <svg>
+                        <use xlink:href="#slider-arrow"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
 
 
     </section>
+</div>
+
+
+
 
     {!! view_render_event('bagisto.shop.products.view.after', ['product' => $product]) !!}
 @endsection
@@ -154,6 +251,50 @@
 
         </form>
     </script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <script>
+
+// function displayVals() {
+//   var singleValues = $( "#single" ).val();
+//   var multipleValues = $( "#multiple" ).val() || [];
+//   // When using jQuery 3:
+//   // var multipleValues = $( "#multiple" ).val();
+//   $( "p" ).html( "<b>Single:</b> " + singleValues +
+//     " <b>Multiple:</b> " + multipleValues.join( ", " ) );
+// }
+    
+    $(document).ready(function(){
+        var current_price = $("#final_price").text();
+        current_price = current_price.replace(/[^0-9\.]+/g, "");
+        var quant = $( "#quantity" ).val();
+        var total_price = current_price * quant;
+
+        $('#total_price,#control').text("Total HUF " + total_price);
+            $(".quantity-change").click(function(){
+                var current_price = $("#final_price").text();
+                current_price = current_price.replace(/[^0-9\.]+/g, "");
+                var quant = $( "#quantity" ).val();
+                var total_price = current_price * quant;
+
+                    $('#total_price').text("Total HUF " + total_price);
+                    console.log(total_price);
+            });
+
+            
+            $('.super').on('change', function() {
+                var current_price = $("#final_price").text();
+                current_price = current_price.replace(/[^0-9\.]+/g, "");
+                var quant = $( "#quantity" ).val();
+                var total_price = current_price * quant;
+
+                    $('#total_price').text("Total HUF " + total_price);
+                    console.log(total_price);
+            });
+    });
+
+
+    </script>
+
 
     <script>
 

@@ -13,10 +13,10 @@
 
     <div class="attached-products-wrapper mt-50">
 
-        <div class="title">
+        <!-- <div class="title">
             {{ __('shop::app.products.cross-sell-title') }}
              <span class="border-bottom"></span>
-        </div>
+        </div> -->
 
         <div class="product-grid-4">
             @foreach($products as $product)

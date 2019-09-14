@@ -16,11 +16,12 @@
                 <input type="hidden" id="selected_configurable_option" name="selected_configurable_option" :value="selectedProductId">
 
                 <div v-for='(attribute, index) in childAttributes' class="attribute control-group" :class="[errors.has('super_attribute[' + attribute.id + ']') ? 'has-error' : '']">
-                    <label class="required">@{{ attribute.label }}</label>
+                    <label class="required product-card__quantity">@{{ attribute.label }}</label>
 
                     <span v-if="! attribute.swatch_type || attribute.swatch_type == '' || attribute.swatch_type == 'dropdown'">
                         <select
-                            class="control"
+                            class="control super"
+                            style="width: auto;"
                             v-validate="'required'"
                             :name="['super_attribute[' + attribute.id + ']']"
                             :disabled="attribute.disabled"

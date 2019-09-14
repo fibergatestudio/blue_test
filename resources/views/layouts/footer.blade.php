@@ -29,22 +29,22 @@
                     <h2 class="footer__title">Learn</h2>
                     <ul class="footer__nav">
                         <li>
-                            <a href="about-us.html">About Us</a>
+                            <a href="{{ url('/aboutus') }}">About Us</a>
                         </li>
                         <li>
-                            <a href="about-bb-group.html">About BB Group</a>
+                            <a href="{{ url('/aboutbb') }}">About BB Group</a>
                         </li>
                         <li>
-                            <a href="shipping.html">Payment &amp; Shipping</a>
+                            <a href="{{ url('/shipping') }}">Payment &amp; Shipping</a>
                         </li>
                         <li>
-                            <a href="tutorials.html">Tutorial</a>
+                            <a href="{{ url('/tutorials') }}">Tutorial</a>
                         </li>
                         <li>
                             <a href="faq.html">FAQ</a>
                         </li>
                         <li>
-                            <a href="#">Contacts</a>
+                            <a href="{{ url('/contacts') }}">Contacts</a>
                         </li>
                     </ul>
                 </div>
@@ -67,7 +67,7 @@
                             <a href="#">For Businesses</a>
                         </li>
                         <li>
-                            <a href="#">Loyalty Program</a>
+                            <a href="{{ url('/loyality') }}">Loyalty Program</a>
                         </li>
                     </ul>
                 </div>
@@ -92,7 +92,7 @@
                         </li>
                     </ul>
                     <div class="footer__socials">
-                        <h2>Follow us:</h2>
+                        <h2 style="color: white;">Follow us:</h2>
                         <ul>
                             <li>
                                 <a href="#">
@@ -120,7 +120,7 @@
                         <svg class="subscribe-card__icon">
                             <use xlink:href="#email"></use>
                         </svg>
-                        <h2 class="subscribe-card__title">Want to hear coffee news from us?</h2>
+                        <h2 style="color: white;" class="subscribe-card__title">Want to hear coffee news from us?</h2>
                         <input class="subscribe-card__email" type="email" name="email" required placeholder="Enter your email">
                         <input class="subscribe-card__button button button_white" type="submit" value="Subscribe">
                     </form>
@@ -135,7 +135,7 @@
             </div>
         </footer>
         <div class="bb-floating">
-            <a class="bb-floating__button" href="#"><span>BLUE BOX</span>
+            <a style="color: white;" class="bb-floating__button" href="#"><span>BLUE BOX</span>
             </a>
         </div>
     </div>

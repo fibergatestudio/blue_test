@@ -10,7 +10,7 @@
 
     <product-gallery></product-gallery>
 
-    @include ('shop::products.view.product-add')
+    <!-- @include ('shop::products.view.product-add') -->
 
 </div>
 
@@ -21,7 +21,7 @@
     <script type="text/x-template" id="product-gallery-template">
         <div>
 
-            <ul class="thumb-list">
+            <ul style="display:none;" class="thumb-list">
                 <li class="gallery-control top" @click="moveThumbs('top')" v-if="(thumbs.length > 4) && this.is_move.up">
                     <span class="overlay"></span>
                     <i class="icon arrow-up-white-icon"></i>
@@ -37,8 +37,8 @@
                 </li>
             </ul>
 
-            <div class="product-hero-image" id="product-hero-image">
-                <img :src="currentLargeImageUrl" id="pro-img" :data-image="currentOriginalImageUrl"/>
+            <div style="min-height: 600px; max-width: 400px;" lass="product-hero-image" id="product-hero-image">
+                <img style="min-height: 600px;" :src="currentLargeImageUrl" id="pro-img" :data-image="currentOriginalImageUrl"/>
 
                 @auth('customer')
                     <a class="add-to-wishlist" href="{{ route('customer.wishlist.add', $product->product_id) }}">
@@ -108,7 +108,8 @@
 
                     this.currentOriginalImageUrl = image.original_image_url;
 
-                    $('img#pro-img').data('zoom-image', image.original_image_url).ezPlus();
+                    //Disabled Image Zoom
+                    //$('img#pro-img').data('zoom-image', image.original_image_url).ezPlus();
                 },
 
                 moveThumbs: function(direction) {
@@ -152,7 +153,8 @@
 
     <script>
         $(document).ready(function() {
-            $('img#pro-img').data('zoom-image', $('img#pro-img').data('image')).ezPlus();
+             //Disabled Image Zoom
+            //$('img#pro-img').data('zoom-image', $('img#pro-img').data('image')).ezPlus();
 
             $(document).mousemove(function(event) {
                 if ($('.add-to-wishlist').length) {

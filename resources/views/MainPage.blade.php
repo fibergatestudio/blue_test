@@ -257,7 +257,7 @@
                         The best <span class="font-light">from our shop</span>
                     </h2>
                     <div class="best__list js-init-slider swiper-container" data-options="bestGoods">
-                        <div class="swiper-wrapper">
+                        <div style="height: auto;"  class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="product-tile product-tile_has-shadow">
                                     <div class="product-tile__content">

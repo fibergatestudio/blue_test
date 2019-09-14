@@ -36,16 +36,57 @@
                         </li>
                     </ul>
                 </div>
-                <a class="header__cart cart-link cart-link_main" href="shopping-cart.html">
-                    <svg class="cart-link__icon">
-                        <use xlink:href="#shopping-bag"></use>
-                    </svg><span class="cart-link__counter">2</span>
-                </a>
+                <div class="header__cart">
+                    <button class="cart-btn js-box-trigger cart-link_main" data-target-id="cartModal">
+                        <svg class="cart-btn__icon">
+                            <use xlink:href="#shopping-bag"></use>
+                        </svg><span class="cart-btn__counter">2</span>
+                    </button>
+                </div>
                 <div class="header__auth">
                     <a href="newsletter-subscription.html">Subscribe</a>
                     <button class="js-open-popup" data-popup-id="signin">Sign in</button>
                 </div>
             </div>
+            <!-- cart popup-->
+            <form class="cart-modal" id="cartModal">
+                <button class="cart-modal__close js-close-modal" type="button">
+                    <svg>
+                        <use xlink:href="#rounded-close"></use>
+                    </svg>
+                </button>
+                <h2 class="cart-modal__header">Cart (<span id="cartItems">2</span>)</h2>
+                <div class="cart-modal__list">
+                    <div class="cart-sm-product cart-modal__item">
+                        <div class="cart-sm-product__image">
+                            <img src="img/tmp/goods/green-sm.png" alt="Blue Bird Blend ">
+                        </div>
+                        <h3 class="cart-sm-product__title">Blue Bird Blend </h3><span class="cart-sm-product__price">2150 HUF</span>
+                    </div>
+                    <div class="cart-sm-product cart-modal__item">
+                        <div class="cart-sm-product__image">
+                            <img src="img/tmp/goods/coffee-machine.png" alt="Coffee Machine">
+                        </div>
+                        <h3 class="cart-sm-product__title">Coffee Machine</h3><span class="cart-sm-product__price">10 000 HUF</span>
+                    </div>
+                    <div class="cart-sm-product cart-modal__item">
+                        <div class="cart-sm-product__image">
+                            <img src="img/tmp/goods/cup.png" alt="Cup">
+                        </div>
+                        <h3 class="cart-sm-product__title">Cup</h3><span class="cart-sm-product__price">3 000 HUF</span>
+                    </div>
+                    <div class="cart-modal__price">
+                        <div class="cart-modal__row"><span class="cart-modal__label">Shipping:</span><span>Free</span>
+                        </div>
+                        <div class="cart-modal__row"><span class="cart-modal__label">Total:</span><span class="cart-modal__total">19 300 HUF</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-modal__buttons">
+                    <input class="button button_blue cart-modal__submit" type="submit" value="Make a purchase">
+                    <a class="cart-modal__back" href="#">Back to product list</a>
+                </div>
+            </form>
             <div class="header__row js-block-cnt">
                 <div class="header__content">
                     <div class="banner">
@@ -119,39 +160,40 @@
 
 @section('content')
 
-<main>
-    <section class="lets-work js-block-cnt">
-        <div class="container">
-            <h2 class="title color-blue lets-work__title">We are open to cooperation</h2>
-            <p class="lets-work__note">If you have any questions or comments, write to us!</p>
-            <form class="lets-work__form form">
-                <label class="form__field field">
-                    <svg class="field__icon field__icon_user">
-                        <use xlink:href="#user"></use>
-                    </svg>
-                    <input class="field__input" type="text" name="name" placeholder="Name" required>
-                </label>
-                <label class="form__field field">
-                    <svg class="field__icon field__icon_phone-call">
-                        <use xlink:href="#phone-call"></use>
-                    </svg>
-                    <input class="field__input" type="tel" name="tel" placeholder="Phone" required>
-                </label>
-                <label class="form__field field">
-                    <svg class="field__icon field__icon_envelope">
-                        <use xlink:href="#envelope"></use>
-                    </svg>
-                    <input class="field__input" type="email" name="email" placeholder="Email" required>
-                </label>
-                <label class="form__field field">
-                    <svg class="field__icon field__icon_comment">
-                        <use xlink:href="#chat-comment"></use>
-                    </svg>
-                    <input class="field__input" type="text" name="comments" placeholder="Comments" required>
-                </label>
-                <input class="button button_blue" type="submit" value="Send">
-            </form>
-        </div>
-    </section>
-</main>
+        <main>
+            <section class="lets-work js-block-cnt">
+                <div class="container">
+                    <h2 class="title color-blue lets-work__title">We are open to cooperation</h2>
+                    <p class="lets-work__note">If you have any questions or comments, write to us!</p>
+                    <form class="lets-work__form form">
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_user">
+                                <use xlink:href="#user"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="name" placeholder="Name" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_phone-call">
+                                <use xlink:href="#phone-call"></use>
+                            </svg>
+                            <input class="field__input" type="tel" name="tel" placeholder="Phone" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_envelope">
+                                <use xlink:href="#envelope"></use>
+                            </svg>
+                            <input class="field__input" type="email" name="email" placeholder="Email" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_comment">
+                                <use xlink:href="#chat-comment"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="comments" placeholder="Comments" required>
+                        </label>
+                        <input class="button button_blue" type="submit" value="Send">
+                    </form>
+                </div>
+            </section>
+        </main>
+        
 @endsection
