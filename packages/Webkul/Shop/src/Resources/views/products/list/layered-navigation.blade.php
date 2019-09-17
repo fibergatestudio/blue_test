@@ -1,6 +1,6 @@
 @inject ('attributeRepository', 'Webkul\Attribute\Repositories\AttributeRepository')
 
-<div class="layered-filter-wrapper">
+<div style="position: initial;" class="layered-filter-wrapper sidebar"> <!-- sidebar -->
 
     {!! view_render_event('bagisto.shop.products.list.layered-nagigation.before') !!}
 
@@ -14,9 +14,9 @@
     <script type="text/x-template" id="layered-navigation-template">
         <div>
 
-            <div class="filter-title">
+            <!-- <div style="border-bottom:none;" class="filter-title">
                 {{ __('shop::app.products.layered-nav-title') }}
-            </div>
+            </div> -->
 
             <div class="filter-content">
 
@@ -31,9 +31,45 @@
     </script>
 
     <script type="text/x-template" id="filter-attribute-item-template">
-        <div class="filter-attributes-item" :class="[active ? 'active' : '']">
 
-            <div class="filter-attributes-title" @click="active = !active">
+
+
+        <div style="border-bottom:none;" class="filter-attributes-item filters__category" :class="[active ? 'active' : '']">
+
+                <!-- <aside style="padding-top:150px;" class="sidebar" id="sidebar">
+                    <div class="filters">
+                        <div class="filters__category">
+                            <div class="filters__title" role="button" tabindex="0" aria-label="Show/hide category">Roast
+                                <svg>
+                                    <use xlink:href="#arrow-down"></use>
+                                </svg>
+                            </div>
+                            <ul class="filters__list">
+                                <li>
+                                    <div class="input-checkbox filters__checkbox">
+                                        <input class="input-checkbox__real" id="roastOption0" type="checkbox" name="roast">
+                                        <label class="input-checkbox__label" for="roastOption0">LIGHT</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="input-checkbox filters__checkbox">
+                                        <input class="input-checkbox__real" id="roastOption1" type="checkbox" name="roast">
+                                        <label class="input-checkbox__label" for="roastOption1">MEDIUM</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="input-checkbox filters__checkbox">
+                                        <input class="input-checkbox__real" id="roastOption2" type="checkbox" name="roast">
+                                        <label class="input-checkbox__label" for="roastOption2">DARK</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside> -->
+
+
+            <div class="filter-attributes-title filters__title" @click="active = !active">
                 @{{ attribute.name ? attribute.name : attribute.admin_name }}
 
                 <div class="pull-right">
@@ -42,15 +78,18 @@
                     </span>
 
                     <i class="icon" :class="[active ? 'arrow-up-icon' : 'arrow-down-icon']"></i>
+                    <!-- <svg>
+                        <use xlink:href="#arrow-down"></use>
+                    </svg> -->
                 </div>
             </div>
 
             <div class="filter-attributes-content">
 
                 <ol class="items" v-if="attribute.type != 'price'">
-                    <li class="item" v-for='(option, index) in attribute.options'>
+                    <li class="item input-checkbox filters__checkbox" v-for='(option, index) in attribute.options'>
 
-                        <span class="checkbox">
+                        <span class="checkbox input-checkbox__label">
                             <input type="checkbox" :id="option.id" v-bind:value="option.id" v-model="appliedFilters" @change="addFilter($event)"/>
                             <label class="checkbox-view" :for="option.id"></label>
                             @{{ option.label ? option.label : option.admin_name }}

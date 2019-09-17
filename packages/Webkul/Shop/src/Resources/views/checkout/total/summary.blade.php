@@ -1,4 +1,4 @@
-<div class="order-summary">
+<div style="display:none;" class="order-summary">
     <h3>{{ __('shop::app.checkout.total.order-summary') }}</h3>
 
     <div class="item-detail">

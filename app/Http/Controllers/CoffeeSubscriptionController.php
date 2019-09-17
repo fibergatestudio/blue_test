@@ -38,12 +38,19 @@ class CoffeeSubscriptionController extends Controller
             return view('CoffeeSubscription',[
                 'customer' => $customer
             ]);
-
         }
+    }
 
-        //dd($customer);
-        
+    public function payment(Request $request){
 
+        $subscription_name = $request->subscription_name;
+
+
+        return view('CoffeeSubscriptionPayment',
+        [
+            'subscription_name' => $subscription_name,
+
+        ]);
     }
 
     public function subscribe(Request $request){
@@ -128,12 +135,7 @@ class CoffeeSubscriptionController extends Controller
             return Redirect::back()->withErrors('Subscription Changed');
 
         }
-
-       
-
-
         //return back();
-
     }
 
 

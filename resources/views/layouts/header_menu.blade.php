@@ -7,7 +7,7 @@
         </button>
         <a class="header__logo" href="/">
             <svg>
-                <use xlink:href="#logo"></use>
+                <use style="color: #64b2db;" xlink:href="#logo"></use>
             </svg>
         </a>
         <nav class="nav header__nav nav_main">

@@ -8,174 +8,11 @@
     @inject ('productImageHelper', 'Webkul\Product\Helpers\ProductImage')
     <section class="">
         @if ($cart)
-            <!-- <div class="title">
+            <div class="title">
                 {{ __('shop::app.checkout.cart.title') }}
-            </div> -->
-
-            <div class="page">
-                <div class="page__content">
-                    <div class="container">
-                        <ul class="breadcrumb page__breadcrumb">
-                            <li class="breadcrumb__item">
-                                <a href="/">Home</a>
-                            </li>
-                            <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
-                            </li>
-                        </ul>
-                        <a class="back-button page__back-button" href="#">
-                            <svg>
-                                <use xlink:href="#long-arrow"></use>
-                            </svg>
-                        </a>
-                        <h1 class="page__title">Cart</h1>
-                        <div class="cart">
-                            <form class="cart__table" action="{{ route('shop.checkout.cart.update') }}" method="POST" @submit.prevent="onSubmit">
-                            @csrf
-                                <div class="cart__row cart__row_header">
-                                    <div class="cart__col cart__col_cat">Product</div>
-                                    <div class="cart__col cart__col_price">Price</div>
-                                    <div class="cart__col cart__col_quantity">Quantity</div>
-                                    <div class="cart__col cart__col_total">Total</div>
-                                </div>
-                                @foreach ($cart->items as $key => $item)
-
-                                <?php
-                                    if ($item->type == "configurable")
-                                        $productBaseImage = $productImageHelper->getProductBaseImage($item->child->product);
-                                    else
-                                        $productBaseImage = $productImageHelper->getProductBaseImage($item->product);
-                                ?>
-
-                                <div class="cart__row cart__row_product">
-
-                                    <div class="cart__col cart__col_remove">
-                                        <span class="remove">
-                                            <button class="cart__remove-btn" type="button">
-                                                <a href="{{ route('shop.checkout.cart.remove', $item->id) }}" onclick="removeLink('Do you really want to do this?')"> 
-                                                    <svg>
-                                                        <use style="color: #64b2db;" xlink:href="#close"></use>
-                                                    </svg>
-                                                </a>
-                                            </button>
-                                        </span>
-                                    </div>
-
-                                    <div class="cart__col cart__col_image">
-                                        <picture>
-                                            <source srcset="{{ $productBaseImage['medium_image_url'] }}" type="image/webp">
-                                            <source srcset="{{ $productBaseImage['medium_image_url'] }}" type="image/png">
-                                            <img src="{{ $productBaseImage['medium_image_url'] }}" alt="Picture alt text">
-                                        </picture>
-                                    </div>
-
-                                    <div class="cart__col cart__col_info">
-                                        <div>
-                                            <h2 class="cart__product-title">{{ $item->product->name }}</h2>
-                                            <p class="cart__product-desc">Spice, Nutty, Dark chocolate, Cocoa, Bitter sweet</p>
-                                            <p class="cart__product-mob-price">{{ core()->currency($item->base_price) }}</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="cart__col cart__col_price">
-                                        <span class="cart__product-price">{{ core()->currency($item->base_price) }}</span>
-                                    </div>
-
-                                    <div class="cart__col cart__col_quantity">
-                                        <div class="input-number cart__product-quantity">
-                                            <input type="text" class="control quantity-change input-number__value" id="cart-quantity{{ $key }}" v-validate="'required|numeric|min_value:1'" name="qty[{{$item->id}}]" value="{{ $item->quantity }}" data-vv-as="&quot;{{ __('shop::app.checkout.cart.quantity.quantity') }}&quot;" style="border-right: none; border-left: none; border-radius: 0px;" readonly>
-                                            
-                                            <div class="input-number__controls">
-                                                <button class="control quantity-change input-number__button" value="+" style="width: 35px; padding: 0 12px; border-radius: 0px 3px 3px 0px;" onclick="updateCartQunatity('add', {{$key}})" readonly>+</button>
-                                                <button class="control quantity-change input-number__button" value="-" style="width: 35px; border-radius: 3px 0px 0px 3px;" onclick="updateCartQunatity('remove', {{$key}})" readonly>-</button>
-                                            </div>
-                                        
-                                        </div>
-                                    </div>
-
-                                    <?php 
-                                    
-                                    $prod_quan = $item->quantity;
-                                    $prod_price = $item->price;
-                                    $prod_sum = $prod_quan * $prod_price;
-                                    
-                                    ?>
-
-
-                                    <div class="cart__col cart__col_total">
-                                        <span class="cart__product-price">{{ core()->currency($prod_sum) }}</span>
-                                    </div>
-
-
-                                </div>
-                                @endforeach
-                                <!-- <div class="cart__row cart__row_product">
-                                    <div class="cart__col cart__col_remove">
-                                        <button class="cart__remove-btn" type="button">
-                                            <svg>
-                                                <use xlink:href="#close"></use>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <div class="cart__col cart__col_image">
-                                        <picture>
-                                            <source srcset="img/tmp/goods/blue.webp" type="image/webp">
-                                            <source srcset="img/tmp/goods/blue.png" type="image/png">
-                                            <img src="img/tmp/goods/blue.png" alt="Picture alt text">
-                                        </picture>
-                                    </div>
-                                    <div class="cart__col cart__col_info">
-                                        <div>
-                                            <h2 class="cart__product-title">Ethiopia</h2>
-                                            <p class="cart__product-desc">Spice, Nutty, Dark chocolate, Cocoa, Bitter sweet</p>
-                                            <p class="cart__product-mob-price">1&nbsp;x&nbsp;3300 HUF</p>
-                                        </div>
-                                    </div>
-                                    <div class="cart__col cart__col_price"><span class="cart__product-price">3 300 HUF</span>
-                                    </div>
-                                    <div class="cart__col cart__col_quantity">
-                                        <div class="input-number cart__product-quantity">
-                                            <input class="input-number__value" type="text" name="quantity-1" data-min="1" value="1">
-                                            <div class="input-number__controls">
-                                                <button class="input-number__button" type="button" data-action="1">+</button>
-                                                <button class="input-number__button" type="button" data-action="-1">-</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cart__col cart__col_total"><span class="cart__product-price">3 300 HUF</span>
-                                    </div>
-                                </div> -->
-                                <div class="cart__row cart__row_total">
-                                    <div class="cart__coupon">
-                                        <div class="coupon">
-                                            <input class="coupon__input" type="text" name="coupon" placeholder="Coupon Code">
-                                            <button class="button button_blue coupon__button">Apply</button>
-                                        </div>
-                                    </div>
-                                    <div class="cart__total total">
-                                        <div class="total__container">
-                                            <div class="total__row">
-                                                <h3>Subtotal:</h3> <span id="subtotalSum">{{ core()->currency($cart->base_sub_total) }}</span>
-                                            </div>
-                                            <div class="total__row">
-                                                <h3>Total:</h3> <span id="totalSum">  {{ core()->currency($cart->base_grand_total) }} </span>
-                                            </div>
-                                        </div>
-                                        <!-- input.button.button_blue.total__button(type="submit", value="PROCEED TO CHECKOUT")-->
-                                        <!-- <a style="color:white;" class="button button_blue total__button" href="shopping-cart-step-1.html">PROCEED TO CHECKOUT</a> -->
-                                        <button type="submit" class="button button_blue total__button">{{ __('shop::app.checkout.cart.update-cart') }}</button>
-                                        @if (! cart()->hasError())
-                                        <a style="color:white;" class="button button_blue total__button" href="{{ route('shop.checkout.onepage.index') }}">{{ __('shop::app.checkout.cart.proceed-to-checkout') }}</a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <div style="display:none;" class="cart-content">
+            <div class="cart-content">
                 <div class="left-side">
                     <form action="{{ route('shop.checkout.cart.update') }}" method="POST" @submit.prevent="onSubmit">
 
@@ -347,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- include ('shop::products.view.cross-sells') --> 
+            @include ('shop::products.view.cross-sells')
 
         @else
 
@@ -398,25 +235,6 @@
 @endsection
 
 @push('scripts')
-
-
-<!-- <script>
-    $(document).ready(function(){
-        $(".quantity-change").click(function(){
-            var current_price = $("#final_price").text();
-            current_price = current_price.replace(/[^0-9\.]+/g, "");
-            var quant = $( "#quantity" ).val();
-            var total_price = current_price * quant;
-
-                $('#total_price').text("Total HUF " + total_price);
-                console.log(total_price);
-        });
-    });
-
-
-    </script> -->
-
-
     <script>
         function removeLink(message) {
             if (!confirm(message))

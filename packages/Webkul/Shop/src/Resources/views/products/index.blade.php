@@ -15,7 +15,7 @@
     <div class="main">
         {!! view_render_event('bagisto.shop.products.index.before', ['category' => $category]) !!}
 
-        <div class="category-container">
+        <div style="padding-top: 35px;" class="category-container">
 
             @if (in_array($category->display_mode, [null, 'products_only', 'products_and_description']))
                 @include ('shop::products.list.layered-navigation')
@@ -36,8 +36,13 @@
                     @endif
                 @endif
 
-                @if (in_array($category->display_mode, [null, 'products_only', 'products_and_description']))
-                    <?php $products = $productRepository->getAll($category->id); ?>
+                @if (in_array($category->display_mode, ['products_only', 'products_and_description']))
+                    <?php $products = $productRepository->getAll($category->id);
+                          //dd($products);
+                          //$locale = request()->get('locale') ?: app()->getLocale();
+                          //echo $locale;
+                          echo 'test';
+                    ?>
 
                     @if ($products->count())
 

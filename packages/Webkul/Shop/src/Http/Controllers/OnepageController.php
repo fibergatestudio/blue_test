@@ -244,12 +244,12 @@ class OnepageController extends Controller
             $percentage = $loyality_settings->payout_percentage;
 
             $points = $points_to_user->points;
-            $points_to_add = ($orderItem->price) * ($percentage / 100);
+            $points_to_add = ($cart->sub_total) * ($percentage / 100);
             $converted_points = floor($points_to_add);
             $item_price = $points + $converted_points; 
 
             DB::table('customers')
-            ->where('id', $data['customer_id'])
+            ->where('id', $cart['customer_id'])
             ->limit(1)
             ->update(['points' => $item_price ]);
         }

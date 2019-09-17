@@ -27,6 +27,8 @@ Route::get('/test', 'MenuController@test');
 
     //-- CoffeeSubscription --//
     Route::get('/coffeesubscription', 'CoffeeSubscriptionController@index');
+        //-- Coffee Subscription Payment --//
+        Route::get('/coffeesubscription/payment', 'CoffeeSubscriptionController@payment');
         //-- Coffee Subscription POST --//
         Route::post('/coffeesubscription/subscribe', 'CoffeeSubscriptionController@subscribe');
 

@@ -93,7 +93,13 @@
                                 <div class="product-card__info">
                                     <h1 class="product-card__title">{{ $product->name }}</h1>
                                     <div class="product-card__price">@include ('shop::products.price', ['product' => $product])</div>
-                                    <div id="total_price" style="font-size: 20px; color: #64dbd0; margin-top: -20px;" class="product-card__price"></div>
+
+                                    @if ($product->type == 'configurable')
+                                        <div id="total_price" style="font-size: 20px; color: #64dbd0; margin-top: -20px;" class="product-card__price"></div>
+                                    @else
+                                       
+                                    @endif
+
                                     @include ('shop::products.view.stock', ['product' => $product])
                                     <!-- <div class="product-card__quantity"><span>Quantity: </span>
                                         <select class="js-init-styleselect" name="quantity_gram" value="250">
@@ -253,16 +259,6 @@
     </script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
     <script>
-
-// function displayVals() {
-//   var singleValues = $( "#single" ).val();
-//   var multipleValues = $( "#multiple" ).val() || [];
-//   // When using jQuery 3:
-//   // var multipleValues = $( "#multiple" ).val();
-//   $( "p" ).html( "<b>Single:</b> " + singleValues +
-//     " <b>Multiple:</b> " + multipleValues.join( ", " ) );
-// }
-    
     $(document).ready(function(){
         var current_price = $("#final_price").text();
         current_price = current_price.replace(/[^0-9\.]+/g, "");

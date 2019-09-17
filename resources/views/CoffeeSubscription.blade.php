@@ -5,43 +5,9 @@
     <div class="header__top-panel">
         <button class="burger header__burger"><span class="burger__line"></span><span class="burger__line"></span><span class="burger__line"></span>
         </button>
-        <a class="header__logo" href="/">
-            <svg>
-                <use xlink:href="#logo"></use>
-            </svg>
-        </a>
+
         @include('layouts.header_menu')
-        <div class="header__lang-switcher lang lang_main">
-            <button class="lang__trigger">En
-                <svg>
-                    <use xlink:href="#arrow-down"></use>
-                </svg>
-            </button>
-            <ul class="lang__list">
-                <li class="lang__current">
-                    <button class="lang__trigger">En
-                        <svg>
-                            <use xlink:href="#arrow-down"></use>
-                        </svg>
-                    </button>
-                </li>
-                <li class="lang__option">
-                    <a href="#">Hu</a>
-                </li>
-                <li class="lang__option">
-                    <a href="#">En</a>
-                </li>
-            </ul>
-        </div>
-        <a class="header__cart cart-link cart-link_main" href="shopping-cart.html">
-            <svg class="cart-link__icon">
-                <use xlink:href="#shopping-bag"></use>
-            </svg><span class="cart-link__counter">2</span>
-        </a>
-        <div class="header__auth">
-            <a href="newsletter-subscription.html">Subscribe</a>
-            <button class="js-open-popup" data-popup-id="signin">Sign in</button>
-        </div>
+
     </div>
     <div class="header__row js-block-cnt">
         <div class="header__content">
@@ -91,7 +57,7 @@
 
 @section('content')
 <main>
-    <section class="plan js-block-cnt">
+    <section id="changeOrder" class="plan js-block-cnt">
         <div class="container">
             <h2 class="title title_center">Choose your subscription</h2>
             <ul class="plan__list">
@@ -162,6 +128,7 @@
                             </div>
                             @if(!empty($customer))
                             <input class="subscription-form__submit button button_blue" type="submit" value="subscribe">
+                            <a class="button button_blue" href="{{ url('/coffeesubscription/payment') }}">Pay</a>
                             @else
                             <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a>
                             @endif

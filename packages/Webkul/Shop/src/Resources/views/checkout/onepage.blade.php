@@ -11,8 +11,8 @@
 @push('scripts')
     <script type="text/x-template" id="checkout-template">
         <div id="checkout" class="checkout-process">
-            <div class="col-main">
-                <ul class="checkout-steps">
+            <div style="width:100%;" class="col-main">
+                <ul style="display:none;" class="checkout-steps">
                     <li class="active" :class="[completedStep >= 0 ? 'active' : '', completedStep > 0 ? 'completed' : '']" @click="navigateToStep(1)">
                         <div class="decorator address-info"></div>
                         <span>{{ __('shop::app.checkout.onepage.information') }}</span>
@@ -43,8 +43,8 @@
                 <div class="step-content information" v-show="currentStep == 1" id="address-section">
                     @include('shop::checkout.onepage.customer-info')
 
-                    <div class="button-group">
-                        <button type="button" class="btn btn-lg btn-primary" @click="validateForm('address-form')" :disabled="disable_button" id="checkout-address-continue-button">
+                    <div style="text-align: center;" class="button-group">
+                        <button type="button" class="button button_blue" @click="validateForm('address-form')" :disabled="disable_button" id="checkout-address-continue-button">
                             {{ __('shop::app.checkout.onepage.continue') }}
                         </button>
                     </div>
@@ -53,19 +53,19 @@
                 <div class="step-content shipping" v-show="currentStep == 2" id="shipping-section">
                     <shipping-section v-if="currentStep == 2" @onShippingMethodSelected="shippingMethodSelected($event)"></shipping-section>
 
-                    <div class="button-group">
-                        <button type="button" class="btn btn-lg btn-primary" @click="validateForm('shipping-form')" :disabled="disable_button" id="checkout-shipping-continue-button">
+                    <div style="text-align: center;" class="button-group">
+                        <button type="button" class="button button_blue" @click="validateForm('shipping-form')" :disabled="disable_button" id="checkout-shipping-continue-button">
                             {{ __('shop::app.checkout.onepage.continue') }}
                         </button>
 
                     </div>
                 </div>
 
-                <div class="step-content payment" v-show="currentStep == 3" id="payment-section">
+                <div style="display: block;" class="step-content payment" v-show="currentStep == 3" id="payment-section">
                     <payment-section v-if="currentStep == 3" @onPaymentMethodSelected="paymentMethodSelected($event)"></payment-section>
 
-                    <div class="button-group">
-                        <button type="button" class="btn btn-lg btn-primary" @click="validateForm('payment-form')" :disabled="disable_button" id="checkout-payment-continue-button">
+                    <div style="text-align: center;"  class="button-group">
+                        <button type="button" class="button button_blue" @click="validateForm('payment-form')" :disabled="disable_button" id="checkout-payment-continue-button">
                             {{ __('shop::app.checkout.onepage.continue') }}
                         </button>
                     </div>
@@ -84,16 +84,16 @@
                     </review-section>
 
                     <div class="button-group">
-                        <button type="button" class="btn btn-lg btn-primary" @click="placeOrder()" :disabled="disable_button" id="checkout-place-order-button">
+                        <button type="button" class="button button_blue" @click="placeOrder()" :disabled="disable_button" id="checkout-place-order-button">
                             {{ __('shop::app.checkout.onepage.place-order') }}
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="col-right" v-show="currentStep != 4">
+            <!-- <div class="col-right" v-show="currentStep != 4">
                 <summary-section :key="summeryComponentKey"></summary-section>
-            </div>
+            </div> -->
         </div>
     </script>
 
@@ -192,10 +192,13 @@
                     this.$validator.validateAll(scope).then(function (result) {
                         if (result) {
                             if (scope == 'address-form') {
+
                                 this_this.saveAddress();
                             } else if (scope == 'shipping-form') {
+                                
                                 this_this.saveShipping();
                             } else if (scope == 'payment-form') {
+
                                 this_this.savePayment();
                             }
                         }
