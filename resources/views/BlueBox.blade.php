@@ -16,14 +16,35 @@
             <div class="page page_has-filter">
                 <div class="page__content page__content_bluebox">
                     <div class="container page__container page__container_bluebox">
-                        <ul class="breadcrumb page__breadcrumb">
+                        <!-- <ul class="breadcrumb page__breadcrumb">
                             <li class="breadcrumb__item">
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
                                 <a href="#">Box creator</a>
                             </li>
+                        </ul> -->
+
+                        <!-- Dynamic breadcrumbs -->
+                        <ul class="breadcrumb page__breadcrumb">
+                            <li class="breadcrumb__item">
+                                <a href="/">Home</a>
+                            </li>                
+                        <?php $link = "" ?>
+                        @for($i = 1; $i <= count(Request::segments()); $i++)
+                            @if($i < count(Request::segments()) & $i > 0)
+                            <?php $link .= "/" . Request::segment($i); ?>
+                            <li class="breadcrumb__item">
+                            <a href="<?= $link ?>">{{ ucwords(str_replace('-',' ',Request::segment($i)))}}</a>
+                            </li>
+                            @else 
+                            <li class="breadcrumb__item">
+                            {{ucwords(str_replace('-',' ',Request::segment($i)))}}
+                            </li>
+                            @endif
+                        @endfor
                         </ul>
+                        <!-- End Dynamic breadcrumbs --> 
                         <div class="page__header">
                             <a class="back-button page__back-button" href="#">
                                 <svg>
