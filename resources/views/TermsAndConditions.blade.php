@@ -17,7 +17,7 @@
                         <a href="/">Home</a>
                     </li>
                     <li class="breadcrumb__item">
-                        <a href="terms.html">Terms&amp;Conditions</a>
+                        <a href="{{ url('/terms') }}">Terms&amp;Conditions</a>
                     </li>
                 </ul>
                 <a class="back-button page__back-button" href="#">

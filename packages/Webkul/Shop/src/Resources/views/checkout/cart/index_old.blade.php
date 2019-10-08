@@ -196,7 +196,7 @@
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">
@@ -206,7 +206,7 @@
                         </a>
                         <h1 class="page__title">Your cart is empty</h1>
                         <div class="cart">
-                            <a style="color:white;" class="button button_blue cart__go-shopping" href="{{ route('shop.home.index') }}">Go shopping</a>
+                            <a style="color:white;" class="button button_blue cart__go-shopping" href="{{ url('/categories/coffee') }}">Go shopping</a>
                         </div>
                     </div>
                 </div>

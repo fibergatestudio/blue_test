@@ -55,7 +55,7 @@
 
                             @else
 
-                                <!-- Current Loyality Points: <b>{{ $customer->points }}</b><br> -->
+                                <!-- Current Loyalty Points: <b>{{ $customer->points }}</b><br> -->
                                 Price in points: <b> 
                                 <?php 
                                 //echo $points_price;

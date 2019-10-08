@@ -115,15 +115,21 @@ Route::group(['middleware' => ['web']], function () {
                 //DeletePage
                 Route::get('pages/detelePage/{page_id}', 'Webkul\Admin\Http\Controllers\DashboardController@deletePage');
 
-            //Loyality Route
-            Route::get('loyality', 'Webkul\Admin\Http\Controllers\DashboardController@loyality')->defaults('_config', [
-                'view' => 'admin::dashboard.loyality'
-            ])->name('admin.dashboard.loyality');
-                //Loyality Apply Percentage
-                Route::post('loyality/apply_percentage', 'Webkul\Admin\Http\Controllers\DashboardController@apply_percentage')->name('admin.dashboard.apply_percentage');
-                //Loyality Apply Points Value
-                Route::post('loyality/apply_points_value', 'Webkul\Admin\Http\Controllers\DashboardController@apply_points_value')->name('admin.dashboard.apply_points_value');
-
+            //loyalty Route
+            Route::get('loyalty', 'Webkul\Admin\Http\Controllers\DashboardController@loyalty')->defaults('_config', [
+                'view' => 'admin::dashboard.loyalty'
+            ])->name('admin.dashboard.loyalty');
+                //loyalty Apply Percentage
+                Route::post('loyalty/apply_percentage', 'Webkul\Admin\Http\Controllers\DashboardController@apply_percentage')->name('admin.dashboard.apply_percentage');
+                //loyalty Apply Points Value
+                Route::post('loyalty/apply_points_value', 'Webkul\Admin\Http\Controllers\DashboardController@apply_points_value')->name('admin.dashboard.apply_points_value');
+            //Tasks Route
+            Route::get('tasks', 'Webkul\Admin\Http\Controllers\DashboardController@tasks')->defaults('_config', [
+                'view' => 'admin::dashboard.tasks'
+            ])->name('admin.dashboard.tasks');
+            Route::get('form', 'Webkul\Admin\Http\Controllers\DashboardController@form')->defaults('_config', [
+                'view' => 'admin::dashboard.form'
+            ])->name('admin.dashboard.form');
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\DashboardController@index')->defaults('_config', [
                 'view' => 'admin::dashboard.index'

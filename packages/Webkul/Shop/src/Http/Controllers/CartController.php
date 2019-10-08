@@ -101,7 +101,14 @@ class CartController extends Controller
     public function add(Request $request, $id)
     {
         
-        $points = $request->points;
+        if($request->points == ""){
+
+            $points = "0";
+
+        } else {
+            $points = $request->points;
+        }
+        //dd($points);
         $loyality_program = DB::table('loyality_program')->first();
         $points_value = $loyality_program->points_value;
         $points_converted = $points * $points_value;
@@ -156,7 +163,8 @@ class CartController extends Controller
                     }
                 }
 
-                return redirect()->back();
+                //return redirect()->back();
+                return back()->with('addtocard', 'open');
             } else {
                 session()->flash('warning', trans('shop::app.checkout.cart.item.error-add'));
 
@@ -276,7 +284,7 @@ class CartController extends Controller
     public function addConfigurable($slug)
     {
         session()->flash('warning', trans('shop::app.checkout.cart.add-config-warning'));
-        return redirect()->route('shop.products.index', $slug);
+        return redirect()->route('shop.products.index', $slug)->with('selectcount', 'open');
     }
 
     public function buyNow($id, $quantity = 1)

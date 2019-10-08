@@ -2,18 +2,26 @@
 <?php 
 
 $customer = auth()->guard('customer')->user();
-$address = DB::table('customer_addresses')->where('customer_id', $customer->id)->first();
+
+if($customer){
+
+    $address = DB::table('customer_addresses')->where('customer_id', $customer->id)->first();
+
+} else {
+    
+}
+
 
 ?>
 <div class="page">
-                <div class="">
+                <div class="page__content">
                     <div class="container">
                         <ul class="breadcrumb page__breadcrumb">
                             <li class="breadcrumb__item">
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">
@@ -46,7 +54,13 @@ $address = DB::table('customer_addresses')->where('customer_id', $customer->id)-
                                     <div class="cart-settings__form-item">
                                         <div class="input-text">
                                             <label class="input-text__label" for="shippingFirstName">First name</label>
-                                            <input class="input-text__input input-text__input_has-icon" id="shippingFirstName" type="text" name="shipping-first-name" value="{{ $customer->first_name }}">
+                                            <input class="input-text__input input-text__input_has-icon" id="shippingFirstName" type="text" name="shipping-first-name" 
+                                            @if(empty($customer))
+                                            value=""
+                                            @else
+                                            value="{{ $customer->first_name }}"
+                                            @endif
+                                            >
                                             <svg class="input-text__icon">
                                                 <use xlink:href="#pencil"></use>
                                             </svg>
@@ -55,7 +69,13 @@ $address = DB::table('customer_addresses')->where('customer_id', $customer->id)-
                                     <div class="cart-settings__form-item">
                                         <div class="input-text">
                                             <label class="input-text__label" for="shippingLastName">Last name</label>
-                                            <input class="input-text__input input-text__input_has-icon" id="shippingLastName" type="text" name="shipping_last_name" value="{{ $customer->first_name }}">
+                                            <input class="input-text__input input-text__input_has-icon" id="shippingLastName" type="text" name="shipping_last_name" 
+                                            @if(empty($customer))
+                                            value=""
+                                            @else
+                                            value="{{ $customer->first_name }}"
+                                            @endif
+                                            >
                                             <svg class="input-text__icon">
                                                 <use xlink:href="#pencil"></use>
                                             </svg>
@@ -73,7 +93,13 @@ $address = DB::table('customer_addresses')->where('customer_id', $customer->id)-
                                     <div class="cart-settings__form-item">
                                         <div class="input-text">
                                             <label class="input-text__label" for="shippingAddress">Address</label>
-                                            <input class="input-text__input input-text__input_has-icon" id="shippingAddress" type="text" name="shipping_address" value="{{ $address->address1 }}"> 
+                                            <input class="input-text__input input-text__input_has-icon" id="shippingAddress" type="text" name="shipping_address" 
+                                            @if(empty($customer))
+                                            value=""
+                                            @else
+                                            value="{{ $address->address1 }}"
+                                            @endif
+                                            > 
                                             <svg class="input-text__icon">
                                                 <use xlink:href="#pencil"></use>
                                             </svg>
@@ -91,7 +117,13 @@ $address = DB::table('customer_addresses')->where('customer_id', $customer->id)-
                                     <div class="cart-settings__form-item">
                                         <div class="input-text">
                                             <label class="input-text__label" for="shippingCity">City</label>
-                                            <input class="input-text__input input-text__input_has-icon" id="shippingCity" type="text" name="shipping_city" value="{{ $address->city }}">
+                                            <input class="input-text__input input-text__input_has-icon" id="shippingCity" type="text" name="shipping_city" 
+                                            @if(empty($customer))
+                                            value=""
+                                            @else
+                                            value="{{ $address->city }}"
+                                            @endif
+                                            >
                                             <svg class="input-text__icon">
                                                 <use xlink:href="#pencil"></use>
                                             </svg>
@@ -100,7 +132,13 @@ $address = DB::table('customer_addresses')->where('customer_id', $customer->id)-
                                     <div class="cart-settings__form-item">
                                         <div class="input-text">
                                             <label class="input-text__label" for="shippingPhone">Phone number</label>
-                                            <input class="input-text__input input-text__input_has-icon" id="shippingPhone" type="tel" name="shipping_phone" value="{{ $address->phone }}">
+                                            <input class="input-text__input input-text__input_has-icon" id="shippingPhone" type="tel" name="shipping_phone" 
+                                            @if(empty($customer))
+                                            value=""
+                                            @else
+                                            value="{{ $address->phone }}"
+                                            @endif
+                                            >
                                             <svg class="input-text__icon">
                                                 <use xlink:href="#pencil"></use>
                                             </svg>
@@ -146,12 +184,12 @@ $address = DB::table('customer_addresses')->where('customer_id', $customer->id)-
                                     </div>
                                 </div>
                             </div>
-                            <div class="cart-settings__confirm">
+                            <!-- <div class="cart-settings__confirm">
                                 <div class="input-checkbox">
-                                    <input class="input-checkbox__real" id="confirmRegister" type="checkbox" name="confirm-register">
+                                    <input class="input-checkbox__real" id="confirmRegister" type="checkbox" name="confirm-register" required>
                                     <label class="input-checkbox__label" for="confirmRegister">Making a purchase you automatically register in our system and take part in our loyalty program</label>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- <div class="cart-settings__send">
 
                                 <a class="button button_blue" href="shopping-cart-step-2.html">Continue</a>

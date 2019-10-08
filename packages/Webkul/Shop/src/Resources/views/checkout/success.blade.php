@@ -14,7 +14,7 @@
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">
@@ -46,7 +46,7 @@
                                     <h2 class="confirmation__title">Thank you for your order!</h2>
                                     <div class="confirmation__row"><span>{{ __('shop::app.checkout.success.order-id-info', ['order_id' => $order->id]) }}</span><span>Number of your order</span>
                                     </div>
-                                    <div class="confirmation__row"><span> {{ __('shop::app.checkout.success.info') }}</span>
+                                    <div class="confirmation__row"><span>{{ $order->customer_email }}</span><span>Email, which will receive information about your order</span>
                                     </div>
                                     <div class="confirmation__row confirmation__row_history">
                                         <h3>You can view information about your order in your account</h3>

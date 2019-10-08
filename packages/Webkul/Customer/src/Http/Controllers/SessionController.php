@@ -38,6 +38,7 @@ class SessionController extends Controller
     public function show()
     {
         if (auth()->guard('customer')->check()) {
+            return redirect('/');
             return redirect()->route('customer.session.index');
         } else {
             return view($this->_config['view']);
@@ -54,7 +55,8 @@ class SessionController extends Controller
         if (! auth()->guard('customer')->attempt(request(['email', 'password']))) {
             session()->flash('error', trans('shop::app.customer.login-form.invalid-creds'));
 
-            return redirect()->back();
+            //return redirect()->back();
+            return redirect('/')->with('loginerr', 'open');
         }
 
         if (auth()->guard('customer')->user()->status == 0) {

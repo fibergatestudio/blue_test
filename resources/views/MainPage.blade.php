@@ -1,6 +1,10 @@
 
 @extends('layouts.main')
 
+@section('page_title')
+    {{ __('shop::app.home.page-title') }}
+@stop
+
 @section('header')
 
 <header class="header header_has-columns header_main">
@@ -15,8 +19,8 @@
                             </svg><span>Award-winning coffees, roasted to perfection,<br> and delivered at peak freshness.</span>
                         </p>
                         <div class="banner__btn-group">
-                            <button class="button button_blue banner__button">Shop Coffee</button>
-                            <button class="button button_blue banner__button">Make a Blue Box</button>
+                            <a href="{{ url('/categories/coffee') }}"><button class="button button_blue banner__button">Shop Coffee</button></a>
+                            <a href="{{ url('/bluebox') }}"> <button class="button button_blue banner__button">Make a Blue Box</button></a>
                         </div>
                         <div class="banner__brands"><span>Featured on:</span>
                             <ul>
@@ -130,7 +134,7 @@
                             <li class="swiper-slide">
                                 <div class="steps-buy">
                                     <div class="steps-buy__text">or, <strong>just buy coffee </strong><br>in our online store:</div>
-                                        <div class="steps-buy__button button button_blue">Buy</div>
+                                        <a href="{{ url('/categories/coffee') }}"><div class="steps-buy__button button button_blue">Buy</div></a>
                                     </div>
                             </li>
                         </div>
@@ -156,7 +160,7 @@
                             <p>While in Gozsdu you can have a limitless fun, at Rumbach you can choose from 14 coffee beans (twelve SO and two Blend) to find the best for your taste. Dont be afraid if you can't choose, our baristas are here to help you. Their job is to make the best drink from the fresh coffee. We also seeks to serve alternative coffee lovers.</p>
                             <p>In our grinder we put always fresh and best quality beans. <br>We are buying and roasting green coffee from certified high quality producers.</p>
                         </div>
-                        <button class="button button_blue about-cafe__button">Read more</button>
+                        <a href="{{ url('/aboutbb') }}"> <button class="button button_blue about-cafe__button">Read more</button></a>
                     </div>
                 </div>
             </article>
@@ -220,7 +224,7 @@
                                 </li>
                             </ul>
                             <h3 class="box__subtitle">Choose the right package for you:</h3>
-                            <button class="button button_blue box__button">Choose</button>
+                            <a href="{{ url('/coffeesubscription') }}"><button class="button button_blue box__button">Choose</button></a>
                         </div>
                     </div>
                 </div>
@@ -239,7 +243,7 @@
                             <p class="box__desc box__desc_bluebox">You don't have to search for freshly roasted coffee any more. If you decide to subscribe, <strong>you will always have fresh coffee when you want.</strong>
                             </p>
                             <h3 class="box__subtitle box__subtitle_bluebox">Read more about our Loyalty Program</h3>
-                            <button class="button button_blue box__button">Read more</button>
+                            <a href="{{ url('/loyalty') }}"><button class="button button_blue box__button">Read more</button></a>
                         </div>
                     </div>
                     <div class="split__col split__col_picture">
@@ -258,156 +262,12 @@
                     </h2>
                     <div class="best__list js-init-slider swiper-container" data-options="bestGoods">
                         <div style="height: auto;"  class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="product-tile product-tile_has-shadow">
-                                    <div class="product-tile__content">
-                                        <div class="product-tile__image">
-                                            <a href="product-card.html">
-                                                <picture>
-                                                    <source srcset="{{ url('assets/img/tmp/goods/green.webp') }}" type="image/webp">
-                                                    <source srcset="{{ url('assets/img/tmp/goods/green.png') }}" type="image/png">
-                                                    <img src="{{ url('assets/img/tmp/goods/green.png') }}" alt="product image">
-                                                </picture>
-                                            </a>
-                                        </div>
-                                        <h3 class="product-tile__name">
-                                            <a href="product-card.html">Blue Bird Blend – Our own selected Blend</a>
-                                        </h3>
-                                        <div class="product-tile__price">2150 HUF</div>
-                                    </div>
-                                    <div class="product-tile__hidden">
-                                        <div class="product-tile__buttons">
-                                            <button class="button button_transparent">Add to cart</button>
-                                            <button class="button button_blue">Add to Blue box</button>
-                                        </div>
-                                    </div>
+                            @foreach ($all_prod as $prod)
+                                <div class="swiper-slide">
+                                    @include ('shop::products.list.maincard', ['product' => $prod])
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-tile product-tile_has-shadow">
-                                    <div class="product-tile__content">
-                                        <div class="product-tile__image">
-                                            <a href="product-card.html">
-                                                <picture>
-                                                    <source srcset="{{ url('assets/img/tmp/goods/yellow.webp') }}" type="image/webp">
-                                                    <source srcset="{{ url('assets/img/tmp/goods/yellow.png') }}" type="image/png">
-                                                    <img src="{{ url('assets/img/tmp/goods/yellow.png') }}" alt="product image">
-                                                </picture>
-                                            </a>
-                                        </div>
-                                        <h3 class="product-tile__name">
-                                            <a href="product-card.html">Blue Bird Blend – Our own selected Blend</a>
-                                        </h3>
-                                        <div class="product-tile__price">2150 HUF</div>
-                                    </div>
-                                    <div class="product-tile__hidden">
-                                        <div class="product-tile__buttons">
-                                            <button class="button button_transparent">Add to cart</button>
-                                            <button class="button button_blue">Add to Blue box</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-tile product-tile_has-shadow">
-                                    <div class="product-tile__content">
-                                        <div class="product-tile__image">
-                                            <a href="product-card.html">
-                                                <picture>
-                                                    <source srcset="{{ url('assets/img/tmp/goods/blue.webp') }}" type="image/webp">
-                                                    <source srcset="{{ url('assets/img/tmp/goods/blue.png') }}" type="image/png">
-                                                    <img src="{{ url('assets/img/tmp/goods/blue.png') }}" alt="product image">
-                                                </picture>
-                                            </a>
-                                        </div>
-                                        <h3 class="product-tile__name">
-                                            <a href="product-card.html">Blue Bird Blend – Our own selected Blend</a>
-                                        </h3>
-                                        <div class="product-tile__price">2150 HUF</div>
-                                    </div>
-                                    <div class="product-tile__hidden">
-                                        <div class="product-tile__buttons">
-                                            <button class="button button_transparent">Add to cart</button>
-                                            <button class="button button_blue">Add to Blue box</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-tile product-tile_has-shadow">
-                                    <div class="product-tile__content">
-                                        <div class="product-tile__image">
-                                            <a href="product-card.html">
-                                                <picture>
-                                                    <source srcset="{{ url('assets/img/tmp/goods/green.webp') }}" type="image/webp">
-                                                    <source srcset="{{ url('assets/img/tmp/goods/green.png') }}" type="image/png">
-                                                    <img src="{{ url('assets/img/tmp/goods/green.png') }}" alt="product image">
-                                                </picture>
-                                            </a>
-                                        </div>
-                                        <h3 class="product-tile__name">
-                                            <a href="product-card.html">Blue Bird Blend – Our own selected Blend</a>
-                                        </h3>
-                                        <div class="product-tile__price">2150 HUF</div>
-                                    </div>
-                                    <div class="product-tile__hidden">
-                                        <div class="product-tile__buttons">
-                                            <button class="button button_transparent">Add to cart</button>
-                                            <button class="button button_blue">Add to Blue box</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-tile product-tile_has-shadow">
-                                    <div class="product-tile__content">
-                                        <div class="product-tile__image">
-                                            <a href="product-card.html">
-                                                <picture>
-                                                    <source srcset="{{ url('assets/img/tmp/goods/yellow.webp') }}" type="image/webp">
-                                                    <source srcset="{{ url('assets/img/tmp/goods/yellow.png') }}" type="image/png">
-                                                    <img src="{{ url('assets/img/tmp/goods/yellow.png') }}" alt="product image">
-                                                </picture>
-                                            </a>
-                                        </div>
-                                        <h3 class="product-tile__name">
-                                            <a href="product-card.html">Blue Bird Blend – Our own selected Blend</a>
-                                        </h3>
-                                        <div class="product-tile__price">2150 HUF</div>
-                                    </div>
-                                    <div class="product-tile__hidden">
-                                        <div class="product-tile__buttons">
-                                            <button class="button button_transparent">Add to cart</button>
-                                            <button class="button button_blue">Add to Blue box</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-tile product-tile_has-shadow">
-                                    <div class="product-tile__content">
-                                        <div class="product-tile__image">
-                                            <a href="product-card.html">
-                                                <picture>
-                                                    <source srcset="{{ url('img/tmp/goods/blue.webp') }}" type="image/webp">
-                                                    <source srcset="{{ url('img/tmp/goods/blue.png') }}" type="image/png">
-                                                    <img src="{{ url('img/tmp/goods/blue.png') }}" alt="product image">
-                                                </picture>
-                                            </a>
-                                        </div>
-                                        <h3 class="product-tile__name">
-                                            <a href="product-card.html">Blue Bird Blend – Our own selected Blend</a>
-                                        </h3>
-                                        <div class="product-tile__price">2150 HUF</div>
-                                    </div>
-                                    <div class="product-tile__hidden">
-                                        <div class="product-tile__buttons">
-                                            <button class="button button_transparent">Add to cart</button>
-                                            <button class="button button_blue">Add to Blue box</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+                               
                         </div>
                         <button class="slider-control slider-control_prev best__control best__control_prev">
                             <svg>
@@ -422,7 +282,7 @@
                         <div class="swiper-pagination"></div>
                     </div>
                     <div class="best__button-wrapper"><span>Make your choice here:</span>
-                        <button class="button button_blue">Visit shop</button>
+                        <a href="{{ url('/categories/coffee') }}"><button class="button button_blue">Visit shop</button></a>
                     </div>
                 </div>
             </section>
@@ -672,10 +532,51 @@
                             </div>
                             <button class="faq__load-more">Load more</button>
                             <h3 class="faq__subt">Did not find the answer? Write to us:</h3>
-                            <button class="button button_blue faq__write">Write</button>
+                            <button class="button button_blue faq__write js-box-trigger" data-target-id="regModal">Write</button>
+                            <!-- <a class="offer-tile__button button button_blue js-box-trigger" data-target-id="regModal">Get an offer</a> -->
                         </div>
                     </div>
                 </div>
             </article>
         </main>
+
+         <!-- Modal - modal-->
+         <div style="z-index: 999; padding-bottom: 0px; padding: 0px;"class="modal modal_reg" id="regModal">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+        
+                <form action="{{ url('/form_sumbit') }}" method="POST" class="lets-work__form form">
+                @csrf()
+                <input type="hidden" name="page_from" value="Main Page">
+                    <p class="lets-work__note">Write to us what we can help</p>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_user">
+                                <use xlink:href="#user"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="name" placeholder="Name" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_phone-call">
+                                <use xlink:href="#phone-call"></use>
+                            </svg>
+                            <input class="field__input" type="tel" name="tel" placeholder="Phone" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_envelope">
+                                <use xlink:href="#envelope"></use>
+                            </svg>
+                            <input class="field__input" type="email" name="email" placeholder="Email" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_comment">
+                                <use xlink:href="#chat-comment"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="symptom" placeholder="Comments" required>
+                        </label>
+                        <input class="button button_blue" type="submit" value="Send">
+                    </form>
+            </div>
         @endsection

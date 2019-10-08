@@ -6,6 +6,7 @@ use Webkul\Core\Eloquent\Repository;
 use Illuminate\Support\Facades\Event;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Illuminate\Container\Container as App;
+use DB;
 
 /**
  * Attribute Reposotory
@@ -157,6 +158,65 @@ class AttributeRepository extends Repository
     public function getFilterAttributes()
     {
         return $this->model->where('is_filterable', 1)->with('options')->get();
+    }
+    public function getCoffeeMachines()
+    {
+        return $this->model->where('is_filterable', 1)->where('code', 'coffeemachineweight')->with('options')->get();
+    }
+    public function getCoffee()
+    {
+        return $this->model->where('is_filterable', 1)->where('code', 'CoffeeWeight')->with('options')->get();
+    }
+    public function getBaristaTools(){
+        $attributeFamily = DB::table('attribute_families')->where('code', 'coffeemachine')->first();
+    }
+    public function getFam($fam_id){
+
+        $db = DB::table('attribute_families')->where('id', $fam_id)->first();
+
+        $group = DB::table('attribute_groups')->where('attribute_family_id', $db->id)->get();
+
+        foreach($group as $gr){
+            if($gr->name == 'General'){
+                $id = $gr->id;
+            }
+        }
+
+        $atr_group = DB::table('attribute_group_mappings')->where('attribute_group_id', $id)->get();
+
+        //dd($atr_group);
+
+        $arr = [];
+
+        foreach($atr_group as $atr){
+            $arr[] = $atr->attribute_id;
+        }
+        //dd($arr);
+
+        $all_atr = DB::table('attributes')->where('is_filterable', 1)->whereIn('id', $arr)->get();
+        //dd($all_atr);
+
+        return $this->model->where('is_filterable', 1)->whereIn('id', $arr)->get();
+        //return $this->model->where('is_filterable', 1)->with('options')->get();
+        //return $all_atr;
+
+        //dd($all_atr);
+
+        //$attributeFamily = DB::table('attribute_families')->where('code', 'coffeemachine')->first();
+
+        //dd($attributeFamily);
+
+        //$test = $this->getAttributeByCode('sku');
+
+        //dd($test);
+
+        //return $this->model->where('is_filterable', 1)->where('code', 'BaristaTools')->with('options')->get();
+    }
+    public function getFlavored(){
+        return $this->model->where('is_filterable', 1)->where('code', 'Flavored')->with('options')->get();
+    }
+    public function getCoffeeAccessories(){
+        return $this->model->where('is_filterable', 1)->where('code', 'CoffeeAccessories')->with('options')->get();
     }
 
     /**

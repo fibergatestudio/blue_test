@@ -141,21 +141,21 @@
                         <div class="billing__col billing__col_forms">
                             <div class="input-text billing__input">
                                 <label class="input-text__label" for="name">Name</label>
-                                <input class="input-text__input input-text__input_has-icon" id="name" type="text" name="name" value="Victoria">
+                                <input class="input-text__input input-text__input_has-icon" id="name" type="text" name="name" value="{{ $customer->name }}">
                                 <svg class="input-text__icon">
                                     <use xlink:href="#pencil"></use>
                                 </svg>
                             </div>
                             <div class="input-text billing__input">
                                 <label class="input-text__label" for="billingAddress">Billing address</label>
-                                <input class="input-text__input input-text__input_has-icon" id="billingAddress" type="text" name="billing-address" value="532 Ullrich Cliff Suite 854">
+                                <input class="input-text__input input-text__input_has-icon" id="billingAddress" type="text" name="billing-address" @if(!empty($address)) value="{{ $address->address1 }}{{ $address->postcode }}" @endif>
                                 <svg class="input-text__icon">
                                     <use xlink:href="#pencil"></use>
                                 </svg>
                             </div>
                             <div class="input-text billing__input">
                                 <label class="input-text__label" for="city">City</label>
-                                <input class="input-text__input input-text__input_has-icon" id="city" type="text" name="city" value="Budapest">
+                                <input class="input-text__input input-text__input_has-icon" id="city" type="text" name="city" @if(!empty($address)) value="{{ $address->city }}" @endif>
                                 <svg class="input-text__icon">
                                     <use xlink:href="#pencil"></use>
                                 </svg>
@@ -163,10 +163,10 @@
                         </div>
                         <div class="billing__col">
                             <div class="billing__subscription subsciption-card">
-                                <div class="subsciption-card__col"><span class="subsciption-card__label">Subscribtion</span><span class="subsciption-card__term">{{ $coffee->subscription_term }}</span>
+                                <div class="subsciption-card__col"><span class="subsciption-card__label">Subscribtion</span><span class="subsciption-card__term">@if($coffee) {{ $coffee->subscription_term }} @endif</span>
                                     <a class="subsciption-card__button button button_blue" href="{{ url('/coffeesubscription') }}">Change</a>
                                 </div>
-                                <div class="subsciption-card__col"><span class="subsciption-card__label subsciption-card__label_transp">Valid until</span><span class="subsciption-card__text">{{ $coffee->subscription_term_ends }}</span><span class="subsciption-card__label subsciption-card__label_transp">Coffee type</span><span class="subsciption-card__text">Espresso</span>
+                                <div class="subsciption-card__col"><span class="subsciption-card__label subsciption-card__label_transp">Valid until</span><span class="subsciption-card__text">@if($coffee) {{ $coffee->subscription_term_ends }} @endif</span><span class="subsciption-card__label subsciption-card__label_transp">Coffee type</span><span class="subsciption-card__text">Espresso</span>
                                 </div>
                             </div>
                         </div>
@@ -196,9 +196,9 @@
                                     <div class="bank-card__row">
                                         <div class="bank-card__sign">
                                             <picture>
-                                                <source srcset="img/common/sign.webp" type="image/webp">
-                                                <source srcset="img/common/sign.png" type="image/png">
-                                                <img src="img/common/sign.png" alt="Picture alt text">
+                                                <source srcset="{{ url('assets/img/common/sign.webp') }}" type="image/webp">
+                                                <source srcset="{{ url('assets/img/common/sign.png') }}" type="image/png">
+                                                <img src="{{ url('assets/img/common/sign.png') }}" alt="Picture alt text">
                                             </picture><span>3369</span>
                                         </div>
                                         <div class="bank-card__cvv-wrapper">

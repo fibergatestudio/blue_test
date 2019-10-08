@@ -54,10 +54,15 @@ class AddressController extends Controller
         
         $user_id = auth()->guard('customer')->user()->id;
 
+        $customer = auth()->guard('customer')->user();
+        $address = DB::table('customer_addresses')->where('customer_id', $customer->id)->first();
+
         $coffee = DB::table('coffee_subscription')->where('user_id', $user_id)->first();
 
         return view($this->_config['view'],[
-            'coffee' => $coffee
+            'coffee' => $coffee,
+            'customer' => $customer,
+            'address' => $address,
         ])->with('addresses', $this->customer->addresses);
     }
 

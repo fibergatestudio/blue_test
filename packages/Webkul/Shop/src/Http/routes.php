@@ -2,9 +2,16 @@
 
 Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
     //Store front home
-    Route::get('/', 'Webkul\Shop\Http\Controllers\HomeController@index')->defaults('_config', [
+    Route::get('/shop', 'Webkul\Shop\Http\Controllers\HomeController@index')->defaults('_config', [
         'view' => 'shop::home.index'
     ])->name('shop.home.index');
+        Route::post('/shop', 'Webkul\Shop\Http\Controllers\HomeController@ShowMore')->defaults('_config', [
+            'view' => 'shop::home.index'
+        ])->name('shop.home.index');
+
+    Route::post('/filter', 'Webkul\Shop\Http\Controllers\HomeController@filter')->defaults('_config', [
+        'view' => 'shop::home.index'
+    ])->name('shop.home.filter');
 
     //subscription
     //subscribe
@@ -15,8 +22,11 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
     //Store front header nav-menu fetch
     Route::get('/categories/{slug}', 'Webkul\Shop\Http\Controllers\CategoryController@index')->defaults('_config', [
-        'view' => 'shop::products.index'
+        'view' => 'shop::home.index'
     ])->name('shop.categories.index');
+        Route::get('/categories/{slug}/filter', 'Webkul\Shop\Http\Controllers\CategoryController@index_filter')->defaults('_config', [
+            'view' => 'shop::home.index'
+        ])->name('shop.categories.filter');
 
     //Store front search
     Route::get('/search', 'Webkul\Shop\Http\Controllers\SearchController@index')->defaults('_config', [
@@ -166,7 +176,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
         //registration form store
         Route::post('register', 'Webkul\Customer\Http\Controllers\RegistrationController@create')->defaults('_config', [
-            'redirect' => 'customer.session.index',
+            'redirect' => 'shop.home.index',
         ])->name('customer.register.create');
 
         //verify account
@@ -180,7 +190,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
             //Customer logout
             Route::get('logout', 'Webkul\Customer\Http\Controllers\SessionController@destroy')->defaults('_config', [
-                'redirect' => 'customer.session.index'
+                'redirect' => 'shop.home.index'
             ])->name('customer.session.destroy');
 
             //Customer Wishlist add
@@ -216,6 +226,8 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 Route::post('profile/edit', 'Webkul\Customer\Http\Controllers\CustomerController@update')->defaults('_config', [
                     'redirect' => 'customer.profile.index'
                 ])->name('customer.profile.edit');
+                    //New Profile Edit
+                    Route::post('profile/newedit', 'Webkul\Customer\Http\Controllers\CustomerController@new_up')->name('customer.profile.newedit');;
                 /*  Profile Routes Ends Here  */
 
                 /*    Routes for Addresses   */
@@ -310,6 +322,9 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         });
     });
     //customer routes end here
+
+    //-- Contacts --//
+    //Route::get('/contacts', 'Webkul\Shop\Http\Controllers\HomeController@Contacts');
 
     Route::fallback('Webkul\Shop\Http\Controllers\HomeController@notFound');
 });

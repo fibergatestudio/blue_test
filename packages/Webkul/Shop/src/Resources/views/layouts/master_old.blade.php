@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css') }}">
 
     @if ($favicon = core()->getCurrentChannel()->favicon_url)
-        <link rel="icon" sizes="16x16" href="{{ $favicon }}" />
+        <link rel="icon" sizes="16x16" href="{{ url('assets/img/favicon.ico') }}" />
     @else
-        <link rel="icon" sizes="16x16" href="{{ bagisto_asset('images/favicon.ico') }}" />
+        <link rel="icon" sizes="16x16" href="{{ url('assets/img/favicon.ico') }}" />
     @endif
 
     @yield('head')

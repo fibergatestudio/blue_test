@@ -1,11 +1,14 @@
 
     @if ($product->type == "configurable")
         <div class="cart-wish-wrap">
-            <a href="{{ route('cart.add.configurable', $product->url_key) }}" class="btn btn-lg btn-primary addtocart">
-                {{ __('shop::app.products.add-to-cart') }}
-            </a>
+            <div class="product-tile__buttons">
+                <a href="{{ route('cart.add.configurable', $product->url_key) }}">
+                    <button class="button button_transparent">{{ __('shop::app.products.add-to-cart') }}</button>
+                </a>
+                <button class="button button_blue"{{ $product->haveSufficientQuantity(1) ? '' : 'disabled' }}>Add to Blue box</button>
+            </div>
 
-            @include('shop::products.wishlist')
+            <!-- include('shop::products.wishlist') -->
         </div>
     @else
         <div class="cart-wish-wrap">
@@ -20,6 +23,6 @@
                     </div>
             </form>
 
-            @include('shop::products.wishlist')
+            <!-- include('shop::products.wishlist') -->
         </div>
     @endif

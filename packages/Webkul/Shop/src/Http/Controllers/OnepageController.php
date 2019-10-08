@@ -115,6 +115,12 @@ class OnepageController extends Controller
 
         $customer = $this->customer->find(auth()->guard('customer')->user()->id);
 
+        if($customer) {
+             
+        } else {
+
+        }
+        
         $exchange_rate = DB::table('currencies')->where('code', 'HUF')->first();
         $exch_id = $exchange_rate->id;
 
@@ -240,18 +246,26 @@ class OnepageController extends Controller
 
             $points_to_user = DB::table('customers')->where('id', $cart['customer_id'])->first();
 
-            $loyality_settings = DB::table('loyality_program')->first();
-            $percentage = $loyality_settings->payout_percentage;
+            if($points_to_user){
 
-            $points = $points_to_user->points;
-            $points_to_add = ($cart->sub_total) * ($percentage / 100);
-            $converted_points = floor($points_to_add);
-            $item_price = $points + $converted_points; 
+                $loyality_settings = DB::table('loyality_program')->first();
+                $percentage = $loyality_settings->payout_percentage;
 
-            DB::table('customers')
-            ->where('id', $cart['customer_id'])
-            ->limit(1)
-            ->update(['points' => $item_price ]);
+                $points = $points_to_user->points;
+                $points_to_add = ($cart->sub_total) * ($percentage / 100);
+                $converted_points = floor($points_to_add);
+                $item_price = $points + $converted_points; 
+
+                DB::table('customers')
+                ->where('id', $cart['customer_id'])
+                ->limit(1)
+                ->update(['points' => $item_price ]);
+
+            } else {
+
+            }
+
+
         }
 
         $order = $this->orderRepository->create(Cart::prepareDataForOrder());

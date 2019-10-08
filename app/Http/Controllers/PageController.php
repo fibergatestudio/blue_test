@@ -160,4 +160,14 @@ class PageController extends Controller
 
         return back();
     }
+
+    public function success(){
+
+        return view('custompages.success');
+    }
+
+    public function error(){
+
+        return view('custompages.error');
+    }
 }

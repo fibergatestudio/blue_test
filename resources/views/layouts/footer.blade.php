@@ -1,27 +1,81 @@
 
 
 <footer class="footer js-block-cnt">
+            <?php if (\Request::is('shop') || \Request::is('coffeesubscription/*') || \Request::is('trainings') || \Request::is('products/*') || \Request::is('customer/*') || \Request::is('faq') || \Request::is('checkout/*')) { ?>
+                <div class="scroll-panel scroll-panel_abs ">
+                <a class="scroll-panel__logo" href="/">
+                    <svg style="color: #64b2db;">
+                        <use xlink:href="#logo"></use>
+                    </svg>
+                </a>
+                <button class="scroll-panel__slide-to slide-btn" data-scroll-to-point="0"><span class="slide-btn__up">
+                    <svg>
+                      <use xlink:href="#long-arrow"></use>
+                    </svg></span>
+                </button>
+            </div>
+            <?php } else if (\Request::is('filter')) { ?>
+            <div class="scroll-panel scroll-panel_abs ">
+                <a class="scroll-panel__logo" href="/">
+                    <svg style="color: #64b2db;">
+                        <use xlink:href="#logo"></use>
+                    </svg>
+                </a>
+                <button class="scroll-panel__slide-to slide-btn" data-scroll-to-point="0"><span class="slide-btn__up">
+                    <svg>
+                      <use xlink:href="#long-arrow"></use>
+                    </svg></span>
+                </button>
+            </div>
+
+            <?php }  else if (\Request::is('bluebox')) { ?>
+            <div class="scroll-panel scroll-panel_abs ">
+                <a class="scroll-panel__logo" href="/">
+                    <svg style="color: #64b2db;">
+                        <use xlink:href="#logo"></use>
+                    </svg>
+                </a>
+                <button class="scroll-panel__slide-to slide-btn" data-scroll-to-point="0"><span class="slide-btn__up">
+                    <svg>
+                      <use xlink:href="#long-arrow"></use>
+                    </svg></span>
+                </button>
+            </div>
+
+            <?php } ?>
+            <!-- <div class="scroll-panel scroll-panel_abs scroll-panel_footer">
+                <a class="scroll-panel__logo" href="/">
+                    <svg style="color: #64b2db;">
+                        <use xlink:href="#logo"></use>
+                    </svg>
+                </a>
+                <button class="scroll-panel__slide-to slide-btn" data-scroll-to-point="0"><span class="slide-btn__up">
+                    <svg>
+                      <use xlink:href="#long-arrow"></use>
+                    </svg></span>
+                </button>
+            </div> -->
             <div class="footer__row">
                 <div class="footer__col">
                     <h2 class="footer__title">COFFEE</h2>
                     <ul class="footer__nav">
                         <li>
-                            <a href="#">Online Shop</a>
+                            <a href="{{ url('/categories/coffee') }}">Online Shop</a>
                         </li>
                         <li>
-                            <a href="#">Coffee Beans</a>
+                            <a href="{{ url('/coffeebeans') }}">Coffee Beans</a>
                         </li>
                         <li>
-                            <a href="#">Flavored Coffee</a>
+                            <a href="{{ url('/flavoredcoffee') }}">Flavored Coffee</a>
                         </li>
                         <li>
-                            <a href="#">Coffee Capsules</a>
+                            <a href="{{ url('/coffeecapsules') }}">Coffee Capsules</a>
                         </li>
                         <li>
-                            <a href="#">Turkish Coffee</a>
+                            <a href="{{ url('/turkishcoffee') }}">Turkish Coffee</a>
                         </li>
                         <li>
-                            <a href="#">Our Coffee (Rumbach)</a>
+                            <a href="{{ url('/aboutcafe') }}">Our Coffee (Rumbach)</a>
                         </li>
                     </ul>
                 </div>
@@ -41,10 +95,13 @@
                             <a href="{{ url('/tutorials') }}">Tutorial</a>
                         </li>
                         <li>
-                            <a href="faq.html">FAQ</a>
+                            <a href="{{ url('/faq') }}">FAQ</a>
                         </li>
                         <li>
                             <a href="{{ url('/contacts') }}">Contacts</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/bluecoffeegiftbox') }}">BlueCoffeeGiftBox</a>
                         </li>
                     </ul>
                 </div>
@@ -52,22 +109,22 @@
                     <h2 class="footer__title">FOR CLIENTS</h2>
                     <ul class="footer__nav">
                         <li>
-                            <a href="#">Blue Box</a>
+                            <a href="{{ url('/bluebox') }}">Blue Box</a>
                         </li>
                         <li>
-                            <a href="#">Coffee Subscription</a>
+                            <a href="{{ url('/coffeesubscription') }}">Coffee Subscription</a>
                         </li>
                         <li>
-                            <a href="#">Services</a>
+                            <a href="{{ url('/services') }}">Services</a>
                         </li>
                         <li>
-                            <a href="#">Barista Trainings</a>
+                            <a href="{{ url('/baristatrainings') }}">Barista Trainings</a>
                         </li>
                         <li>
-                            <a href="#">For Businesses</a>
+                            <a href="{{ url('/forbusinesses') }}">For Businesses</a>
                         </li>
                         <li>
-                            <a href="{{ url('/loyality') }}">Loyalty Program</a>
+                            <a href="{{ url('/loyalty') }}">Loyalty Program</a>
                         </li>
                     </ul>
                 </div>
@@ -110,18 +167,26 @@
                             </li>
                         </ul>
                         <div class="footer__privacy footer__privacy_md">
-                            <a href="#">Terms and conditions </a>
+                            <a href="{{ url('/terms') }}">Terms and conditions </a>
                             <a href="#">Privacy Policy</a>
                         </div>
                     </div>
                 </div>
                 <div class="footer__col">
-                    <form class="subscribe-card">
+                        <!-- <form action="{{ route('shop.subscribe') }}">
+                            <div class="control-group" :class="[errors.has('subscriber_email') ? 'has-error' : '']">
+                                <input type="email" class="control subscribe-field" name="subscriber_email" placeholder="Email Address" required><br/>
+
+                                <button class="btn btn-md btn-primary">{{ __('shop::app.subscription.subscribe') }}</button>
+                            </div>
+                        </form> -->
+                    <form action="{{ route('shop.subscribe') }}" class="subscribe-card">
+                    @csrf()
                         <svg class="subscribe-card__icon">
                             <use xlink:href="#email"></use>
                         </svg>
                         <h2 style="color: white;" class="subscribe-card__title">Want to hear coffee news from us?</h2>
-                        <input class="subscribe-card__email" type="email" name="email" required placeholder="Enter your email">
+                        <input class="subscribe-card__email" type="email" name="subscriber_email" required placeholder="Enter your email" required>
                         <input class="subscribe-card__button button button_white" type="submit" value="Subscribe">
                     </form>
                 </div>
@@ -129,19 +194,31 @@
             <div class="footer__row footer__row_bottom">
                 <div class="footer__copyrights">© 2019 Roastery. All right reserved</div>
                 <div class="footer__privacy footer__privacy_md-hidden">
-                    <a href="terms.html">Terms and conditions </a>
+                    <a href="{{ url('/terms') }}">Terms and conditions </a>
                     <a href="#">Privacy Policy</a>
                 </div>
             </div>
         </footer>
         <div class="bb-floating">
-            <a style="color: white;" class="bb-floating__button" href="#"><span>BLUE BOX</span>
+            <a style="color: white;" class="bb-floating__button" href="{{ url('/bluebox') }}"><span>BLUE BOX</span>
             </a>
         </div>
     </div>
+
+    @if ($errors->get('password') || $errors->get('email'))
+    <div class="layout visible">
+    @elseif(session()->has('loginerr'))
+    <div class="layout visible">
+    @else
     <div class="layout">
+    @endif
         <div class="layout__back js-close-popup"></div>
+
+        @if ($errors->any())
+        <div class="popup visible" id="signin">
+        @else
         <div class="popup" id="signin">
+        @endif
             <button class="popup__close js-close-popup">
                 <svg>
                     <use xlink:href="#close"></use>
@@ -157,6 +234,12 @@
                     <h2>Create Account</h2>
                     <form method="post" action="{{ route('customer.register.create') }}" class="account-popup__form form" @submit.prevent="onSubmit">
                     {{ csrf_field() }}
+
+                        @if(empty($value))
+
+                        @else
+                        <input type="hidden" name="referal" value="{{ $value }}">
+                        @endif
                         <label class="form__field field">
                             <svg class="field__icon field__icon_user">
                                 <use xlink:href="#user"></use>
@@ -173,13 +256,17 @@
                             <input type="text" class="field__input control" name="last_name" placeholder="Last Name" v-validate="'required'" value="{{ old('last_name') }}" data-vv-as="&quot;{{ __('shop::app.customer.signup-form.lastname') }}&quot;">
 
                         </label>
+                            @if ($errors->any())
+                                @foreach ($errors->get('email') as $message) 
+                                <span style="position: absolute; padding-top: 25px;" class="control-error">{{ $message }}</span>
+                                @endforeach
+                            @endif 
                         <label class="form__field field">
                             <svg class="field__icon field__icon_envelope">
                                 <use xlink:href="#envelope"></use>
                             </svg>
                             <!-- <input class="field__input" type="email" name="email" placeholder="Email" required> -->
                             <input type="email" class="field__input control" name="email" placeholder="Email" v-validate="'required|email'" value="{{ old('email') }}" data-vv-as="&quot;{{ __('shop::app.customer.signup-form.email') }}&quot;">
-
                         </label>
                         <label class="form__field field">
                             <svg class="field__icon field__icon_padlock">
@@ -187,8 +274,12 @@
                             </svg>
                             <!-- <input class="field__input" type="password" name="password" placeholder="Password" required> -->
                             <input type="password" class="field__input control"  name="password" placeholder="Password" v-validate="'required|min:6'" ref="password" value="{{ old('password') }}" data-vv-as="&quot;{{ __('shop::app.customer.signup-form.password') }}&quot;">
-
                         </label>
+                            @if ($errors->any())
+                                @foreach ($errors->get('password') as $message) 
+                                <span style="position: absolute; padding-top: 25px;" class="control-error">{{ $message }}</span>
+                                @endforeach
+                            @endif 
                         <label class="form__field field">
                             <svg class="field__icon field__icon_padlock">
                                 <use xlink:href="#padlock"></use>
@@ -201,7 +292,11 @@
                 </div>
             </div>
         </div>
+        @if(session()->has('loginerr'))
+        <div class="popup visible" id="login">
+        @else
         <div class="popup" id="login">
+        @endif
             <button class="popup__close popup__close_white js-close-popup">
                 <svg>
                     <use xlink:href="#close"></use>
@@ -217,17 +312,20 @@
                                 <use xlink:href="#envelope"></use>
                             </svg>
                             <!-- <input class="field__input" type="email" name="email" placeholder="Email" required> -->
-                            <input type="text" class="field__input" name="email" v-validate="'required|email'" value="{{ old('email') }}" data-vv-as="&quot;{{ __('shop::app.customer.login-form.email') }}&quot;">
+                            <input type="text" class="field__input" name="email" v-validate="'required|email'" value="{{ old('email') }}" placeholder="Email" data-vv-as="&quot;{{ __('shop::app.customer.login-form.email') }}&quot;">
 
                             <!-- Error Email -->
                             <!-- <span class="control-error" v-if="errors.has('email')">@{{ errors.first('email') }}</span> -->
                         </label>
+                            @if(session()->has('loginerr'))
+                                <span style="position: absolute; padding-top: 25px;" class="control-error">Please Check Your Credentials And Try Again</span>
+                            @endif
                         <label class="form__field field">
                             <svg class="field__icon field__icon_padlock">
                                 <use xlink:href="#padlock"></use>
                             </svg>
                             <!-- <input class="field__input" type="password" name="password" placeholder="Password" required> -->
-                            <input type="password" class="field__input" name="password" v-validate="'required'" value="{{ old('password') }}" data-vv-as="&quot;{{ __('shop::app.customer.login-form.password') }}&quot;">
+                            <input type="password" class="field__input" name="password" v-validate="'required'" value="{{ old('password') }}" placeholder="Password" data-vv-as="&quot;{{ __('shop::app.customer.login-form.password') }}&quot;">
                             <!-- Error Password -->
                         </label>
                         <div>
@@ -411,8 +509,139 @@
             </symbol>
         </svg>
     </div>
+
+    @if (session()->has('popup'))
+        <button class="js-box-trigger" data-target-id="msgSentModal">Message sent</button>
+            <!-- modal - changes saved-->
+            <div class="modal modal_m-sent visible" id="msgSentModal">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+            <svg class="modal__icon" width="47" height="49" xmlns="http://www.w3.org/2000/svg">
+                <path d="M47 35.06v2.291c-.032.12-.07.238-.096.36-.159.759-.256 1.538-.48 2.275-1.996 6.552-8.55 10.319-14.938 8.607-6.58-1.764-10.561-8.6-9.015-15.486.095-.421.209-.838.324-1.3h-.611l-17.853.001c-1.47 0-2.714-.535-3.544-1.818-.364-.563-.53-1.265-.787-1.904V3.826c.266-.652.458-1.352.815-1.943C1.442.845 2.462.366 3.58.1h39.84c.638.286 1.324.494 1.904.876.983.647 1.42 1.706 1.676 2.85v24.26c-.214.846-.486 1.66-1.073 2.324-.07.08-.056.29-.015.418.168.523.404 1.026.535 1.558.217.882.372 1.781.553 2.673M2.772 4.437c-.01.172-.02.26-.02.348 0 7.529-.002 15.057.003 22.586 0 .988.596 1.575 1.576 1.575 6.516.003 13.033.004 19.55-.01.189-.001.418-.142.56-.29.874-.905 1.658-1.92 2.604-2.732 1.954-1.674 4.262-2.555 6.781-2.678 3.93-.191 7.277 1.208 9.958 4.24.106.12.163.287.243.431l.178-.145V4.46c-.2.15-.36.267-.515.39L24.735 19.753c-1.025.806-1.439.81-2.448.017L4.101 5.471c-.421-.33-.846-.658-1.33-1.034m38.677-1.434H5.553L23.5 17.108 41.448 3.003M34.55 26.082c-5.362.082-9.746 4.623-9.667 10.064.084 5.712 4.486 10.026 9.78 9.975 5.465-.054 9.596-4.565 9.565-10.07-.031-5.623-4.366-9.934-9.678-9.97" fill="#64b2db"></path>
+                <path d="M33.58 38.522c1.984-2.009 3.92-3.986 5.882-5.936.261-.26.63-.475.982-.557.575-.133 1.129.202 1.383.721.276.563.22 1.102-.161 1.597-.095.124-.209.233-.319.344-2.208 2.237-4.415 4.473-6.625 6.708-.795.804-1.54.801-2.33-.007-1.31-1.343-2.627-2.68-3.926-4.035-.806-.84-.526-2.105.525-2.438.573-.181 1.059-.001 1.473.426.915.943 1.832 1.883 2.749 2.824.107.11.22.213.367.353" fill="#64b2db"></path>
+            </svg>
+            <h2 class="modal__title">Password Reset</h2>
+            <p class="modal__text">Your message has been sent!</p>
+        </div>
+        <!-- end of modal-->
+
+    @endif
+
+    @if (session()->has('register'))
+        <button class="js-box-trigger" data-target-id="msgSentModal">Account Created!</button>
+            <!-- modal - changes saved-->
+            <div class="modal modal_m-sent visible" id="msgSentModal">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+            <svg class="modal__icon" width="47" height="49" xmlns="http://www.w3.org/2000/svg">
+                <path d="M47 35.06v2.291c-.032.12-.07.238-.096.36-.159.759-.256 1.538-.48 2.275-1.996 6.552-8.55 10.319-14.938 8.607-6.58-1.764-10.561-8.6-9.015-15.486.095-.421.209-.838.324-1.3h-.611l-17.853.001c-1.47 0-2.714-.535-3.544-1.818-.364-.563-.53-1.265-.787-1.904V3.826c.266-.652.458-1.352.815-1.943C1.442.845 2.462.366 3.58.1h39.84c.638.286 1.324.494 1.904.876.983.647 1.42 1.706 1.676 2.85v24.26c-.214.846-.486 1.66-1.073 2.324-.07.08-.056.29-.015.418.168.523.404 1.026.535 1.558.217.882.372 1.781.553 2.673M2.772 4.437c-.01.172-.02.26-.02.348 0 7.529-.002 15.057.003 22.586 0 .988.596 1.575 1.576 1.575 6.516.003 13.033.004 19.55-.01.189-.001.418-.142.56-.29.874-.905 1.658-1.92 2.604-2.732 1.954-1.674 4.262-2.555 6.781-2.678 3.93-.191 7.277 1.208 9.958 4.24.106.12.163.287.243.431l.178-.145V4.46c-.2.15-.36.267-.515.39L24.735 19.753c-1.025.806-1.439.81-2.448.017L4.101 5.471c-.421-.33-.846-.658-1.33-1.034m38.677-1.434H5.553L23.5 17.108 41.448 3.003M34.55 26.082c-5.362.082-9.746 4.623-9.667 10.064.084 5.712 4.486 10.026 9.78 9.975 5.465-.054 9.596-4.565 9.565-10.07-.031-5.623-4.366-9.934-9.678-9.97" fill="#64b2db"></path>
+                <path d="M33.58 38.522c1.984-2.009 3.92-3.986 5.882-5.936.261-.26.63-.475.982-.557.575-.133 1.129.202 1.383.721.276.563.22 1.102-.161 1.597-.095.124-.209.233-.319.344-2.208 2.237-4.415 4.473-6.625 6.708-.795.804-1.54.801-2.33-.007-1.31-1.343-2.627-2.68-3.926-4.035-.806-.84-.526-2.105.525-2.438.573-.181 1.059-.001 1.473.426.915.943 1.832 1.883 2.749 2.824.107.11.22.213.367.353" fill="#64b2db"></path>
+            </svg>
+            <h2 class="modal__title">Account Created!</h2>
+            <p class="modal__text">Your account has been created!</p>
+        </div>
+        <!-- end of modal-->
+
+    @endif
+
+    @if (session()->has('addtocard'))
+
+    <div class="modal modal_changes visible" id="changesModal">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+            <svg class="modal__icon" width="45" height="45" xmlns="http://www.w3.org/2000/svg">
+                <path d="M42.141 18.695c-1.026 0-1.858.851-1.858 1.901v1.915c-.003 4.994-1.908 9.689-5.363 13.218-3.452 3.527-8.04 5.469-12.92 5.469h-.01c-10.082-.006-18.278-8.399-18.273-18.709C3.72 17.495 5.625 12.8 9.08 9.271 12.532 5.744 17.12 3.8 22 3.8h.01c2.577.002 5.077.547 7.431 1.62a1.842 1.842 0 0 0 2.454-.963c.418-.959-.003-2.083-.94-2.51A21.449 21.449 0 0 0 22.012 0H22C16.128 0 10.607 2.337 6.453 6.581 2.295 10.828.003 16.477 0 22.487c-.003 6.01 2.282 11.662 6.435 15.914 4.153 4.252 9.676 6.596 15.552 6.599H22c5.872 0 11.393-2.337 15.547-6.581 4.158-4.247 6.45-9.896 6.453-15.907v-1.916c0-1.05-.832-1.9-1.859-1.9z" fill="#64b2db"></path>
+                <path d="M44.471 3.547a1.763 1.763 0 0 0-2.553 0L21.674 24.49l-4.592-4.75a1.763 1.763 0 0 0-2.553 0 1.914 1.914 0 0 0 0 2.64l5.869 6.073a1.77 1.77 0 0 0 1.277.547 1.77 1.77 0 0 0 1.276-.547l21.52-22.264a1.914 1.914 0 0 0 0-2.642z" fill="#64b2db"></path>
+            </svg>
+            <p class="modal__text">Item have been added to the cart!</p>
+        </div>
+
+    @endif
+
+    @if (session()->has('already_sub'))
+
+    <div class="modal modal_changes visible" id="changesModal">
+        <button class="modal__close js-close-modal">
+            <svg>
+                <use xlink:href="#rounded-close"></use>
+            </svg>
+        </button>
+        <svg class="modal__icon" width="45" height="45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.141 18.695c-1.026 0-1.858.851-1.858 1.901v1.915c-.003 4.994-1.908 9.689-5.363 13.218-3.452 3.527-8.04 5.469-12.92 5.469h-.01c-10.082-.006-18.278-8.399-18.273-18.709C3.72 17.495 5.625 12.8 9.08 9.271 12.532 5.744 17.12 3.8 22 3.8h.01c2.577.002 5.077.547 7.431 1.62a1.842 1.842 0 0 0 2.454-.963c.418-.959-.003-2.083-.94-2.51A21.449 21.449 0 0 0 22.012 0H22C16.128 0 10.607 2.337 6.453 6.581 2.295 10.828.003 16.477 0 22.487c-.003 6.01 2.282 11.662 6.435 15.914 4.153 4.252 9.676 6.596 15.552 6.599H22c5.872 0 11.393-2.337 15.547-6.581 4.158-4.247 6.45-9.896 6.453-15.907v-1.916c0-1.05-.832-1.9-1.859-1.9z" fill="#64b2db"></path>
+            <path d="M44.471 3.547a1.763 1.763 0 0 0-2.553 0L21.674 24.49l-4.592-4.75a1.763 1.763 0 0 0-2.553 0 1.914 1.914 0 0 0 0 2.64l5.869 6.073a1.77 1.77 0 0 0 1.277.547 1.77 1.77 0 0 0 1.276-.547l21.52-22.264a1.914 1.914 0 0 0 0-2.642z" fill="#64b2db"></path>
+        </svg>
+        <p class="modal__text">Already Subbed!</p>
+    </div>
+
+    @endif
+
+    @if (session()->has('subbed'))
+
+    <div class="modal modal_changes visible" id="changesModal">
+        <button class="modal__close js-close-modal">
+            <svg>
+                <use xlink:href="#rounded-close"></use>
+            </svg>
+        </button>
+        <svg class="modal__icon" width="45" height="45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.141 18.695c-1.026 0-1.858.851-1.858 1.901v1.915c-.003 4.994-1.908 9.689-5.363 13.218-3.452 3.527-8.04 5.469-12.92 5.469h-.01c-10.082-.006-18.278-8.399-18.273-18.709C3.72 17.495 5.625 12.8 9.08 9.271 12.532 5.744 17.12 3.8 22 3.8h.01c2.577.002 5.077.547 7.431 1.62a1.842 1.842 0 0 0 2.454-.963c.418-.959-.003-2.083-.94-2.51A21.449 21.449 0 0 0 22.012 0H22C16.128 0 10.607 2.337 6.453 6.581 2.295 10.828.003 16.477 0 22.487c-.003 6.01 2.282 11.662 6.435 15.914 4.153 4.252 9.676 6.596 15.552 6.599H22c5.872 0 11.393-2.337 15.547-6.581 4.158-4.247 6.45-9.896 6.453-15.907v-1.916c0-1.05-.832-1.9-1.859-1.9z" fill="#64b2db"></path>
+            <path d="M44.471 3.547a1.763 1.763 0 0 0-2.553 0L21.674 24.49l-4.592-4.75a1.763 1.763 0 0 0-2.553 0 1.914 1.914 0 0 0 0 2.64l5.869 6.073a1.77 1.77 0 0 0 1.277.547 1.77 1.77 0 0 0 1.276-.547l21.52-22.264a1.914 1.914 0 0 0 0-2.642z" fill="#64b2db"></path>
+        </svg>
+        <p class="modal__text">Subbed!</p>
+    </div>
+
+    @endif
+
+    @if (session()->has('verifed'))
+
+    <div class="modal modal_changes visible" id="changesModal">
+        <button class="modal__close js-close-modal">
+            <svg>
+                <use xlink:href="#rounded-close"></use>
+            </svg>
+        </button>
+        <svg class="modal__icon" width="45" height="45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.141 18.695c-1.026 0-1.858.851-1.858 1.901v1.915c-.003 4.994-1.908 9.689-5.363 13.218-3.452 3.527-8.04 5.469-12.92 5.469h-.01c-10.082-.006-18.278-8.399-18.273-18.709C3.72 17.495 5.625 12.8 9.08 9.271 12.532 5.744 17.12 3.8 22 3.8h.01c2.577.002 5.077.547 7.431 1.62a1.842 1.842 0 0 0 2.454-.963c.418-.959-.003-2.083-.94-2.51A21.449 21.449 0 0 0 22.012 0H22C16.128 0 10.607 2.337 6.453 6.581 2.295 10.828.003 16.477 0 22.487c-.003 6.01 2.282 11.662 6.435 15.914 4.153 4.252 9.676 6.596 15.552 6.599H22c5.872 0 11.393-2.337 15.547-6.581 4.158-4.247 6.45-9.896 6.453-15.907v-1.916c0-1.05-.832-1.9-1.859-1.9z" fill="#64b2db"></path>
+            <path d="M44.471 3.547a1.763 1.763 0 0 0-2.553 0L21.674 24.49l-4.592-4.75a1.763 1.763 0 0 0-2.553 0 1.914 1.914 0 0 0 0 2.64l5.869 6.073a1.77 1.77 0 0 0 1.277.547 1.77 1.77 0 0 0 1.276-.547l21.52-22.264a1.914 1.914 0 0 0 0-2.642z" fill="#64b2db"></path>
+        </svg>
+        <p class="modal__text">Account Verified!</p>
+    </div>
+
+    @endif
+
+    @if (session()->has('message_sent'))
+
+    <div class="modal modal_changes visible" id="changesModal">
+        <button class="modal__close js-close-modal">
+            <svg>
+                <use xlink:href="#rounded-close"></use>
+            </svg>
+        </button>
+        <svg class="modal__icon" width="45" height="45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.141 18.695c-1.026 0-1.858.851-1.858 1.901v1.915c-.003 4.994-1.908 9.689-5.363 13.218-3.452 3.527-8.04 5.469-12.92 5.469h-.01c-10.082-.006-18.278-8.399-18.273-18.709C3.72 17.495 5.625 12.8 9.08 9.271 12.532 5.744 17.12 3.8 22 3.8h.01c2.577.002 5.077.547 7.431 1.62a1.842 1.842 0 0 0 2.454-.963c.418-.959-.003-2.083-.94-2.51A21.449 21.449 0 0 0 22.012 0H22C16.128 0 10.607 2.337 6.453 6.581 2.295 10.828.003 16.477 0 22.487c-.003 6.01 2.282 11.662 6.435 15.914 4.153 4.252 9.676 6.596 15.552 6.599H22c5.872 0 11.393-2.337 15.547-6.581 4.158-4.247 6.45-9.896 6.453-15.907v-1.916c0-1.05-.832-1.9-1.859-1.9z" fill="#64b2db"></path>
+            <path d="M44.471 3.547a1.763 1.763 0 0 0-2.553 0L21.674 24.49l-4.592-4.75a1.763 1.763 0 0 0-2.553 0 1.914 1.914 0 0 0 0 2.64l5.869 6.073a1.77 1.77 0 0 0 1.277.547 1.77 1.77 0 0 0 1.276-.547l21.52-22.264a1.914 1.914 0 0 0 0-2.642z" fill="#64b2db"></path>
+        </svg>
+        <p class="modal__text">Message Sent!</p>
+    </div>
+
+    @endif
+
+
     <script src="{{ url('assets/js/libs.min.js') }}"></script>
     <script src="{{ url('assets/js/main.js?1566387411004') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js'></script>
+    
+
 </body>
 
 </html>

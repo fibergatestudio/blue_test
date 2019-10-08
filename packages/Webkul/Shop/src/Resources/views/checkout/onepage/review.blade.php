@@ -4,14 +4,14 @@
     </div> -->
 
             <div class="page">
-                <div class="">
+                <div class="page__content">
                     <div class="container">
                         <ul class="breadcrumb page__breadcrumb">
                             <li class="breadcrumb__item">
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">
@@ -42,7 +42,7 @@
                                 <div class="payment__box payment__box_order">
                                     <div class="payment__row payment__row_head payment__row_order">
                                         <h2 class="payment__title">Your order</h2>
-                                        <button class="payment__edit-cart js-open-popup" data-popup-id="editShoppingCart">Edit shopping cart</button>
+                                        <a href="{{ url('checkout/cart') }}"><button class="payment__edit-cart js-open-popup" data-popup-id="editShoppingCart">Edit shopping cart</button></a>
                                     </div>
                                     <div class="payment__content">
 
@@ -102,7 +102,7 @@
                                         </div>
                                         <div class="payment__row payment__row_head payment__row_order">
                                             <h2 class="payment__title">Shipping details</h2>
-                                            <button class="payment__edit-cart js-open-popup" data-popup-id="editShoppingCart">Edit shipping address</button>
+                                            <a href="{{ url('checkout/onepage') }}"><button class="payment__edit-cart js-open-popup" data-popup-id="editShoppingCart">Edit shipping address</button></a>
                                         </div>
                                         @if ($shippingAddress = $cart->shipping_address)
                                         <div class="payment__row payment__row_order">

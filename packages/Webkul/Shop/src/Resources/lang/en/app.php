@@ -18,11 +18,24 @@ return [
     ],
 
     'home' => [
-        'page-title' => 'Bagisto - Home',
+        'page-title' => 'Blue Bird Cafe',
         'featured-products' => 'Featured Products',
         'new-products' => 'New Products',
         'verify-email' => 'Verify Your Email Account',
         'resend-verify-email' => 'Resend Verification Email'
+    ],
+
+    'contacts' => [
+        'contacts' => 'Contacts',
+        'address' => 'ADDRESS',
+        'coffee-manager' => 'COFFE STORE MANAGER',
+        'head-manager' => 'HEAD MANAGER',
+        'education' => 'EDUCATION FOR BARISTAS AND PROFESSIONAL CONSULTING',
+        'order' => 'To make an order',
+        'co-operate' => 'We are open to cooperation',
+        'questions' => 'If you have any questions or comments, write to us!',
+        'with-questions' => 'With any other question',
+
     ],
 
     'header' => [
@@ -59,14 +72,14 @@ return [
         'subscribed' => 'You Are Now Subscribed To Subscription Emails',
         'not-subscribed' => 'You Cannot Be Subscribed To Subscription Emails, Try Again After Some time',
         'already' => 'You Are Already Subscribed To Our Subscription List',
-        'unsubscribed' => 'You Are Unsubscribed From Bagisto Subscription Mails',
+        'unsubscribed' => 'You Are Unsubscribed From BBC Subscription Mails',
         'already-unsub' => 'You Are Already Unsubscribed',
         'not-subscribed' => 'Error! Mail Cannot Be Sent Currently, Please Try Again Later'
     ],
 
     'search' => [
         'no-results' => 'No Results Found',
-        'page-title' => 'Bagisto - Search',
+        'page-title' => 'Blue Bird Cafe',
         'found-results' => 'Search Results Found',
         'found-result' => 'Search Result Found'
     ],

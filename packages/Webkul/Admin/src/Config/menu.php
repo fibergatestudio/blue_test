@@ -47,10 +47,18 @@ return [
     //     'sort' => 0,                    // Sort number on which your menu-icon should display
     //     'icon-class' => 'dashboard-icon',   //class of menu-icn
     // ],
+    // [
+    //     'key' => 'tasks',          // uniquely defined key for menu-icon
+    //     'name' => 'Calendar Tasks',        //  name of menu-icon
+    //     'route' => 'admin.dashboard.tasks',  // the route for your menu-icon
+    //     'sort' => 0,                    // Sort number on which your menu-icon should display
+    //     'icon-class' => 'dashboard-icon',   //class of menu-icn
+    // ],
+
     [
-        'key' => 'loyality',          // uniquely defined key for menu-icon
-        'name' => 'Loyality Program',        //  name of menu-icon
-        'route' => 'admin.dashboard.loyality',  // the route for your menu-icon
+        'key' => 'loyalty',          // uniquely defined key for menu-icon
+        'name' => 'Loyalty Program',        //  name of menu-icon
+        'route' => 'admin.dashboard.loyalty',  // the route for your menu-icon
         'sort' => 0,                    // Sort number on which your menu-icon should display
         'icon-class' => 'dashboard-icon',   //class of menu-icn
     ],
@@ -83,6 +91,18 @@ return [
         'name' => 'admin::app.layouts.invoices',
         'route' => 'admin.sales.invoices.index',
         'sort' => 3,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.tasks',
+        'name' => 'Calendar Tasks',
+        'route' => 'admin.dashboard.tasks',
+        'sort' => 4,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.form',
+        'name' => 'Contac Form',
+        'route' => 'admin.dashboard.form',
+        'sort' => 5,
         'icon-class' => '',
     ],
     [

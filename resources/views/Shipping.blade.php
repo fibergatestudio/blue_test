@@ -17,7 +17,7 @@
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shipping.html">shipping</a>
+                                <a href="{{ url('/shipping') }}">shipping</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">

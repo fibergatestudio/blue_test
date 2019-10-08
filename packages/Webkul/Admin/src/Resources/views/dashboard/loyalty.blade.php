@@ -8,7 +8,7 @@
 <div class="content full-page dashboard">
     <div class="page-header">
         <div class="page-title">
-            <h1>Loyality Program</h1>
+            <h1>Loyalty Program</h1>
         </div>
 
         <div class="page-action">
@@ -50,7 +50,7 @@
             </div>
             <div class="dashboard-stats">
                 <div class="dashboard-card">
-                        <form action="{{ url('admin/loyality/apply_points_value') }}" method="POST">
+                        <form action="{{ url('admin/loyalty/apply_points_value') }}" method="POST">
                         @csrf()
                             <div class="title">
                             Points Value
@@ -65,7 +65,7 @@
             </div>
             <div class="dashboard-stats">
                 <div class="dashboard-card">
-                    <form action="{{ url('admin/loyality/apply_percentage') }}" method="POST">
+                    <form action="{{ url('admin/loyalty/apply_percentage') }}" method="POST">
                     @csrf()
                         <div class="title">
                             Payout %

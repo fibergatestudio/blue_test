@@ -7,9 +7,11 @@ use Illuminate\Http\Response;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Product\Repositories\ProductReviewRepository as ProductReview;
 use Webkul\Customer\Models\Customer;
+use App\CustomerAddresses;
 use Auth;
 use Hash;
 use DB;
+use Redirect;
 
 /**
  * Customer controlller for the customer basically for the tasks of customers which will be done after customer authentication.
@@ -135,6 +137,67 @@ class CustomerController extends Controller
 
             return redirect()->back($this->_config['redirect']);
         }
+    }
+
+    public function new_up(Request $request){
+
+
+        //Customer
+        $user_id = $request->user_id;
+
+        $firstName = $request->firstName;
+        $lastName = $request->lastName;
+        $email = $request->email;
+        $gender = $request->gender;
+
+        $customer = DB::table('customers')->where('id', $user_id)->first();
+
+        DB::table('customers')->where('id', $user_id)
+        ->limit(1)
+        ->update([
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
+            'gender' => $gender,
+        ]);
+
+        //Adress
+        $streetAddress = $request->streetAddress;
+        $city = $request->city;
+        $region = $request->region;
+        $zip = $request->zip;
+        $phone = $request->phone;
+        
+        $address_checker = DB::table('customer_addresses')->where('customer_id', $user_id)->first();
+
+        if($address_checker){
+
+            DB::table('customer_addresses')->where('customer_id', $user_id)
+            ->limit(1)
+            ->update([
+                'address1' => $streetAddress,
+                'city' => $city,
+                'state' => $region,
+                'postcode' => $zip,
+                'phone' => $phone,
+            ]);
+
+        } else {
+
+            $new_address = new CustomerAddresses();
+            $new_address->customer_id = $user_id;
+            $new_address->address1 = $streetAddress;
+            $new_address->city = $city;
+            $new_address->state = $region;
+            $new_address->postcode = $zip;
+            $new_address->phone = $phone;
+            $new_address->save();
+
+        }
+
+
+        //return back();
+        return Redirect::back()->withErrors(['Information Changed!', 'The Message']);
     }
 
     /**

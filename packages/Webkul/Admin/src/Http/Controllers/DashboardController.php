@@ -131,8 +131,19 @@ class DashboardController extends Controller
     {
         return view($this->_config['view']);
     }
+    public function tasks(){
+        return view($this->_config['view']);
+    }
+    public function form(){
+
+        $contact_form = DB::table('contact_form')->get();
+
+        return view($this->_config['view'],[
+            'contact_form' => $contact_form,
+        ]);
+    }
     // LOYALITY 
-    public function loyality()
+    public function loyalty()
     {
         // Total Customers Points
         $total_customers_points = DB::table('customers')->sum('points');
@@ -140,6 +151,18 @@ class DashboardController extends Controller
         $total_customers_used_points = DB::table('customers')->sum('used_points');
         //Loyality Settings
         $loyality_settings = DB::table('loyality_program')->first();
+
+        if(!$loyality_settings){
+            $new_settings = new LoyalityProgram();
+            $new_settings->payout_percentage = '5';
+            $new_settings->points_value = '1';
+            $new_settings->save();
+            $loyality_settings = DB::table('loyality_program')->first();
+        } else {
+            // $test="Has Value";
+            // dd($test);
+        }
+
         // Points Value
         $points_value = $loyality_settings->points_value;
         // Pyaout Percentage

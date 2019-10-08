@@ -9,6 +9,10 @@
 @endsection
 
 @push('scripts')
+<!-- Script for products only -->
+<script type="text/javascript" src="{{ bagisto_asset('js/shop.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
+
     <script type="text/x-template" id="checkout-template">
         <div id="checkout" class="checkout-process">
             <div style="width:100%;" class="col-main">
@@ -43,8 +47,8 @@
                 <div class="step-content information" v-show="currentStep == 1" id="address-section">
                     @include('shop::checkout.onepage.customer-info')
 
-                    <div style="text-align: center;" class="button-group">
-                        <button type="button" class="button button_blue" @click="validateForm('address-form')" :disabled="disable_button" id="checkout-address-continue-button">
+                    <div style="text-align: center;" class="button-group low_cont">
+                        <button type="button" class="button button_blue " @click="validateForm('address-form')" :disabled="disable_button" id="checkout-address-continue-button">
                             {{ __('shop::app.checkout.onepage.continue') }}
                         </button>
                     </div>
@@ -53,7 +57,7 @@
                 <div class="step-content shipping" v-show="currentStep == 2" id="shipping-section">
                     <shipping-section v-if="currentStep == 2" @onShippingMethodSelected="shippingMethodSelected($event)"></shipping-section>
 
-                    <div style="text-align: center;" class="button-group">
+                    <div style="text-align: center;" class="button-group low_cont">
                         <button type="button" class="button button_blue" @click="validateForm('shipping-form')" :disabled="disable_button" id="checkout-shipping-continue-button">
                             {{ __('shop::app.checkout.onepage.continue') }}
                         </button>
@@ -64,7 +68,7 @@
                 <div style="display: block;" class="step-content payment" v-show="currentStep == 3" id="payment-section">
                     <payment-section v-if="currentStep == 3" @onPaymentMethodSelected="paymentMethodSelected($event)"></payment-section>
 
-                    <div style="text-align: center;"  class="button-group">
+                    <div style="text-align: center;"  class="button-group low_cont">
                         <button type="button" class="button button_blue" @click="validateForm('payment-form')" :disabled="disable_button" id="checkout-payment-continue-button">
                             {{ __('shop::app.checkout.onepage.continue') }}
                         </button>
@@ -83,7 +87,7 @@
                         </div>
                     </review-section>
 
-                    <div class="button-group">
+                    <div style="text-align: center; padding-bottom: 30px;" class="button-group">
                         <button type="button" class="button button_blue" @click="placeOrder()" :disabled="disable_button" id="checkout-place-order-button">
                             {{ __('shop::app.checkout.onepage.place-order') }}
                         </button>

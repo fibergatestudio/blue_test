@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.lay404')
 
 @section('page_title')
     {{ __('admin::app.error.404.page-title') }}
@@ -53,13 +53,13 @@
                                 <img src="{{ url('assets/img/404/zero-been.png') }}" alt="Picture alt text">
                             </picture>4
                         </div>
-                        <div class="page-404__desc">Oops! Page doesn’t found</div>
+                        <div class="page-404__desc">{{ __('admin::app.error.404.oops') }} {{ __('shop::app.contacts.contacts') }}</div>
                     </div>
                     <div class="page-404__text">Try one of our services and get nice bonuses for the loyalty program!</div>
                     <div class="page-404__btn-group">
-                        <a class="button button_blue page-404__button" href="catalog.html">Shop</a>
-                        <a class="button button_blue page-404__button" href="bluebox.html">Blue Box</a>
-                        <a class="button button_blue page-404__button" href="newsletter-subscription.html">subscription</a>
+                        <a class="button button_blue page-404__button" href="{{ url('/categories/coffee') }}">Shop</a>
+                        <a class="button button_blue page-404__button" href="{{ url('/bluebox') }}">Blue Box</a>
+                        <a class="button button_blue page-404__button" href="{{ url('/') }}">subscription</a>
                     </div>
                 </div>
                 <div class="header__picture header__picture_keep"></div>

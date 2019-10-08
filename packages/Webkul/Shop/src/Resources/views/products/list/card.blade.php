@@ -12,7 +12,7 @@
             <div class="product-tile__image">
                 <a href="{{ route('shop.products.index', $product->url_key) }}" title="{{ $product->name }}">
                     <picture>
-                        <img src="{{ $productBaseImage['medium_image_url'] }}" onerror="this.src='{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}'"/>
+                        <img src="{{ $productBaseImage['medium_image_url'] }}" height=329 width=226 onerror="this.src='{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}'"/>
                     </picture>
                 </a>
             </div>

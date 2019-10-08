@@ -11,6 +11,8 @@ use Webkul\Shop\Mail\SubscriptionEmail;
 use Webkul\Customer\Repositories\CustomerRepository as Customer;
 use Webkul\Core\Repositories\SubscribersListRepository as Subscription;
 
+use Redirect;
+
 /**
  * Subscription controller
  *
@@ -75,8 +77,12 @@ class SubscriptionController extends Controller
             }
         };
 
+        //dd($unique);
+
         if ($unique()) {
             $token = uniqid();
+
+            //dd($token);
 
             $subscriptionData['email'] = $email;
             $subscriptionData['token'] = $token;
@@ -87,10 +93,15 @@ class SubscriptionController extends Controller
                 Mail::queue(new SubscriptionEmail($subscriptionData));
 
                 session()->flash('success', trans('shop::app.subscription.subscribed'));
+
+
+                return redirect()->back()->with('subbed', 'open');
+                //dd($email);
             } catch (\Exception $e) {
                 session()->flash('error', trans('shop::app.subscription.not-subscribed'));
 
                 $mailSent = false;
+                dd($mailSent);
             }
 
             $result = false;
@@ -106,14 +117,18 @@ class SubscriptionController extends Controller
                 if (!$result) {
                     session()->flash('error', trans('shop::app.subscription.not-subscribed'));
 
-                    return redirect()->back();
+                    //return redirect()->back();
+                    //return Redirect::back()->withErrors(['Error when subbing!', 'The Message']);
+                    return redirect()->back()->with('error_sub', 'open');
                 }
             }
         } else {
             session()->flash('error', trans('shop::app.subscription.already'));
+            return redirect()->back()->with('already_sub', 'open');
         }
 
         return redirect()->back();
+        //return Redirect::back()->withErrors(['error', 'The Message']);
     }
 
     /**

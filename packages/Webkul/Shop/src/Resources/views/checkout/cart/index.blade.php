@@ -20,7 +20,7 @@
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">
@@ -165,7 +165,7 @@
                                         <!-- <a style="color:white;" class="button button_blue total__button" href="shopping-cart-step-1.html">PROCEED TO CHECKOUT</a> -->
                                         <button type="submit" class="button button_blue total__button">{{ __('shop::app.checkout.cart.update-cart') }}</button>
                                         @if (! cart()->hasError())
-                                        <a style="color:white;" class="button button_blue total__button" href="{{ route('shop.checkout.onepage.index') }}">{{ __('shop::app.checkout.cart.proceed-to-checkout') }}</a>
+                                        <a style="color:white; display: initial;" class="button button_blue total__button" href="{{ route('shop.checkout.onepage.index') }}">{{ __('shop::app.checkout.cart.proceed-to-checkout') }}</a>
                                         @endif
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@
                                                     <input class="control quantity-change" value="+" style="width: 35px; padding: 0 12px; border-radius: 0px 3px 3px 0px;" onclick="updateCartQunatity('add', {{$key}})" readonly>
                                                 </div>
 
-                                                <span class="control-error" v-if="errors.has('qty[{{$item->id}}]')">@{{ errors.first('qty[{!!$item->id!!}]') }}</span>
+                                                <!-- <span class="control-error" v-if="errors.has('qty[{{$item->id}}]')">@{{ errors.first('qty[{!!$item->id!!}]') }}</span> -->
                                             </div>
 
                                             <span class="remove">
@@ -359,7 +359,7 @@
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">
@@ -369,7 +369,7 @@
                         </a>
                         <h1 class="page__title">Your cart is empty</h1>
                         <div class="cart">
-                            <a style="color:white;" class="button button_blue cart__go-shopping" href="{{ route('shop.home.index') }}">Go shopping</a>
+                            <a style="color:white;" class="button button_blue cart__go-shopping" href="{{ url('/categories/coffee') }}">Go shopping</a>
                         </div>
                     </div>
                 </div>
@@ -394,7 +394,7 @@
 
         @endif
     </section>
-
+    <script type="text/javascript" src="{{ bagisto_asset('js/shop.js') }}"></script>
 @endsection
 
 @push('scripts')

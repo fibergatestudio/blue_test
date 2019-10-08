@@ -53,7 +53,11 @@
                             <div class="cart-settings__box subscription-settings">
                                 <h2 class="subscription-settings__title">For those who love coffee</h2>
                                 <p class="subscription-settings__desc">Join our community of coffee addicts as we learn more about the drink we love.</p>
-                                <form action="{{ url('/subscribe') }}" class="subscription-settings__form">
+                                @if($errors->any())
+                                <h4>{{$errors->first()}}</h4>
+                                @endif
+                                <form action="{{ url('/subscribe') }}" class="subscription-settings__form" method=GET>
+                                @csrf()
                                     <div class="field subscription-settings__field">
                                         <svg class="field__icon field__icon_envelope">
                                             <use xlink:href="#envelope"></use>

@@ -122,7 +122,7 @@
                                 </div>
                                 <footer class="tutorial-card__footer">
                                     <h4>Pour your coffee and enjoy!</h4>
-                                    <button class="button button_blue">Shop our coffee</button>
+                                    <a href="{{ url('/categories/coffee') }}"><button class="button button_blue">Shop our coffee</button></a>
                                 </footer>
                             </article>
                         </div>
@@ -136,21 +136,21 @@
                                         <div class="tutorial-tile__wrapper">
                                             <div class="tutorial-tile__title">AEROPRESS</div>
                                             <div class="tutorial-tile__desc">Coffee liberated from the constraints of gravity</div>
-                                            <a class="button button_blue tutorial-tile__button" href="tutorial.html">Start guide</a>
+                                            <a class="button button_blue tutorial-tile__button" href="#">Start guide</a>
                                         </div>
                                     </div>
                                     <div class="tutorial-tile tutorial-tile_mini swiper-slide" style="background-image: url({{ url('assets/img/tutorials/card-img-3.jpg')}})">
                                         <div class="tutorial-tile__wrapper">
                                             <div class="tutorial-tile__title">BIALETTI MOKA POT</div>
                                             <div class="tutorial-tile__desc">Preparation guide</div>
-                                            <a class="button button_blue tutorial-tile__button" href="tutorial.html">Start guide</a>
+                                            <a class="button button_blue tutorial-tile__button" href="#">Start guide</a>
                                         </div>
                                     </div>
                                     <div class="tutorial-tile tutorial-tile_mini swiper-slide" style="background-image: url({{ url('assets/img/tutorials/card-img-4.jpg')}})">
                                         <div class="tutorial-tile__wrapper">
                                             <div class="tutorial-tile__title">CHEMEX</div>
                                             <div class="tutorial-tile__desc">Coffee liberated from the constraints of gravity</div>
-                                            <a class="button button_blue tutorial-tile__button" href="tutorial.html">Start guide</a>
+                                            <a class="button button_blue tutorial-tile__button" href="#">Start guide</a>
                                         </div>
                                     </div>
                                 </div>

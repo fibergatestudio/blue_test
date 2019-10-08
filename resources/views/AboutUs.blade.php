@@ -3,51 +3,9 @@
 @section('header')
 
 <header class="header header_has-columns header_about-us">
-            <div class="header__top-panel">
-                <button class="burger header__burger"><span class="burger__line"></span><span class="burger__line"></span><span class="burger__line"></span>
-                </button>
-                <a class="header__logo" href="/">
-                    <svg>
-                        <use xlink:href="#logo"></use>
-                    </svg>
-                </a>
-                <nav class="nav header__nav nav_main">
+
                 @include('layouts.header_menu')
-                </nav>
-                <div class="header__lang-switcher lang lang_main">
-                    <button class="lang__trigger">En
-                        <svg>
-                            <use xlink:href="#arrow-down"></use>
-                        </svg>
-                    </button>
-                    <ul class="lang__list">
-                        <li class="lang__current">
-                            <button class="lang__trigger">En
-                                <svg>
-                                    <use xlink:href="#arrow-down"></use>
-                                </svg>
-                            </button>
-                        </li>
-                        <li class="lang__option">
-                            <a href="#">Hu</a>
-                        </li>
-                        <li class="lang__option">
-                            <a href="#">En</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="header__cart">
-                    <button class="cart-btn js-box-trigger cart-link_main" data-target-id="cartModal">
-                        <svg class="cart-btn__icon">
-                            <use xlink:href="#shopping-bag"></use>
-                        </svg><span class="cart-btn__counter">2</span>
-                    </button>
-                </div>
-                <div class="header__auth">
-                    <a href="newsletter-subscription.html">Subscribe</a>
-                    <button class="js-open-popup" data-popup-id="signin">Sign in</button>
-                </div>
-            </div>
+
             <!-- cart popup-->
             <form class="cart-modal" id="cartModal">
                 <button class="cart-modal__close js-close-modal" type="button">
@@ -59,19 +17,19 @@
                 <div class="cart-modal__list">
                     <div class="cart-sm-product cart-modal__item">
                         <div class="cart-sm-product__image">
-                            <img src="img/tmp/goods/green-sm.png" alt="Blue Bird Blend ">
+                            <img src="{{ url('assets/img/tmp/goods/green-sm.png') }}" alt="Blue Bird Blend ">
                         </div>
                         <h3 class="cart-sm-product__title">Blue Bird Blend </h3><span class="cart-sm-product__price">2150 HUF</span>
                     </div>
                     <div class="cart-sm-product cart-modal__item">
                         <div class="cart-sm-product__image">
-                            <img src="img/tmp/goods/coffee-machine.png" alt="Coffee Machine">
+                            <img src="{{ url('assets/img/tmp/goods/coffee-machine.png') }}" alt="Coffee Machine">
                         </div>
                         <h3 class="cart-sm-product__title">Coffee Machine</h3><span class="cart-sm-product__price">10 000 HUF</span>
                     </div>
                     <div class="cart-sm-product cart-modal__item">
                         <div class="cart-sm-product__image">
-                            <img src="img/tmp/goods/cup.png" alt="Cup">
+                            <img src="{{ url('assets/img/tmp/goods/cup.png') }}" alt="Cup">
                         </div>
                         <h3 class="cart-sm-product__title">Cup</h3><span class="cart-sm-product__price">3 000 HUF</span>
                     </div>
@@ -163,7 +121,7 @@
                                     </g>
                                 </svg>
                                 <p>From the start we are focusing on speciality line. As the brand was getting bigger we also outgrew our place, so today you can find us in two different locations.</p>
-                                <a class="button button_blue" href="#">Our locations</a>
+                                <a class="button button_blue" href="{{ url('/contacts') }}">Our locations</a>
                             </div>
                         </div>
                         <div class="about-us__col about-us__col_pl-100">
@@ -297,11 +255,11 @@
                     </div>
                 </div>
                 <div class="gallery__container swiper-container js-init-slider" data-options="gallery">
-                    <div style="height: auto;" class="swiper-wrapper">
+                    <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="gallery__category">
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/big-image.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-1.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-1.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-1.jpg') }}" type="image/jpeg">
@@ -310,7 +268,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-2.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-2.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-2.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-2.jpg') }}" type="image/jpeg">
@@ -319,7 +277,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-3.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-3.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-3.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-3.jpg') }}" type="image/jpeg">
@@ -328,7 +286,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-4.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-4.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-4.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-4.jpg') }}" type="image/jpeg">
@@ -337,7 +295,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-5.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-5.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-5.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-5.jpg') }}" type="image/jpeg">
@@ -346,7 +304,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-6.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-6.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-6.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-6.jpg') }}" type="image/jpeg">
@@ -355,7 +313,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-7.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-7.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-7.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-7.jpg') }}" type="image/jpeg">
@@ -364,7 +322,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-8.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-8.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-8.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-8.jpg') }}" type="image/jpeg">
@@ -373,7 +331,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-9.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-9.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-9.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-9.jpg') }}" type="image/jpeg">
@@ -382,7 +340,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-10.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-10.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-10.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-10.jpg') }}" type="image/jpeg">
@@ -391,7 +349,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-11.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-11.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-11.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-11.jpg') }}" type="image/jpeg">
@@ -400,7 +358,7 @@
                                     </a>
                                 </div>
                                 <div class="gallery__item">
-                                    <a class="js-galley-lightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-12.jpg') }}">
+                                    <a class="glightbox" href="{{ url('assets/img/tmp/gallery/gallery-img-12.jpg') }}">
                                         <picture>
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-12.webp') }}" type="image/webp">
                                             <source srcset="{{ url('assets/img/tmp/gallery/gallery-img-12.jpg') }}" type="image/jpeg">
@@ -410,14 +368,221 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="swiper-slide">
                             <div class="gallery__category">
                                 <p>Images</p>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </main>
+        
 
+        <!-- <div id="glightbox-body" class="glightbox-container glightbox-clean">
+    <div class="gloader visible" style="display: none;"></div>
+    <div class="goverlay"></div>
+    <div class="gcontainer">
+    <div id="glightbox-slider" class="gslider"><div class="gslide loaded">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media gslide-image"><img src="file:///D:/WorkBackups/38_BlueBird/2_pages/1_easy/img/tmp/gallery/big-image.jpg">
+            </div>
+            
+        </div>
+    </div>
+</div><div class="gslide loaded current">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media gslide-image"><img src="file:///D:/WorkBackups/38_BlueBird/2_pages/1_easy/img/tmp/gallery/gallery-img-2.jpg">
+            </div>
+            
+        </div>
+    </div>
+</div><div class="gslide loaded">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media gslide-image"><img src="file:///D:/WorkBackups/38_BlueBird/2_pages/1_easy/img/tmp/gallery/gallery-img-3.jpg">
+            </div>
+            
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div class="gslide">
+    <div class="gslide-inner-content">
+        <div class="ginner-container">
+            <div class="gslide-media">
+            </div>
+            <div class="gslide-description">
+                <div class="gdesc-inner">
+                    <h4 class="gslide-title"></h4>
+                    <div class="gslide-desc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+    <button class="gnext gbtn" tabindex="0" style="display: block;"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 477.175 477.175" xml:space="preserve"> <g><path d="M360.731,229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1,0s-5.3,13.8,0,19.1l215.5,215.5l-215.5,215.5c-5.3,5.3-5.3,13.8,0,19.1c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-4l225.1-225.1C365.931,242.875,365.931,234.275,360.731,229.075z"></path></g></svg></button>
+    <button class="gprev gbtn" tabindex="1" style="display: block;"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 477.175 477.175" xml:space="preserve"><g><path d="M145.188,238.575l215.5-215.5c5.3-5.3,5.3-13.8,0-19.1s-13.8-5.3-19.1,0l-225.1,225.1c-5.3,5.3-5.3,13.8,0,19.1l225.1,225c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1L145.188,238.575z"></path></g></svg></button>
+    <button class="gclose gbtn" tabindex="2"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve"><g><g><path d="M505.943,6.058c-8.077-8.077-21.172-8.077-29.249,0L6.058,476.693c-8.077,8.077-8.077,21.172,0,29.249C10.096,509.982,15.39,512,20.683,512c5.293,0,10.586-2.019,14.625-6.059L505.943,35.306C514.019,27.23,514.019,14.135,505.943,6.058z"></path></g></g><g><g><path d="M505.942,476.694L35.306,6.059c-8.076-8.077-21.172-8.077-29.248,0c-8.077,8.076-8.077,21.171,0,29.248l470.636,470.636c4.038,4.039,9.332,6.058,14.625,6.058c5.293,0,10.587-2.019,14.624-6.057C514.018,497.866,514.018,484.771,505.942,476.694z"></path></g></g></svg></button>
+</div>
+</div> -->
+
+<!-- <a href="https://vimeo.com/115041822" class="glightbox">
+  <img src="https://picsum.photos/400/300/?random" alt="image">
+</a>
+
+<a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12085.977306439116!2d-73.96648875371474!3d40.77314541916876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c258bf08488f6b%3A0x618706a9142daa0d!2sUpper+East+Side%2C+Nueva+York%2C+EE.+UU.!5e0!3m2!1ses-419!2smx!4v1511830027642" class="glightbox-demo">
+  <img src="https://picsum.photos/401/300/?random" alt="image">
+</a>
+
+<a href="https://www.youtube.com/watch?v=Ga6RYejo6Hk" class="glightbox">
+  <img src="https://picsum.photos/402/300/?random" alt="image">
+</a> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+<script type="text/javascript">
+    const lightbox = GLightbox({ 
+        touchNavigation: true,
+        loopAtEnd: true,
+        autoplayVideos: true,
+        onOpen: () => {
+            console.log('Lightbox opened')
+        },
+        beforeSlideLoad: (slide, data) => {
+            // Need to execute a script in the slide?
+            // You can do that here...
+    }});
+    // Instead of using a selector, define the gallery elements
+const myGallery = GLightbox({
+    elements: [
+        {
+            'href': 'https://picsum.photos/1200/800',
+            'type': 'image',
+            'title': 'My Title',
+            'description': 'Example',
+        },
+        {
+            'href': 'https://picsum.photos/1200/800',
+            'type': 'image'
+        },
+        {
+            'href': 'https://www.youtube.com/watch?v=Ga6RYejo6Hk',
+            'type': 'video',
+            'source': 'youtube', //vimeo, youtube or local
+            'width': 900,
+        }
+    ],
+    autoplayVideos: true,
+});
+//myGallery.open();
+</script>
+
+        <script src="{{  url('assets/js/libs.min.js') }}"></script>
 @endsection

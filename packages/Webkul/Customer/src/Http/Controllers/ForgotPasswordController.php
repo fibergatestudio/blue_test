@@ -60,10 +60,12 @@ class ForgotPasswordController extends Controller
             request(['email'])
         );
         //dd($response);
+
         if ($response == Password::RESET_LINK_SENT) {
             session()->flash('success', trans($response));
 
-            return back();
+            return redirect('/')->with('popup', 'open');
+            //return back();
         }
 
         return back()

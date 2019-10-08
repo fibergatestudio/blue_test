@@ -2,18 +2,25 @@
 <?php 
 
 $customer = auth()->guard('customer')->user();
-$address = DB::table('customer_addresses')->where('customer_id', $customer->id)->first();
+
+if($customer){
+
+    $address = DB::table('customer_addresses')->where('customer_id', $customer->id)->first();
+
+} else {
+    
+}
 
 ?>
 <div class="page">
-                <div class="">
+                <div class="page__content">
                     <div class="container">
                         <ul class="breadcrumb page__breadcrumb">
                             <li class="breadcrumb__item">
                                 <a href="/">Home</a>
                             </li>
                             <li class="breadcrumb__item">
-                                <a href="shopping-cart.html">Shopping cart</a>
+                                <a href="{{ url('/checkout/cart') }}">Shopping cart</a>
                             </li>
                         </ul>
                         <a class="back-button page__back-button" href="#">

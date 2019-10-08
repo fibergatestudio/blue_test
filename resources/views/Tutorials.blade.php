@@ -42,7 +42,7 @@
                                     <div class="tutorial-tile__wrapper">
                                         <div class="tutorial-tile__title">BIALETTI MOKA POT</div>
                                         <div class="tutorial-tile__desc">Preparation guide</div>
-                                        <a class="button button_blue tutorial-tile__button" href="tutorial.html">Start guide</a>
+                                        <a class="button button_blue tutorial-tile__button" href="{{ url('tutorials/aeropress') }}">Start guide</a>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <div class="tutorial-tile__wrapper">
                                         <div class="tutorial-tile__title">CHEMEX</div>
                                         <div class="tutorial-tile__desc">Coffee liberated from the constraints of gravity</div>
-                                        <a class="button button_blue tutorial-tile__button" href="tutorial.html">Start guide</a>
+                                        <a class="button button_blue tutorial-tile__button" href="{{ url('tutorials/aeropress') }}">Start guide</a>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                     <div class="tutorial-tile__wrapper">
                                         <div class="tutorial-tile__title">Cold brew coffee</div>
                                         <div class="tutorial-tile__desc">Preparation guide</div>
-                                        <a class="button button_blue tutorial-tile__button" href="tutorial.html">Start guide</a>
+                                        <a class="button button_blue tutorial-tile__button" href="{{ url('tutorials/aeropress') }}">Start guide</a>
                                     </div>
                                 </div>
                             </div>

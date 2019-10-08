@@ -2,20 +2,18 @@
 
 @section('header')
 <header class="header header_has-columns header_giftbox">
-    <div class="header__top-panel">
-        <button class="burger header__burger"><span class="burger__line"></span><span class="burger__line"></span><span class="burger__line"></span>
-        </button>
+
 
         @include('layouts.header_menu')
 
-    </div>
+
     <div class="header__row js-block-cnt">
         <div class="header__content">
             <div class="banner banner_gift">
                 <h1 class="title banner__title color-blue">Coffee <br>Subscription</h1>
                     <p class="banner__text">No matter what your taste, we’ve got the perfect subscription!</p>
                     <div class="banner__btn-group">
-                        <button class="button button_blue banner__button">subscribe</button>
+                        <a href="#changeOrder"><button class="button button_blue banner__button">subscribe</button></a>
                     </div>
             </div>
         </div>
@@ -62,8 +60,8 @@
             <h2 class="title title_center">Choose your subscription</h2>
             <ul class="plan__list">
                 <li class="plan__item">
-                    <form action="{{ url('/coffeesubscription/subscribe') }}" class="subscription-form" method="POST">
-                    @csrf()
+                    <form action="{{ url('/coffeesubscription/payment') }}" class="subscription-form" method="POST">
+                    @csrf() 
 
                         @if(!empty($customer))
                         <input type="hidden" name="user_id" value="{{ $customer->id }}">
@@ -126,12 +124,11 @@
                                     </svg>
                                 </div>
                             </div>
-                            @if(!empty($customer))
+                            
                             <input class="subscription-form__submit button button_blue" type="submit" value="subscribe">
-                            <a class="button button_blue" href="{{ url('/coffeesubscription/payment') }}">Pay</a>
-                            @else
-                            <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a>
-                            @endif
+                            
+                            <!-- <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a> -->
+                            
                         </div>
                         <div style="background-color:red" class="bg-warning">
                             @if($errors->any())
@@ -141,7 +138,7 @@
                     </form>
                 </li>
                 <li class="plan__item">
-                    <form action="{{ url('/coffeesubscription/subscribe') }}" class="subscription-form" method="POST">
+                    <form action="{{ url('/coffeesubscription/payment') }}" class="subscription-form" method="POST">
                     @csrf()
 
                         @if(!empty($customer))
@@ -203,11 +200,11 @@
                                     </svg>
                                 </div>
                             </div>
-                            @if(!empty($customer))
+                         
                             <input class="subscription-form__submit button button_blue" type="submit" value="subscribe">
-                            @else
-                            <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a>
-                            @endif
+                            
+                            <!-- <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a> -->
+                           
                         </div>
                         <div style="background-color:red" class="bg-warning">
                             @if($errors->any())
@@ -217,7 +214,7 @@
                     </form>
                 </li>
                 <li class="plan__item">
-                    <form action="{{ url('/coffeesubscription/subscribe') }}" class="subscription-form" method="POST">
+                    <form action="{{ url('/coffeesubscription/payment') }}" class="subscription-form" method="POST">
                     @csrf()
 
                         @if(!empty($customer))
@@ -281,11 +278,11 @@
                                 </div>
                             </div>
 
-                        @if(!empty($customer))
+                       
                         <input class="subscription-form__submit button button_blue" type="submit" value="subscribe">
-                        @else
-                        <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a>
-                        @endif
+                      
+                        <!-- <a href="{{ url('customer/login') }}" class="subscription-form__submit button button_blue">Login</a> -->
+                        
                             <!-- <input class="subscription-form__submit button button_blue" type="submit" value="subscribe">
 
                             <a href="{{ url('customer/login') }}"><button class="subscription-form__submit button button_blue">Login</button></a> -->
@@ -326,7 +323,7 @@
                     <h2 class="title color-blue">Our coffee:</h2>
                     <ul class="coffee-types__list">
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/coffeebeans') }}">
                                 <div class="coffee-types__icon-wrapper">
                                     <svg class="coffee-types__icon_beans">
                                         <use xlink:href="#coffee-beans-3"></use>
@@ -335,7 +332,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/turkishcoffee') }}">
                                 <div class="coffee-types__icon-wrapper">
                                     <svg class="coffee-types__icon_cezve">
                                         <use xlink:href="#cezve"></use>
@@ -344,7 +341,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/flavoredcoffee') }}">
                                 <div class="coffee-types__icon-wrapper">
                                     <svg class="coffee-types__icon_cup">
                                         <use xlink:href="#cup"></use>
@@ -353,7 +350,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/coffeecapsules') }}">
                                 <div class="coffee-types__icon-wrapper">
                                     <svg class="coffee-types__icon_capsule">
                                         <use xlink:href="#coffee-capsule"></use>

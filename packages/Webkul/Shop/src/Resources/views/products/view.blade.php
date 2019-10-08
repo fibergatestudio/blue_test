@@ -7,240 +7,359 @@
 @section('seo')
     <meta name="description" content="{{ trim($product->meta_description) != "" ? $product->meta_description : str_limit(strip_tags($product->description), 120, '') }}"/>
     <meta name="keywords" content="{{ $product->meta_keywords }}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 @stop
 
 @section('content-wrapper')
-<div class="page__content">
-    {!! view_render_event('bagisto.shop.products.view.before', ['product' => $product]) !!}
+<div class="container">
+    <div class="page__content">
+        {!! view_render_event('bagisto.shop.products.view.before', ['product' => $product]) !!}
 
-    <section class="product-detail">
+        <section class="product-detail">
 
-        <div class="layouter">
-            <product-view>
-                        <ul class="breadcrumb page__breadcrumb">
-                            <li class="breadcrumb__item">
-                                <a href="/">Home</a>
-                            </li>
-                            <li class="breadcrumb__item">
-                                <a href="#">Shop</a>
-                            </li>
-                            <li class="breadcrumb__item">
-                                <a href="product-card.html">{{ $product->name }}</a>
-                            </li>
-                        </ul>
-                        <a class="back-button page__back-button" href="#">
-                            <svg>
-                                <use xlink:href="#long-arrow"></use>
-                            </svg>
-                        </a>
-                <div class="form-container">
-                    @csrf()
+            <div class="layouter">
+                <product-view>
+                            <ul class="breadcrumb page__breadcrumb">
+                                <li class="breadcrumb__item">
+                                    <a href="/">Home</a>
+                                </li>
+                                <li class="breadcrumb__item">
+                                    <a href="{{ url('/categories/coffee') }}">Shop</a>
+                                </li>
+                                <li class="breadcrumb__item">
+                                    <a href="{{ url('/product/'. $product->url_key) }}">{{ $product->name }}</a>
+                                </li>
+                            </ul>
+                            <a class="back-button page__back-button" href="#">
+                                <svg>
+                                    <use xlink:href="#long-arrow"></use>
+                                </svg>
+                            </a>
+                    <div class="form-container">
+                        @csrf()
 
-                    @if(empty($customer))
+                        @if(empty($customer))
 
-                    @else
-                    <input type="hidden" name="product" value="{{ $product->product_id }}">
-                    <input type="hidden" name="points" value="" class="input value1">
-                    <input type="hidden" name="customer_id" value="{{ $customer->id }}" class="input value1">
-                    @endif
-
-
-                    <div class="details">
-
-
-                        <?php  
-
-                        $points_price = $product->special_price / $points->points_value; 
-                        $converted_price = core()->currency($product->price);
+                        <input type="hidden" id="product_id" name="product" value="{{ $product->product_id }}">
+                        <input type="hidden" name="points" value="" class="input value1">
                         
-                        ?>
 
-                        <div style="font-size: 20px;" class="control-group">
+                        @else
+                        <input type="hidden" id="product_id" name="product" value="{{ $product->product_id }}">
+                        <input type="hidden" name="points" value="" class="input value1">
+                        <input type="hidden" name="customer_id" value="{{ $customer->id }}" class="input value1">
+                        @endif
 
-                            @if(empty($customer))
 
+                        <div class="details">
+
+
+                            <?php  
+
+                            $points_price = $product->special_price / $points->points_value; 
+                            $converted_price = core()->currency($product->price);
+                            
+                            ?>
+
+                            <div style="font-size: 20px;" class="control-group">
+
+                                @if(empty($customer))
+
+                                @else
+                                    </b><br>
+                                    <input type="hidden" name="points" class="control quantity-change" value="0" min="0" max="<?php echo $points_price; ?>" placeholder="Enter Amount of Points">
+                                @endif
+
+                            </div>
+                            <section class="product-card prod_fix">
+                                <div id="app" class="product-card__row">
+                                    <div class="product-card__image">
+                                        @include ('shop::products.view.gallery')
+                                    </div>
+
+                                    <div class="product-card__info">
+                                        <h1 class="product-card__title">{{ $product->name }}</h1>
+                                        <div class="product-card__price">@include ('shop::products.price', ['product' => $product])</div>
+
+                                        @include ('shop::products.view.stock', ['product' => $product])
+                                        <?php 
+                                        
+                                        $prod_price = $product->price;
+                                        
+                                        ?>
+
+                                        <input id="price" type="hidden" value="<?php echo $prod_price ?>">
+
+                                        
+                                        {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
+
+                                        <div class="quantity control-group product-card__quantity" :class="[errors.has('quantity') ? 'has-error' : '']">
+
+                                            <label id="test" class="required">{{ __('shop::app.products.quantity') }}</label>
+
+                                            <input class="control quantity-change product-card__input" value="-" style="width: 35px;" onclick="updateQunatity('remove')" readonly>
+
+                                            <input name="quantity" id="quantity" style="margin-left: 14px; max-width:30px;" class="control quantity-change product-card__input" value="1" v-validate="'required|numeric|min_value:1'" style="width: 60px; position: relative; margin-left: -4px; margin-right: -4px; border-right: none;border-left: none; border-radius: 0px;" data-vv-as="&quot;{{ __('shop::app.products.quantity') }}&quot;" readonly>
+
+                                            <input class="control quantity-change product-card__input" value="+" style="width: 35px;" onclick=updateQunatity('add') readonly>
+
+
+                                        </div>
+
+                                        {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
+
+                                        @include ('shop::products.view.configurable-options')
+
+                                        @inject ('productViewHelper', 'Webkul\Product\Helpers\View')
+                                        @if ($customAttributeValues = $productViewHelper->getAdditionalData($product))
+                                            @foreach ($customAttributeValues as $attribute)
+                                            <?php if($attribute['label'] == 'Arabica') { ?>
+                                                <ul class="product-card__composition">
+                                                <li><strong>90% Arabica:</strong><span><?php echo $attribute['value'] ?></span>
+                                                </li>
+                                                </ul>
+                                               <?php } else if($attribute['label'] == 'Robusta'){ ?>
+                                                <ul class="product-card__composition">
+                                                <li><strong>10% Robusta:</strong><span><?php echo $attribute['value'] ?></span>
+                                                </li>
+                                                </ul>
+                                               <?php } else if($attribute['label'] == 'Notes'){ ?>
+                                                
+                                                <div class="product-card__notes">
+                                                    <h2>Notes: </h2> <span><?php echo $attribute['value'] ?></span>
+                                                </div>
+                                                    
+                                                <?php } else { ?>
+                                                  
+                                            <?php } ?>
+                                            @endforeach
+                                        @endif
+                                        <div class="product-card__buttons">
+                                                @include ('shop::products.add-to-cart')
+                                            <button class="button button_transparent">Add to Blue Box</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            @if ($product->type == 'configurable')
+                                <input type="hidden" value="true" name="is_configurable">
                             @else
-
-                                <!-- Current Loyality Points: <b>{{ $customer->points }}</b><br> -->
-                                <!-- Price in points: <b>  -->
-                                <?php 
-
-                                
-                                //echo number_format((float)$points_price, 2, '.', '');
-                                ?>
-                                </b><br>
-                                <input type="hidden" name="points" class="control quantity-change" value="0" min="0" max="<?php echo $points_price; ?>" placeholder="Enter Amount of Points">
-
-                                <!-- <b>Buy with Points?</b><br>
-                                <input class="control" id="points" type="number" placeholder="Enter Amount"><br>
-                                <b>Final Price:</b><br>
-                                <input type="number" class="control" id="result"  disabled> -->
+                                <input type="hidden" value="false" name="is_configurable">
                             @endif
 
                         </div>
-                        <section style="padding-top: 70px !important; outline: none; box-shadow: none;" class="product-card">
-                            <div id="app" class="product-card__row">
-                                <div class="product-card__image">
-                                @include ('shop::products.view.gallery')
-                                    <!-- <picture>
-                                        <source srcset="img/tmp/goods/coffee-product-card.webp" type="image/webp">
-                                        <source srcset="img/tmp/goods/coffee-product-card.png" type="image/png">
-                                        <img src="img/tmp/goods/coffee-product-card.png" alt="Picture alt text">
-                                    </picture> -->
-                                </div>
+                    </div>
+                </product-view>
+                <div class="product-card__details product-details">
+                                <h2 class="product-details__title"><span>Product Details</span>
+                                </h2>
+                                
 
-                                <div class="product-card__info">
-                                    <h1 class="product-card__title">{{ $product->name }}</h1>
-                                    <div class="product-card__price">@include ('shop::products.price', ['product' => $product])</div>
+                                @inject ('productViewHelper', 'Webkul\Product\Helpers\View')
 
-                                    @if ($product->type == 'configurable')
-                                        <div id="total_price" style="font-size: 20px; color: #64dbd0; margin-top: -20px;" class="product-card__price"></div>
-                                    @else
-                                       
+                                @if ($customAttributeValues = $productViewHelper->getAdditionalData($product))
+                                    @foreach ($customAttributeValues as $attribute)
+                                        <?php 
+                                        if($attribute['label'] == 'Body'){
+                                            $body = $attribute['value'];
+                                        } else if($attribute['label'] == 'Region'){
+                                            $region = $attribute['value'];
+                                        } else if($attribute['label'] == 'Aroma'){
+                                            $aroma = $attribute['value'];
+                                        } else if($attribute['label'] == 'Roasting'){
+                                            $roastin = $attribute['value'];
+                                        } else if($attribute['label'] == 'Recomend'){
+                                            $recomend = $attribute['value'];
+                                        } else if($attribute['label'] == 'Flavor'){
+                                            $flavor = $attribute['value'];
+                                        }  
+                                        ?>
+                                    @endforeach
+                                @endif
+                                <ul class="product-details__list product-card">
+                                    <li class="product-details__list-item">
+                                        <div class="product-details__icon">
+                                            <svg>
+                                                <use xlink:href="#coffee-bean-2"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="product-details__text">
+                                            <h3>Body: </h3><span>
+                                            @if(!empty($body))
+                                            <?php echo $body ?>
+                                            @else
+                                            None
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="product-details__list-item">
+                                        <div class="product-details__icon">
+                                            <svg>
+                                                <use xlink:href="#location-pin"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="product-details__text">
+                                            <h3>Region: </h3><span>
+                                            @if(!empty($region))
+                                            <?php echo $region ?>
+                                            @else
+                                            None
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="product-details__list-item">
+                                        <div class="product-details__icon">
+                                            <svg>
+                                                <use xlink:href="#cup"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="product-details__text">
+                                            <h3>Aroma: </h3><span>
+                                            @if(!empty($aroma))
+                                            <?php echo $aroma ?>
+                                            @else
+                                            None
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="product-details__list-item">
+                                        <div class="product-details__icon">
+                                            <svg>
+                                                <use xlink:href="#coffee-bean-2"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="product-details__text">
+                                            <h3>Roasting: </h3><span>
+                                            @if(!empty($roastin))
+                                            <?php echo $roastin ?>
+                                            @else
+                                            None
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="product-details__list-item">
+                                        <div class="product-details__icon">
+                                            <svg>
+                                                <use xlink:href="#bean-bag"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="product-details__text">
+                                            <h3>Flavor: </h3><span>
+                                            @if(!empty($flavor))
+                                            <?php echo $flavor ?>
+                                            @else
+                                            None
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="product-details__list-item">
+                                        <div class="product-details__icon">
+                                            <svg>
+                                                <use xlink:href="#barista"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="product-details__text">
+                                            <h3>We recommend: </h3><span>
+                                            @if(!empty($recomend))
+                                            <?php echo $recomend ?>
+                                            @else
+                                            None
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    @if ($customAttributeValues = $productViewHelper->getAdditionalData($product))
+                                        @foreach ($customAttributeValues as $attribute)
+                                        <?php if($attribute['label'] == 'Weight'){ ?>
+                                        <?php } else if($attribute['label'] == 'Body'){
+                                                
+                                            }else if($attribute['label'] == 'Region'){
+                                                
+                                            } else if($attribute['label'] == 'Aroma'){
+                                                
+                                            } else if($attribute['label'] == 'Roasting'){
+                                                
+                                            } else if($attribute['label'] == 'Recomend'){
+                                            
+                                            } else if($attribute['label'] == 'Flavor'){
+                                                
+                                            } else if($attribute['label'] == 'catalog_img'){
+                                                
+                                            } else { ?>
+                                                <li class="product-details__list-item">
+                                                    <div class="product-details__icon">
+                                                        <svg>
+                                                            <use xlink:href="#coffee-bean-2"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="product-details__text">
+                                                        <h3><?php echo $attribute['label'] ?> </h3><span><?php echo $attribute['value'] ?></span>
+                                                    </div>
+                                                </li>
+                                        <?php } ?>
+                                        @endforeach
                                     @endif
-
-                                    @include ('shop::products.view.stock', ['product' => $product])
-                                    <!-- <div class="product-card__quantity"><span>Quantity: </span>
-                                        <select class="js-init-styleselect" name="quantity_gram" value="250">
-                                            <option value="250" selected>250 g</option>
-                                            <option value="500">500 g</option>
-                                            <option value="1000">1000 g</option>
-                                        </select>
-                                    </div> -->
-                                    <?php 
-                                    
-                                    $prod_price = $product->price;
-
-                                    //echo $prod_price;
-                                    
-                                    ?>
-
-                                    <input id="price" type="hidden" value="<?php echo $prod_price ?>">
-
-                                    
-                                    {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
-
-                                    <div class="quantity control-group" :class="[errors.has('quantity') ? 'has-error' : '']">
-
-                                        <label id="test" class="required">{{ __('shop::app.products.quantity') }}</label>
-
-                                        <input class="control quantity-change" value="-" style="width: 35px; border-radius: 3px 0px 0px 3px;" onclick="updateQunatity('remove')" readonly>
-
-                                        <input name="quantity" id="quantity" class="control quantity-change" value="1" v-validate="'required|numeric|min_value:1'" style="width: 60px; position: relative; margin-left: -4px; margin-right: -4px; border-right: none;border-left: none; border-radius: 0px;" data-vv-as="&quot;{{ __('shop::app.products.quantity') }}&quot;" readonly>
-
-                                        <input class="control quantity-change" value="+" style="width: 35px; padding: 0 12px; border-radius: 0px 3px 3px 0px;" onclick=updateQunatity('add') readonly>
-
-                                        <span class="control-error" v-if="errors.has('quantity')">@{{ errors.first('quantity') }}</span>
-                                    </div>
-
-                                    {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
-
-                                    @include ('shop::products.view.configurable-options')
-
-                                    <ul class="product-card__composition">
-                                        <li><strong>90% Arabica:</strong><span>Brasilia, Columbia, Guatemala.</span>
-                                        </li>
-                                        <li><strong>10% Robusta:</strong><span>Monsooned</span>
-                                        </li>
-                                    </ul>
-                                    <div class="product-card__notes">
-                                        <h2>Notes: </h2> <span>Honey, Dark chocolate, Hazelnut</span>
-                                    </div>
-                                    <div class="product-card__buttons">
-                                        <!-- <a href="{{ route('cart.add', $product->product_id) }}"><button class="button button_blue">Add to Cart</button></a>
-                                        <a href="{{ url('buynow/'.$product->product_id) }}"><button class="button button_blue">Buy</button></a> -->
-                                        <!-- @include ('shop::products.buy-now') -->
-                                        @include ('shop::products.add-to-cart')
-                                        <button class="button button_transparent">Add to Blue Box</button>
-                                    </div>
+                                </ul>
+                            </div>
+            </div>
+        </div>
+    </div>
+            <div class="goods goods_white">
+                <div class="container goods__container">
+                    <h2 class="goods__title">You might also like</h2>
+                        <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
+                                <div class="swiper-wrapper">
+                                @include ('shop::products.view.related-products')
                                 </div>
-                            </div>
-                        </section>
-                        <!-- {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!}  -->
-
-                        <!-- <div class="description">
-                            {!! $product->short_description !!}
-                        </div> -->
-
-                        <!-- {!! view_render_event('bagisto.shop.products.view.short_description.after', ['product' => $product]) !!} -->
-
-
-                        @if ($product->type == 'configurable')
-                            <input type="hidden" value="true" name="is_configurable">
-                        @else
-                            <input type="hidden" value="false" name="is_configurable">
-                        @endif
-
-                        <!-- @include ('shop::products.view.attributes') -->
-
-                        <!-- @include ('shop::products.view.reviews') -->
-                    </div>
-                </div>
-            </product-view>
-            <div class="product-card__details product-details">
-                    <h2 class="product-details__title"><span>Product Details</span>
-                    </h2>
-                    <br>
-                    <ul class="product-details__list">
-                    <!-- {!! view_render_event('bagisto.shop.products.view.short_description.before', ['product' => $product]) !!} 
-
-                    <div style="overflow-wrap: break-word;" class="description"> -->
-                        {!! $product->short_description !!}
-                    <!-- </div>
-
-                    {!! view_render_event('bagisto.shop.products.view.short_description.after', ['product' => $product]) !!} -->
-                    </ul>
-                </div>
-        </div>
-
-        <div class="goods goods_white">
-            <div class="container goods__container">
-                <h2 class="goods__title">You might also like</h2>
-                    <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
-                            <div class="swiper-wrapper">
-                            @include ('shop::products.view.related-products')
-                            </div>
-                        <div class="swiper-pagination goods__pagination"></div>
-                    </div>
-                <button class="slider-control slider-control_prev goods__control goods__control_prev">
-                    <svg>
-                        <use xlink:href="#slider-arrow"></use>
-                    </svg>
-                </button>
-                <button class="slider-control slider-control_next goods__control goods__control_next">
-                    <svg>
-                        <use xlink:href="#slider-arrow"></use>
-                    </svg>
-                </button>
-            </div>
-        </div> 
-        <div class="goods">
-            <div class="container goods__container">
-                <h2 class="goods__title">Reccomended</h2>
-                    <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
-                        <div class="swiper-wrapper">
-                            @include ('shop::products.view.up-sells')
+                            <div class="swiper-pagination goods__pagination"></div>
                         </div>
-                        <div class="swiper-pagination goods__pagination"></div>
-                    </div>
-                <button class="slider-control slider-control_prev goods__control goods__control_prev">
-                    <svg>
-                        <use xlink:href="#slider-arrow"></use>
-                    </svg>
-                </button>
-                <button class="slider-control slider-control_next goods__control goods__control_next">
-                    <svg>
-                        <use xlink:href="#slider-arrow"></use>
-                    </svg>
-                </button>
+                    <button class="slider-control slider-control_prev goods__control goods__control_prev">
+                        <svg>
+                            <use xlink:href="#slider-arrow"></use>
+                        </svg>
+                    </button>
+                    <button class="slider-control slider-control_next goods__control goods__control_next">
+                        <svg>
+                            <use xlink:href="#slider-arrow"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div> 
+            <div class="goods">
+                <div class="container goods__container">
+                    <h2 class="goods__title">Reccomended</h2>
+                        <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
+                            <div class="swiper-wrapper">
+                                @include ('shop::products.view.up-sells')
+                            </div>
+                            <div class="swiper-pagination goods__pagination"></div>
+                        </div>
+                    <button class="slider-control slider-control_prev goods__control goods__control_prev">
+                        <svg>
+                            <use xlink:href="#slider-arrow"></use>
+                        </svg>
+                    </button>
+                    <button class="slider-control slider-control_next goods__control goods__control_next">
+                        <svg>
+                            <use xlink:href="#slider-arrow"></use>
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </div>
 
 
-    </section>
-</div>
+        </section>
+    </div>
 
+<!-- Script for products -->
+<script type="text/javascript" src="{{ bagisto_asset('js/shop.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
 
 
 
@@ -248,7 +367,6 @@
 @endsection
 
 @push('scripts')
-
 
     <script type="text/x-template" id="product-view-template">
         <form method="POST" id="product-form" action="{{ route('cart.add', $product->product_id) }}" @click="onSubmit($event)">
@@ -322,8 +440,8 @@
 
         $(document).ready(function() {
             var addTOButton = document.getElementsByClassName('add-to-buttons')[0];
-            document.getElementById('loader').style.display="none";
-            addTOButton.style.display="flex";
+            //document.getElementById('loader').style.display="none";
+            //addTOButton.style.display="flex";
         });
 
         window.onload = function() {

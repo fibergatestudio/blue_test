@@ -15,12 +15,24 @@
 
                 <input type="hidden" id="selected_configurable_option" name="selected_configurable_option" :value="selectedProductId">
 
-                <div v-for='(attribute, index) in childAttributes' class="attribute control-group" :class="[errors.has('super_attribute[' + attribute.id + ']') ? 'has-error' : '']">
-                    <label class="required product-card__quantity">@{{ attribute.label }}</label>
+
+                <!-- <div class="product-card__info">
+                    <div class="product-card__quantity"><span>Amount: </span>
+                        <select class="js-init-styleselect" name="amount" value="250">
+                            <option value="250" selected>250 g</option>
+                            <option value="500">500 g</option>
+                            <option value="1000">1000 g</option>
+                        </select>
+                    </div>
+                </div> -->
+
+                <div v-for='(attribute, index) in childAttributes' class="attribute control-group product-card__quantity" :class="[errors.has('super_attribute[' + attribute.id + ']') ? 'has-error' : '']">
+                    <label class="required">@{{ attribute.label }}</label>
 
                     <span v-if="! attribute.swatch_type || attribute.swatch_type == '' || attribute.swatch_type == 'dropdown'">
                         <select
-                            class="control super"
+                            class="control js-init-styleselect"
+                            id="weight"
                             style="width: auto;"
                             v-validate="'required'"
                             :name="['super_attribute[' + attribute.id + ']']"
@@ -68,6 +80,24 @@
                 </div>
 
             </div>
+        </script>
+
+        <script>
+            $('document').ready(function () {
+                //$("select#attribute_32").val("10");
+                //$('select#attribute_32').val('10');
+                //$('select#attribute_32').prop("selected", true);
+                var prod_id = Number($('#product_id').val()) + 1;
+                $('select#attribute_32 option:eq(1)').attr('selected', 'selected');
+                $('#selected_configurable_option').attr('value', prod_id);
+                
+                
+
+                console.log("Selected");
+                //reloadPrice();
+                //Vue.configure(attribute, $event.target.value)
+                //console.log("UpdatePrice");
+            });
         </script>
 
         <?php $config = $configurableOptionHelper->getConfigurationConfig($product) ?>

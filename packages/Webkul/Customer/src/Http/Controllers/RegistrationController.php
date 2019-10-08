@@ -12,6 +12,8 @@ use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Cookie;
 
+use App\Referals;
+
 /**
  * Registration controller
  *
@@ -56,6 +58,10 @@ class RegistrationController extends Controller
      */
     public function create(Request $request)
     {
+
+        //dd($request->referal);
+
+
         $request->validate([
             'first_name' => 'string|required',
             'last_name' => 'string|required',
@@ -64,6 +70,8 @@ class RegistrationController extends Controller
         ]);
 
         $data = request()->input();
+
+        //dd($data);
 
         $data['password'] = bcrypt($data['password']);
 
@@ -87,11 +95,30 @@ class RegistrationController extends Controller
 
         Event::fire('customer.registration.after', $customer);
 
+        //CreateRefInDB
+        $check_ref = $request->referal;
+        if(!empty($check_ref)){
+
+            $ref_new = new Referals();
+            $ref_new->ref_id = $request->referal;
+            $ref_new->ref_name = $request->first_name;
+            $ref_new->ref_email = $request->email;
+            $ref_new->code = $request->referal;
+            $ref_new->save();
+            //dd($ref_new);
+
+        } else {
+
+            //dd($check_ref);
+        }
+
         if ($customer) {
             if (core()->getConfigData('customer.settings.email.verification')) {
                 try {
                     Mail::queue(new VerificationEmail($verificationData));
 
+                    // $test = "test";
+                    // dd($test);
                     session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
                 } catch (\Exception $e) {
                     session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
@@ -125,7 +152,8 @@ class RegistrationController extends Controller
             session()->flash('warning', trans('shop::app.customer.signup-form.verify-failed'));
         }
 
-        return redirect()->route('customer.session.index');
+        return redirect('/')->with('verifed', 'open');
+        //return redirect()->route('customer.session.index');
     }
 
     public function resendVerificationEmail($email)

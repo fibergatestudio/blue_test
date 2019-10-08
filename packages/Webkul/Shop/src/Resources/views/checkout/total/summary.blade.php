@@ -23,7 +23,7 @@
             <label class="right">{{ core()->currency($cart->base_tax_total) }}</label>
         </div>
     @endif
-    <!-- LOYALITY POINTS -->
+    <!-- Loyalty POINTS -->
 
     <?php 
 
@@ -61,7 +61,7 @@
             <label>{{ __('Points (Converted)') }}</label>
             <label class="right"> {{ core()->currency($cart->points_converted) }}</label>
         </div>
-    <!-- END LOYALITY POINTS -->
+    <!-- END Loyalty POINTS -->
 
     <div class="item-detail" id="discount-detail" @if ($cart->discount_amount && $cart->discount_amount > 0) style="display: block;" @else style="display: none;" @endif>
         <label>

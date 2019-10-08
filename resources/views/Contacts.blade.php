@@ -3,108 +3,27 @@
 @section('header')
 
 <header class="header header_has-columns">
-            <div class="header__top-panel">
-                <button class="burger header__burger"><span class="burger__line"></span><span class="burger__line"></span><span class="burger__line"></span>
-                </button>
-                <a class="header__logo" href="/">
-                    <svg>
-                        <use xlink:href="#logo"></use>
-                    </svg>
-                </a>
-                <nav class="nav header__nav nav_main">
+
                 @include('layouts.header_menu')
-                </nav>
-                <div class="header__lang-switcher lang lang_main">
-                    <button class="lang__trigger">En
-                        <svg>
-                            <use xlink:href="#arrow-down"></use>
-                        </svg>
-                    </button>
-                    <ul class="lang__list">
-                        <li class="lang__current">
-                            <button class="lang__trigger">En
-                                <svg>
-                                    <use xlink:href="#arrow-down"></use>
-                                </svg>
-                            </button>
-                        </li>
-                        <li class="lang__option">
-                            <a href="#">Hu</a>
-                        </li>
-                        <li class="lang__option">
-                            <a href="#">En</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="header__cart">
-                    <button class="cart-btn js-box-trigger cart-link_main" data-target-id="cartModal">
-                        <svg class="cart-btn__icon">
-                            <use xlink:href="#shopping-bag"></use>
-                        </svg><span class="cart-btn__counter">2</span>
-                    </button>
-                </div>
-                <div class="header__auth">
-                    <a href="newsletter-subscription.html">Subscribe</a>
-                    <button class="js-open-popup" data-popup-id="signin">Sign in</button>
-                </div>
-            </div>
-            <!-- cart popup-->
-            <form class="cart-modal" id="cartModal">
-                <button class="cart-modal__close js-close-modal" type="button">
-                    <svg>
-                        <use xlink:href="#rounded-close"></use>
-                    </svg>
-                </button>
-                <h2 class="cart-modal__header">Cart (<span id="cartItems">2</span>)</h2>
-                <div class="cart-modal__list">
-                    <div class="cart-sm-product cart-modal__item">
-                        <div class="cart-sm-product__image">
-                            <img src="img/tmp/goods/green-sm.png" alt="Blue Bird Blend ">
-                        </div>
-                        <h3 class="cart-sm-product__title">Blue Bird Blend </h3><span class="cart-sm-product__price">2150 HUF</span>
-                    </div>
-                    <div class="cart-sm-product cart-modal__item">
-                        <div class="cart-sm-product__image">
-                            <img src="img/tmp/goods/coffee-machine.png" alt="Coffee Machine">
-                        </div>
-                        <h3 class="cart-sm-product__title">Coffee Machine</h3><span class="cart-sm-product__price">10 000 HUF</span>
-                    </div>
-                    <div class="cart-sm-product cart-modal__item">
-                        <div class="cart-sm-product__image">
-                            <img src="img/tmp/goods/cup.png" alt="Cup">
-                        </div>
-                        <h3 class="cart-sm-product__title">Cup</h3><span class="cart-sm-product__price">3 000 HUF</span>
-                    </div>
-                    <div class="cart-modal__price">
-                        <div class="cart-modal__row"><span class="cart-modal__label">Shipping:</span><span>Free</span>
-                        </div>
-                        <div class="cart-modal__row"><span class="cart-modal__label">Total:</span><span class="cart-modal__total">19 300 HUF</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="cart-modal__buttons">
-                    <input class="button button_blue cart-modal__submit" type="submit" value="Make a purchase">
-                    <a class="cart-modal__back" href="#">Back to product list</a>
-                </div>
-            </form>
+
             <div class="header__row js-block-cnt">
                 <div class="header__content">
                     <div class="banner">
-                        <h1 class="title banner__title color-blue">Contacts</h1>
+                        <h1 class="title banner__title color-blue">{{ __('shop::app.contacts.contacts') }}</h1>
                     </div>
                     <div class="header-contacts">
                         <div class="header-contacts__col">
                             <div class="header-contacts__block">
-                                <h2 class="header-contacts__heading">ADDRESS:</h2>
+                                <h2 class="header-contacts__heading">{{ __('shop::app.contacts.address') }}:</h2>
                                 <div class="header-contacts__content">1074 Budapest, Rumbach Sebestyén u. 12, fszt.</div>
                             </div>
                             <div class="header-contacts__block">
-                                <h2 class="header-contacts__heading">COFFE STORE MANAGER:</h2>
+                                <h2 class="header-contacts__heading">{{ __('shop::app.contacts.coffee-manager') }}:</h2>
                                 <div class="header-contacts__content">Orobinszkij Dániel <a href="tel:+36705506011">+3670/550 60 11</a>
                                 </div>
                             </div>
                             <div class="header-contacts__block">
-                                <h2 class="header-contacts__heading">HEAD MANAGER:<br><i>With any other question</i>
+                                <h2 class="header-contacts__heading">{{ __('shop::app.contacts.head-manager') }}:<br><i>{{ __('shop::app.contacts.with-questions') }}</i>
                                 </h2>
                                 <div class="header-contacts__content">Benkő Attila <a href="tel:+36706102442">+3670/610 24 42 </a>
                                 </div>
@@ -112,18 +31,19 @@
                         </div>
                         <div class="header-contacts__col">
                             <div class="header-contacts__block">
-                                <h2 class="header-contacts__heading">EDUCATION FOR BARISTAS AND PROFESSIONAL CONSULTING:</h2>
+                                <h2 class="header-contacts__heading">{{ __('shop::app.contacts.education') }}:</h2>
                                 <div class="header-contacts__content">Horváth Attila <a href="tel:+36307849081">+3630/784 90 81 </a>
                                     <a href="mailto:bluebirdbaristas@gmail.com">bluebirdbaristas@gmail.com</a>
                                 </div>
                             </div>
                             <div class="header-contacts__block">
-                                <h2 class="header-contacts__heading">To make an order:</h2>
+                                <h2 class="header-contacts__heading">{{ __('shop::app.contacts.order') }}:</h2>
                                 <div class="header-contacts__content">
                                     <a href="mailto:bluebirdroastery@gmail.com">bluebirdroastery@gmail.com</a>
                                 </div>
                             </div>
-                            <button class="header-contacts__button button button_blue">Contact Us</button>
+                            <!-- <button class="button button_blue faq__write js-box-trigger" data-target-id="regModal">Write</button> -->
+                            <button class="header-contacts__button button button_blue button_blue faq__write js-box-trigger" data-target-id="regModal">Contact Us</button>
                         </div>
                     </div>
                 </div>
@@ -163,9 +83,10 @@
         <main>
             <section class="lets-work js-block-cnt">
                 <div class="container">
-                    <h2 class="title color-blue lets-work__title">We are open to cooperation</h2>
-                    <p class="lets-work__note">If you have any questions or comments, write to us!</p>
-                    <form class="lets-work__form form">
+                    <h2 class="title color-blue lets-work__title">{{ __('shop::app.contacts.co-operate') }}</h2>
+                    <p class="lets-work__note">{{ __('shop::app.contacts.questions') }}</p>
+                    <form action="{{ url('/form_sumbit') }}" class="lets-work__form form" method="POST">
+                    @csrf()
                         <label class="form__field field">
                             <svg class="field__icon field__icon_user">
                                 <use xlink:href="#user"></use>
@@ -188,12 +109,52 @@
                             <svg class="field__icon field__icon_comment">
                                 <use xlink:href="#chat-comment"></use>
                             </svg>
-                            <input class="field__input" type="text" name="comments" placeholder="Comments" required>
+                            <input class="field__input" type="text" name="symptom" placeholder="Comments" required>
                         </label>
                         <input class="button button_blue" type="submit" value="Send">
                     </form>
                 </div>
             </section>
         </main>
+
+        <!-- Modal - modal-->
+        <div style="z-index: 999; padding-bottom: 0px; padding: 0px;" class="modal modal_reg" id="regModal">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+        
+                <form action="{{ url('/form_sumbit') }}" method="POST" class="lets-work__form form">
+                    @csrf()
+                    <input type="hidden" name="page_from" value="Contacts">
+                    <p class="lets-work__note">Write to us what we can help</p>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_user">
+                                <use xlink:href="#user"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="name" placeholder="Name" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_phone-call">
+                                <use xlink:href="#phone-call"></use>
+                            </svg>
+                            <input class="field__input" type="tel" name="tel" placeholder="Phone" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_envelope">
+                                <use xlink:href="#envelope"></use>
+                            </svg>
+                            <input class="field__input" type="email" name="email" placeholder="Email" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_comment">
+                                <use xlink:href="#chat-comment"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="symptom" placeholder="Comments" required>
+                        </label>
+                        <input class="button button_blue" type="submit" value="Send">
+                    </form>
+        </div>
         
 @endsection

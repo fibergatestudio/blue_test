@@ -11,16 +11,16 @@
 |
 */
 
-
+Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function () {
 //-- TEST --//
 Route::get('/test', 'MenuController@test');
 
 //-- MENU PAGES --//
     //-- MainPage --//
-    Route::get('/MainPage', 'MenuController@MainPage');
+    Route::get('/', 'MenuController@MainPage');
 
     //-- OnlineShop --//
-    Route::get('/', 'MenuController@OnlineShop');
+    //Route::get('/', 'MenuController@OnlineShop');
 
     //-- BlueBox --//
     Route::get('/bluebox', 'MenuController@BlueBox');
@@ -28,15 +28,29 @@ Route::get('/test', 'MenuController@test');
     //-- CoffeeSubscription --//
     Route::get('/coffeesubscription', 'CoffeeSubscriptionController@index');
         //-- Coffee Subscription Payment --//
-        Route::get('/coffeesubscription/payment', 'CoffeeSubscriptionController@payment');
+        Route::post('/coffeesubscription/payment', 'CoffeeSubscriptionController@payment'); 
         //-- Coffee Subscription POST --//
         Route::post('/coffeesubscription/subscribe', 'CoffeeSubscriptionController@subscribe');
 
-    //-- FAQ --//
-    Route::get('/faq', 'MenuController@FAQ');
+    //-- Tranings --//
+    Route::get('/trainings', 'TrainingsController@index');
+        //-- Tranings Subscription POST --//
+        Route::post('/trainings/subscribe', 'TrainingsController@subscribe');
 
-    //-- Contacts --//
-    Route::get('/contacts', 'MenuController@Contacts');
+
+    //-- FAQ --//
+    Route::get('/faq', 'MenuController@FAQ'); 
+    Route::get('/faq/registration', 'MenuController@faq_registration'); 
+    Route::get('/faq/subscribe', 'MenuController@faq_subscribe'); 
+    Route::get('/faq/blue-box', 'MenuController@faq_blue_box');
+    Route::get('/faq/coffee-shop', 'MenuController@faq_coffee_shop');  
+    Route::get('/faq/loyalty-program', 'MenuController@faq_loyality_program');  
+    Route::get('/faq/payment-and-shipping', 'MenuController@faq_payment_and_shipping');  
+    Route::get('/faq/trainings', 'MenuController@faq_trainings');  
+    Route::get('/faq/for-business', 'MenuController@faq_for_business'); 
+
+    // //-- Contacts --//
+    // Route::get('/contacts', 'MenuController@Contacts');
 
     //-- BasketBox --//
     Route::get('/basketbox', 'MenuController@BasketBox');
@@ -54,7 +68,7 @@ Route::get('/test', 'MenuController@test');
     Route::get('/terms', 'MenuController@TermsAndConditions');
 
     //-- LoyaltyProgram --//
-    Route::get('/loyality', 'MenuController@LoyaltyProgram');
+    Route::get('/loyalty', 'MenuController@LoyaltyProgram');
         //Route::post()
 
     //-- Tutorials --//
@@ -71,11 +85,34 @@ Route::get('/test', 'MenuController@test');
     //-- OurCoffee --//
     Route::get('/ourcoffee', 'MenuController@OurCoffee');
 
+    //-- Coffee Capsules --//
+    Route::get('/coffeecapsules', 'MenuController@CoffeeCapsules');
+
+    //-- Coffee Beans --//
+    Route::get('/coffeebeans', 'MenuController@CoffeeBeans');
+
+    //-- Flavored Coffee --//
+    Route::get('/flavoredcoffee', 'MenuController@FlavoredCoffee');
+
+    //-- Blue Coffee Gift Box --//
+    Route::get('/bluecoffeegiftbox', 'MenuController@BlueGiftBox');
+    
     //-- For Businesses --//
     Route::get('/forbusinesses', 'MenuController@ForBusinesses');
 
+    //-- Services --//
+    Route::get('/services', 'MenuController@Services');
+
+        //-- Contact Form --//
+        Route::post('/form_sumbit', 'MenuController@FormSumbit');
+
+    //-- Turkish Coffee --//
+    Route::get('/turkishcoffee', 'MenuController@TurkishCoffee');
+
     //-- BaristaTrainings --//
     Route::get('/baristatrainings', 'MenuController@BaristaTrainings');
+        //--BARISTA TASKS--//
+        Route::resource('tasks', 'TasksController');
 
     //-- Pages --//
     Route::get('pages/{page}', 'PageController@index');
@@ -85,5 +122,22 @@ Route::get('/test', 'MenuController@test');
         // Route::post('/deletepage/{page_id}', 'PageController@deletePage');
         // //-- Create Page --//
         // Route::post('/editpage/{page_id}', 'PageController@editPage');
+
+
+    //-- TEST --//
+    Route::get('checkout_success', 'PageController@success');
+    Route::get('checkout_error', 'PageController@error');
+
+    //-- CHANGE PASSWORD --//
+    Route::post('/change_password', 'MenuController@ChangePassword');
+
+
+    //-- REFERAL --//
+
+    Route::get('/referal/{user_id}', 'MenuController@Referal');
+
+    Route::get('/contacts', 'MenuController@Contacts');
+
+});
 
 

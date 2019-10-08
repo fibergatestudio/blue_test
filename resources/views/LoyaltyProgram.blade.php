@@ -2,51 +2,9 @@
 
 @section('header')
 <header class="header header_has-columns header_our-cafe">
-            <div class="header__top-panel">
-                <button class="burger header__burger"><span class="burger__line"></span><span class="burger__line"></span><span class="burger__line"></span>
-                </button>
-                <a class="header__logo" href="/">
-                    <svg>
-                        <use xlink:href="#logo"></use>
-                    </svg>
-                </a>
-                <nav class="nav header__nav nav_main">
+
                 @include('layouts.header_menu')
-                </nav>
-                <div class="header__lang-switcher lang lang_main">
-                    <button class="lang__trigger">En
-                        <svg>
-                            <use xlink:href="#arrow-down"></use>
-                        </svg>
-                    </button>
-                    <ul class="lang__list">
-                        <li class="lang__current">
-                            <button class="lang__trigger">En
-                                <svg>
-                                    <use xlink:href="#arrow-down"></use>
-                                </svg>
-                            </button>
-                        </li>
-                        <li class="lang__option">
-                            <a href="#">Hu</a>
-                        </li>
-                        <li class="lang__option">
-                            <a href="#">En</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="header__cart">
-                    <button class="cart-btn js-box-trigger cart-link_main" data-target-id="cartModal">
-                        <svg class="cart-btn__icon">
-                            <use xlink:href="#shopping-bag"></use>
-                        </svg><span class="cart-btn__counter">2</span>
-                    </button>
-                </div>
-                <div class="header__auth">
-                    <a href="newsletter-subscription.html">Subscribe</a>
-                    <button class="js-open-popup" data-popup-id="signin">Sign in</button>
-                </div>
-            </div>
+
             <!-- cart popup-->
             <form class="cart-modal" id="cartModal">
                 <button class="cart-modal__close js-close-modal" type="button">

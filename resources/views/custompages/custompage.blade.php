@@ -28,7 +28,7 @@
                         <a href="/">Home</a>
                     </li>
                     <li class="breadcrumb__item">
-                        <a href="terms.html">{{ $page_title }}</a>
+                        <a href="{{ url('/'.$page_title) }}">{{ $page_title }}</a>
                     </li>
                 </ul>
                 <a class="back-button page__back-button" href="#">

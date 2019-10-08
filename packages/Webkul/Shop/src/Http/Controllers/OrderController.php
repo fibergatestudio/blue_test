@@ -8,6 +8,7 @@ use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Sales\Repositories\InvoiceRepository;
 use Auth;
 use PDF;
+use DB;
 
 /**
  * Customer controlller for the customer basically for the tasks of customers
@@ -70,7 +71,11 @@ class OrderController extends Controller
             'customer_id' => auth()->guard('customer')->user()->id
         ]);
 
-        return view($this->_config['view'], compact('orders'));
+        $cust_id = auth()->guard('customer')->user()->id;
+
+        $refers = DB::table('referals')->where('ref_id', $cust_id)->get();
+
+        return view($this->_config['view'], compact('orders','refers','cust_id'));
     }
 
     /**

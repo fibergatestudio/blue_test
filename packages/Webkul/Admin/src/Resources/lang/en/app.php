@@ -899,7 +899,8 @@ return [
             'page-title' => '404 Page not found',
             'name' => '404',
             'title' => 'Page Not found',
-            'message' => 'The Page you are looking for does not exist or have been moved. Navigate using sidemenu.'
+            'message' => 'The Page you are looking for does not exist or have been moved. Navigate using sidemenu.',
+            'oops' => 'Oops! Page does not found',
         ],
         '403' => [
             'page-title' => '403 forbidden Error',
