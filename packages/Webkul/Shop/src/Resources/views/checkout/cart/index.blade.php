@@ -149,8 +149,8 @@
                                             <input class="coupon__input" type="text" name="coupon" placeholder="Coupon Code">
                                             <button class="button button_blue coupon__button">Apply</button>
                                         </div><br>
-                                        <div class="">
-                                        You Points: <b>
+                                        <div style="padding-bottom: 10px;" class="">
+                                        Your Points: <b>
                                             <?php 
                                             
                                             if($customer_points){
@@ -160,7 +160,7 @@
                                             }
                                             
                                             ?>
-                                            </b>
+                                            </b><br>
                                         </div>
                                         <div class="coupon">
                                             <!-- <input  type="text" name="coupon" placeholder="Coupon Code"> -->

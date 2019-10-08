@@ -177,12 +177,12 @@ class CategoryController extends Controller
         if($filter){
 
             //$all_prod = DB::table('product_flat')->whereIn('CoffeeWeight_label', $filter)->where('locale', $locale)->limit(20)->groupBy('parent_id')->get();
-            $all_prod = DB::table('product_flat')->whereIn('CoffeeWeight_label', $filter)->where('product_id', $items)->groupBy('parent_id')->get();
+            $all_prod = DB::table('product_flat')->whereIn('CoffeeWeight_label', $filter)->where('product_id', $items)->groupBy('parent_id')->paginate(2);
 
         } else {
 
             //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->limit(20)->get();
-            $all_prod = DB::table('product_flat')->whereIn('product_id', $items)->whereNotNull('name')->get();
+            $all_prod = DB::table('product_flat')->whereIn('product_id', $items)->whereNotNull('name')->paginate(2);
 
         }
 
