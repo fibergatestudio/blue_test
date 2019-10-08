@@ -86,46 +86,46 @@ class MenuController extends Controller
         //return view('FAQ');
         return Redirect::to('faq/registration');
     }   
-        public function faq_registration(){
-            
-            return view('faq.faq_registration');
+    public function faq_registration(){
+        
+        return view('faq.faq_registration');
 
-        }
-        public function faq_subscribe(){
-            
-            return view('faq.faq_subscribe');
+    }
+    public function faq_subscribe(){
+        
+        return view('faq.faq_subscribe');
 
-        }
-        public function faq_blue_box(){
-            
-            return view('faq.faq_blue_box');
+    }
+    public function faq_blue_box(){
+        
+        return view('faq.faq_blue_box');
 
-        }
-        public function faq_coffee_shop(){
-            
-            return view('faq.faq_coffee_shop');
+    }
+    public function faq_coffee_shop(){
+        
+        return view('faq.faq_coffee_shop');
 
-        }
-        public function faq_loyality_program(){
-            
-            return view('faq.faq_loyality_program');
+    }
+    public function faq_loyality_program(){
+        
+        return view('faq.faq_loyality_program');
 
-        }
-        public function faq_payment_and_shipping(){
-            
-            return view('faq.faq_payment_and_shipping');
+    }
+    public function faq_payment_and_shipping(){
+        
+        return view('faq.faq_payment_and_shipping');
 
-        }
-        public function faq_trainings(){
-            
-            return view('faq.faq_trainings');
+    }
+    public function faq_trainings(){
+        
+        return view('faq.faq_trainings');
 
-        }
-        public function faq_for_business(){
-            
-            return view('faq.faq_for_business');
+    }
+    public function faq_for_business(){
+        
+        return view('faq.faq_for_business');
 
-        }
+    }
 
     public function Contacts(){
         
