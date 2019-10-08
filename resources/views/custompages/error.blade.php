@@ -46,7 +46,15 @@
                                         <path d="M48.822 29.146C46.465 29.852 45 32.092 45 34.81c.119 1.638.218 3.297.337 4.936.336 6.243.673 12.362 1.01 18.605.118 2.115 1.683 3.65 3.703 3.65 2.02 0 3.603-1.639 3.702-3.775 0-1.286 0-2.468.12-3.775.217-4.003.455-8.006.673-12.009.118-2.592.336-5.185.455-7.778 0-.933-.119-1.763-.455-2.592-1.01-2.323-3.367-3.505-5.723-2.925z" fill="none" stroke="#fff" stroke-miterlimit="50" stroke-width="2" clip-path="url(&quot;#a&quot;)"></path>
                                     </g>
                                 </svg>
-                                <p class="msg__text">There are some problems with your payment, try again please!</p>
+                                <p class="msg__text">There are some problems with your payment, try again please!</p><br>
+                               
+                                <div style="text-align: center;" class="button-group low_cont">
+                                    <a href="{{ url('/checkout/cart') }}">
+                                    <button type="button" class="button button_blue">
+                                        Try Again
+                                    </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

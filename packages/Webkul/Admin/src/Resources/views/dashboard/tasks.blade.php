@@ -20,22 +20,54 @@
         {{ csrf_field() }}
         Task name:
         <br />
-        <input type="text" name="name" />
+        <input type="text" name="name" required/>
         <br /><br />
         Task description:
         <br />
-        <textarea name="description"></textarea>
+        <textarea name="description" required></textarea>
         <br /><br />
-        Start time:
+        Start time: (format YYYY-MM-DD)
         <br />
-        <input type="text" name="task_date" class="date" />
+        <input type="text" name="task_date" class="date" required/>
         <br /><br />
         <input type="submit" value="Save" />
         </form>
 
 
-        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+        <div class="table">
+                <div class="grid-container">
+                    <table class="table">
+                        <thead style="text-align: center;">
+                            <tr class="grid_head">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody style="text-align: center;">
+                            @foreach($task_table as $task)
+                                <tr>
+                                    <td>{{ $task->id }}</td>
+                                    <td>{{ $task->name }}</td>
+                                    <td>{{ $task->description }}</td>
+                                    <td>{{ $task->task_date }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             $('.date').datepicker({
                 autoclose: true,

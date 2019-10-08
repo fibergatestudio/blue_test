@@ -1,6 +1,6 @@
 <div style="position:fixed; z-index: 9999; left: 75px; top: 30px;">
 
-    <p style="font-size: 20px; color: #0041fe; font-weight: 700;">BBCafe</p>
+    <p style="font-size: 20px; color: #0041fe; font-weight: 700; color: #64b2db;">BBCafe</p>
 
 </div>
 
@@ -12,7 +12,7 @@
                 <img src="{{ asset('vendor/webkul/ui/assets/images/logo.png') }}" alt="Bagisto"/>
 
             </a> -->
-                <a class="header__logo" href="{{ route('admin.dashboard.index') }}">
+                <a style="color: #64b2db;" class="header__logo" href="{{ route('admin.dashboard.index') }}">
                     <svg style="height: 100px;">
                         <use xlink:href="#logo"></use>
                     </svg>

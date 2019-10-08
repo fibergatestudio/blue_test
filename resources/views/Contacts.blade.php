@@ -87,6 +87,7 @@
                     <p class="lets-work__note">{{ __('shop::app.contacts.questions') }}</p>
                     <form action="{{ url('/form_sumbit') }}" class="lets-work__form form" method="POST">
                     @csrf()
+                    <input type="hidden" name="page_from" value="Contacts">
                         <label class="form__field field">
                             <svg class="field__icon field__icon_user">
                                 <use xlink:href="#user"></use>

@@ -132,7 +132,12 @@ class DashboardController extends Controller
         return view($this->_config['view']);
     }
     public function tasks(){
-        return view($this->_config['view']);
+
+        $task_table = DB::table('tasks')->get();
+
+        return view($this->_config['view'],[
+            'task_table' => $task_table,
+        ]);
     }
     public function form(){
 

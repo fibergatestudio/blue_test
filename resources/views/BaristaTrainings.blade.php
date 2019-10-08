@@ -541,6 +541,7 @@
                                 fixedWeekCount: false,
                                 displayEventTime: true,
                             events : [
+                                @if($tasks)
                                 @foreach($tasks as $task)
                                 {
                                     title : '\n {{ $task->description}}',
@@ -549,10 +550,18 @@
                                     // url : '{{ route('tasks.edit', $task->id) }}'
                                 },
                                 @endforeach
+                                @endif
                             ],
+                        @if(!$tasks->isEmpty())
                             eventRender: function( event, element, view ) {
-                                element.find('.fc-title').prepend('<span style="font-weight: 700;" class="calendar__name">{{ $task->name }}</span> '); 
+                                element.find('.fc-title').prepend('<span style="font-weight: 700;" class="calendar__name">{{ $task->name }} </span> '); 
                             }
+                        @else
+                        eventRender: function( event, element, view ) {
+                                element.find('.fc-title').prepend('<span style="font-weight: 700;" class="calendar__name"> </span> '); 
+                            }
+                        @endif
+
                         })
                     });
 
@@ -566,7 +575,6 @@
                 </script>
                 </div>
             </div>
-        
         </main>
 
 

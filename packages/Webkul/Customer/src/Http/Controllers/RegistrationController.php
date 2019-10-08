@@ -120,6 +120,7 @@ class RegistrationController extends Controller
                     // $test = "test";
                     // dd($test);
                     session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
+                    return redirect('/')->with('register', 'open');
                 } catch (\Exception $e) {
                     session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
                 }

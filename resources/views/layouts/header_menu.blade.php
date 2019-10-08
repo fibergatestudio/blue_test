@@ -243,7 +243,16 @@ $prodimg = DB::table('product_images')->get();
                     foreach ($cart->items as $item) { ?>
 
                     <div class="cart-sm-product cart-modal__item">
-                        <div class="cart-sm-product__image">
+                    <span class="remove">
+                            <button class="cart__remove-btn" type="button">
+                                <a href="{{ route('shop.checkout.cart.remove', $item->id) }}" onclick="removeLink('Do you really want to do this?')"> 
+                                    <svg>
+                                        <use style="color: #64b2db;" xlink:href="#close"></use>
+                                    </svg>
+                                </a>
+                            </button>
+                        </span>
+                        <div style="flex: 0 0 64px !important;"class="cart-sm-product__image">
 
                             @foreach($prodimg as $prod)
                                 @if($prod->product_id == $item->product_id )

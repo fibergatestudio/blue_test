@@ -37,9 +37,10 @@ class SessionController extends Controller
 
     public function show()
     {
+        return redirect('/');
         if (auth()->guard('customer')->check()) {
             return redirect('/');
-            return redirect()->route('customer.session.index');
+            //return redirect()->route('customer.session.index');
         } else {
             return view($this->_config['view']);
         }

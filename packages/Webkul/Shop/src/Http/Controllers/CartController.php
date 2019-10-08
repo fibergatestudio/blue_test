@@ -201,6 +201,8 @@ class CartController extends Controller
     public function update_points(Request $request){
 
         $new_points = $request->new_points;
+        
+        //dd($new_points);
 
         $loyality_program = DB::table('loyality_program')->first();
         $convert_val = $loyality_program->points_value;
@@ -222,14 +224,46 @@ class CartController extends Controller
 
     }
 
+    public function update_points_new($new_points, $cart_id){
+
+        //$new_points = $request->new_points;
+        
+        //dd($new_points);
+
+        $loyality_program = DB::table('loyality_program')->first();
+        $convert_val = $loyality_program->points_value;
+        $new_converted_points = $new_points * $convert_val;
+
+        //dd($new_converted_points);
+        //$cart_id = $request->cart_id;
+
+        DB::table('cart')->where('id', $cart_id)
+        ->update([
+            'points' => $new_points,
+            'points_converted' => $new_converted_points
+
+        ]);
+
+        Cart::collectTotals();
+
+        //return redirect()->back();
+
+
+    }
+
     /**
      * Updates the quantity of the items present in the cart.
      *
      * @return response
      */
-    public function updateBeforeCheckout()
+    public function updateBeforeCheckout(Request $request)
     {
+        $new_points = $request->new_points;
+        $cart_id = $request->cart_id;
 
+        //dd($new_points, $cart_id);
+
+        $this->update_points_new($new_points, $cart_id);
 
         try {
             $request = request()->except('_token');

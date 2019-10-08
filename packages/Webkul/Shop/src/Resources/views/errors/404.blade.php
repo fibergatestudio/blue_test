@@ -59,7 +59,7 @@
                     <div class="page-404__btn-group">
                         <a class="button button_blue page-404__button" href="{{ url('/categories/coffee') }}">Shop</a>
                         <a class="button button_blue page-404__button" href="{{ url('/bluebox') }}">Blue Box</a>
-                        <a class="button button_blue page-404__button" href="{{ url('/') }}">subscription</a>
+                        <a class="button button_blue page-404__button" href="{{ url('/coffeesubcription') }}">Subscription</a>
                     </div>
                 </div>
                 <div class="header__picture header__picture_keep"></div>

@@ -414,6 +414,7 @@
                     <h2 class="title lets-work__title">Let's work together</h2>
                     <form action="{{ url('/form_sumbit') }}" class="lets-work__form form" method="POST">
                     @csrf()
+                    <input type="hidden" name="page_from" value="For Business">
                         <label class="form__field field">
                             <svg class="field__icon field__icon_user">
                                 <use xlink:href="#user"></use>

@@ -163,7 +163,7 @@
                         </div>
                         <div class="billing__col">
                             <div class="billing__subscription subsciption-card">
-                                <div class="subsciption-card__col"><span class="subsciption-card__label">Subscribtion</span><span class="subsciption-card__term">@if($coffee) {{ $coffee->subscription_term }} @endif</span>
+                                <div class="subsciption-card__col"><span class="subsciption-card__label">Subscribtion</span><span class="subsciption-card__term">@if($coffee) {{ $coffee->subscription_name }}<br>{{ $coffee->subscription_term }} @endif</span>
                                     <a class="subsciption-card__button button button_blue" href="{{ url('/coffeesubscription') }}">Change</a>
                                 </div>
                                 <div class="subsciption-card__col"><span class="subsciption-card__label subsciption-card__label_transp">Valid until</span><span class="subsciption-card__text">@if($coffee) {{ $coffee->subscription_term_ends }} @endif</span><span class="subsciption-card__label subsciption-card__label_transp">Coffee type</span><span class="subsciption-card__text">Espresso</span>

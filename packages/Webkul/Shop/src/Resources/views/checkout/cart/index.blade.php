@@ -47,6 +47,38 @@
                                         $productBaseImage = $productImageHelper->getProductBaseImage($item->product);
                                 ?>
 
+                                <div class="">
+                                    <?php  
+
+                                    $points_price = $item->special_price; 
+                                    $converted_price = $item->base_price / $points->points_value;
+
+                                    if($customer){
+                                        $customer_points = $customer->points;
+                                    } else {
+                                        $customer_points = '0';
+                                    }
+
+
+
+                                    $quantity_price = ($item->base_price / $points->points_value) * $item->quantity;
+
+                                    if($quantity_price > $customer_points){
+
+                                        $final_points = $customer_points;
+
+                                    } else {
+
+                                        $final_points = ($item->base_price / $points->points_value) * $item->quantity;
+                                    }
+
+                                    // echo $points_price;
+                                    //echo $converted_price;
+
+                                    ?>
+
+                                </div>
+
                                 <div class="cart__row cart__row_product">
 
                                     <div class="cart__col cart__col_remove">
@@ -79,6 +111,7 @@
 
                                     <div class="cart__col cart__col_price">
                                         <span class="cart__product-price">{{ core()->currency($item->base_price) }}</span>
+                                        <span style="font-size: 12px;" class="cart__product-price">Price in points: <b><?php echo $converted_price ?></b></span>
                                     </div>
 
                                     <div class="cart__col cart__col_quantity">
@@ -109,51 +142,71 @@
 
                                 </div>
                                 @endforeach
-                                <!-- <div class="cart__row cart__row_product">
-                                    <div class="cart__col cart__col_remove">
-                                        <button class="cart__remove-btn" type="button">
-                                            <svg>
-                                                <use xlink:href="#close"></use>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <div class="cart__col cart__col_image">
-                                        <picture>
-                                            <source srcset="img/tmp/goods/blue.webp" type="image/webp">
-                                            <source srcset="img/tmp/goods/blue.png" type="image/png">
-                                            <img src="img/tmp/goods/blue.png" alt="Picture alt text">
-                                        </picture>
-                                    </div>
-                                    <div class="cart__col cart__col_info">
-                                        <div>
-                                            <h2 class="cart__product-title">Ethiopia</h2>
-                                            <p class="cart__product-desc">Spice, Nutty, Dark chocolate, Cocoa, Bitter sweet</p>
-                                            <p class="cart__product-mob-price">1&nbsp;x&nbsp;3300 HUF</p>
-                                        </div>
-                                    </div>
-                                    <div class="cart__col cart__col_price"><span class="cart__product-price">3 300 HUF</span>
-                                    </div>
-                                    <div class="cart__col cart__col_quantity">
-                                        <div class="input-number cart__product-quantity">
-                                            <input class="input-number__value" type="text" name="quantity-1" data-min="1" value="1">
-                                            <div class="input-number__controls">
-                                                <button class="input-number__button" type="button" data-action="1">+</button>
-                                                <button class="input-number__button" type="button" data-action="-1">-</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cart__col cart__col_total"><span class="cart__product-price">3 300 HUF</span>
-                                    </div>
-                                </div> -->
+
                                 <div class="cart__row cart__row_total">
                                     <div class="cart__coupon">
                                         <div class="coupon">
                                             <input class="coupon__input" type="text" name="coupon" placeholder="Coupon Code">
                                             <button class="button button_blue coupon__button">Apply</button>
+                                        </div><br>
+                                        <div class="">
+                                        You Points: <b>
+                                            <?php 
+                                            
+                                            if($customer_points){
+                                                echo $customer_points; 
+                                            } else {
+                                                echo 'NotLoggedIn'; 
+                                            }
+                                            
+                                            ?>
+                                            </b>
+                                        </div>
+                                        <div class="coupon">
+                                            <!-- <input  type="text" name="coupon" placeholder="Coupon Code"> -->
+                                            <input type="hidden" name="cart_id" value="{{ $cart->id }}">
+                                            <input class="coupon__input" style="width: 100%;" type="number" min="0" max="<?php echo $final_points ?>" name="new_points" placeholder="{{ $cart->points }}" value="{{ $cart->points }}">
+                                            <button class="button button_blue coupon__button" type="submit" >Update Points</button>
                                         </div>
                                     </div>
                                     <div class="cart__total total">
+                                        <!-- Loyalty POINTS -->
+
+                                            <?php 
+
+                                        if($customer){
+                                            
+                                            $used_points = $cart->points;
+
+                                            $point_miltipl = $used_points * $points->points_value;
+
+                                            $points_price = $cart->sub_total / $points->points_value; 
+
+
+
+                                            if($customer->points < $points_price){
+
+                                                $max_points = $customer->points; 
+
+                                            } else {
+
+                                                $max_points = $cart->sub_total / $points->points_value; 
+
+                                            }
+
+                                        } else {
+
+                                        }
+
+                                        ?>
+                                        <!-- END Loyalty POINTS -->
                                         <div class="total__container">
+                                            <div class="total__row">
+                                                <h3>Input use points:</h3> <span id="totalSum"> {{ $cart->points }} </span>
+                                            </div>
+                                            <div class="total__row">
+                                                <h3>Points (Converted):</h3> <span id="totalSum"> {{ core()->currency($cart->points_converted) }}</span>
+                                            </div>
                                             <div class="total__row">
                                                 <h3>Subtotal:</h3> <span id="subtotalSum">{{ core()->currency($cart->base_sub_total) }}</span>
                                             </div>
@@ -315,6 +368,7 @@
                                 </div>
                             @endforeach
                         </div>
+                        
 
                         {!! view_render_event('bagisto.shop.checkout.cart.controls.after', ['cart' => $cart]) !!}
 
@@ -375,22 +429,6 @@
                 </div>
             </div>
 
-
-            <!-- <div class="title">
-                {{ __('shop::app.checkout.cart.title') }}
-            </div> -->
-
-            <!-- <div class="cart-content">
-
-                <p>
-                    {{ __('shop::app.checkout.cart.empty') }}
-                </p>
-
-
-                <p style="display: inline-block;">
-                    <a style="display: inline-block;" href="{{ route('shop.home.index') }}" class="btn btn-lg btn-primary">{{ __('shop::app.checkout.cart.continue-shopping') }}</a>
-                </p>
-            </div> -->
 
         @endif
     </section>

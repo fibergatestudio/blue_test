@@ -640,6 +640,30 @@
     <script src="{{ url('assets/js/main.js?1566387411004') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js'></script>
+    <script>
+
+    // A $( document ).ready() block.
+    $( document ).ready(function() {
+
+        if($('.modal.modal_changes.visible').is(':visible'))
+        {
+            // Set a timeout to hide the element again
+            setTimeout(function(){
+                $(".modal.modal_changes.visible").hide();
+            }, 5000);
+        }
+        if($('.modal.modal_m-sent.visible').is(':visible')){
+            console.log( "visible" );
+            // Set a timeout to hide the element again
+            setTimeout(function(){
+                $(".modal.modal_m-sent.visible").hide();
+                console.log("Hided");
+            }, 5000);
+        }
+
+    });
+    
+    </script>
     
 
 </body>

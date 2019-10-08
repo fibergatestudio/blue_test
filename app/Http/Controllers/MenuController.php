@@ -291,15 +291,19 @@ class MenuController extends Controller
 
     public function FormSumbit(Request $request){
 
+        //dd($request->page_from);
+
         if($request->page_from){
 
             try {
-
-                $email = $request->email;
                 $page_from = $request->page_from;
                 $name = $request->name;
+                $email = $request->email;
+                $phone = $request->tel;
+                $symptom = $request->symptom;
+                //dd($symptom);
 
-                Mail::queue(new NewMail($email, $page_from, $name));
+                Mail::queue(new NewMail($email, $page_from, $name, $phone, $symptom));
             } catch (\Exception $e) {
 
                 dd($e);

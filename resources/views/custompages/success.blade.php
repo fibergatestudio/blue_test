@@ -99,7 +99,19 @@
                                         <path d="M0 4h3v3H0z" fill="#64b2db"></path>
                                     </g>
                                 </svg>
-                                <p class="msg__text">Your payment is successfull!!</p>
+                                <p class="msg__text">Your payment is successfull!!</p><br>
+                                <div style="text-align: center;" class="button-group low_cont">
+                                    <a href="{{ url('/categories/coffee') }}">
+                                    <button type="button" class="button button_blue">
+                                    Continue Shopping
+                                    </button>
+                                    </a>
+                                    <a href="{{ url('/coffeesubscription') }}">
+                                    <button type="button" class="button button_blue">
+                                    Get Coffee Subscription
+                                    </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

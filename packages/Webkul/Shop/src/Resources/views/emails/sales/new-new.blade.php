@@ -11,6 +11,8 @@
                 From page: {{ $page_from }}<br>
                 Name: {{ $name }}<br>
                 Email: {{ $email }}<br>
+                Phone: {{ $phone }}<br>
+                Comment: {{ $symptom }}<br>
             </p>
 
         </div>

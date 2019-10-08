@@ -25,6 +25,8 @@ class NewMail extends Mailable
     public $email;
     public $page_from;
     public $name;
+    public $phone;
+    public $symptom;
 
     /**
      * Create a new message instance.
@@ -32,11 +34,13 @@ class NewMail extends Mailable
      * @param mixed $shipment
      * @return void
      */
-    public function __construct($email, $page_from, $name)
+    public function __construct($email, $page_from, $name, $phone, $symptom)
     {
         $this->email = $email;
         $this->page_from = $page_from;
         $this->name = $name;
+        $this->phone = $phone;
+        $this->symptom = $symptom;
     }
 
     /**
@@ -49,9 +53,11 @@ class NewMail extends Mailable
         $email = $this->email;
         $page_from = $this->page_from;
         $name = $this->name;
+        $phone = $this->phone;
+        $symptom = $this->symptom;
 
-        return $this->to('magicjoke@gmail.com')
-                ->subject(trans('Mail From ',['email' => $email, 'page_from' => $page_from, 'name' => $name]))
+        return $this->to('dmytrovolod911@gmail.com')
+                ->subject(trans('Mail From ',['email' => $email, 'page_from' => $page_from, 'name' => $name, 'phone' => $phone, 'message' => $symptom]))
                 ->view('shop::emails.sales.new-new');
     }
 }
