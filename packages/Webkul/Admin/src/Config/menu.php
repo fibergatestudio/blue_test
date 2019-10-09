@@ -31,7 +31,7 @@ return [
         'name' => 'Pages',        //  name of menu-icon
         'route' => 'admin.dashboard.pages',  // the route for your menu-icon
         'sort' => 0,                    // Sort number on which your menu-icon should display
-        'icon-class' => 'dashboard-icon',   //class of menu-icn
+        'icon-class' => 'pages-icon',   //class of menu-icn
     ],
     // [
     //     'key' => 'bluebox',          // uniquely defined key for menu-icon
@@ -60,7 +60,7 @@ return [
         'name' => 'Loyalty Program',        //  name of menu-icon
         'route' => 'admin.dashboard.loyalty',  // the route for your menu-icon
         'sort' => 0,                    // Sort number on which your menu-icon should display
-        'icon-class' => 'dashboard-icon',   //class of menu-icn
+        'icon-class' => 'loyalty-icon',   //class of menu-icn
     ],
     [
         'key' => 'dashboard',
@@ -103,6 +103,30 @@ return [
         'name' => 'Contac Form',
         'route' => 'admin.dashboard.form',
         'sort' => 5,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.capsules',
+        'name' => 'Coffee Capsules',
+        'route' => 'admin.dashboard.capsules',
+        'sort' => 6,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.turkish',
+        'name' => 'Turkish Coffee',
+        'route' => 'admin.dashboard.turkish',
+        'sort' => 7,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.beans',
+        'name' => 'Coffee Beans',
+        'route' => 'admin.dashboard.beans',
+        'sort' => 8,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.flavored',
+        'name' => 'Flavored Coffee',
+        'route' => 'admin.dashboard.flavored',
+        'sort' => 9,
         'icon-class' => '',
     ],
     [

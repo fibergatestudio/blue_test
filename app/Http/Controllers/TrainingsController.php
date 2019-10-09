@@ -15,14 +15,21 @@ use Redirect;
 
 class TrainingsController extends Controller
 {
-    public function index(){
+    public function index($training_id){
+
+        //dd($training_id);
 
         $customer = auth()->guard('customer')->user();
         //dd($subscription);
+        
+        $training = DB::table('tasks')->where('id', $training_id)->first();
+
 
         if(!$customer){
 
-            return view('TrainingsSubscription');
+            return view('TrainingsSubscription',[
+                'training' => $training,
+            ]);
             
         } else {
 
@@ -33,6 +40,7 @@ class TrainingsController extends Controller
                 'customer' => $customer,
                 'address' => $address,
                 'trainings_sub' => $trainings_sub,
+                'training' => $training,
             ]);
         }
 

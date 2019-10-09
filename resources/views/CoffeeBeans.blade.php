@@ -91,7 +91,7 @@
                     <h2 class="goods__title">Something Classic:</h2>
                     <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
                         <div class="swiper-wrapper">
-                            @foreach ($all_prod as $prod)
+                            @foreach ($all_prod_class as $prod)
                                 <div class="swiper-slide">
                                     @include ('shop::products.list.maincard', ['product' => $prod])
                                 </div>
@@ -125,7 +125,7 @@
                     <h2 class="goods__title">Something Specialty:</h2>
                     <div class="goods__slider swiper-container js-init-slider" data-options="goodsSlider">
                         <div class="swiper-wrapper">
-                        @foreach ($all_prod as $prod)
+                        @foreach ($all_prod_spec as $prod)
                             <div class="swiper-slide">
                                 @include ('shop::products.list.maincard', ['product' => $prod])
                             </div>

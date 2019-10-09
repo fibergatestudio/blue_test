@@ -33,7 +33,7 @@ Route::get('/test', 'MenuController@test');
         Route::post('/coffeesubscription/subscribe', 'CoffeeSubscriptionController@subscribe');
 
     //-- Tranings --//
-    Route::get('/trainings', 'TrainingsController@index');
+    Route::get('/trainings/{training_id}', 'TrainingsController@index');
         //-- Tranings Subscription POST --//
         Route::post('/trainings/subscribe', 'TrainingsController@subscribe');
 
@@ -111,6 +111,7 @@ Route::get('/test', 'MenuController@test');
 
     //-- BaristaTrainings --//
     Route::get('/baristatrainings', 'MenuController@BaristaTrainings');
+    Route::get('/baristatrainings/{training_name}', 'MenuController@BaristaTrainingsFilter');
         //--BARISTA TASKS--//
         Route::resource('tasks', 'TasksController');
 

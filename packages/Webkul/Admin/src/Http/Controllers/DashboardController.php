@@ -13,6 +13,11 @@ use Webkul\Customer\Repositories\CustomerRepository as Customer;
 use Webkul\Product\Repositories\ProductInventoryRepository as ProductInventory;
 
 use App\LoyalityProgram;
+use App\CoffeeCapsules;
+use App\FlavoredCoffee;
+use App\CoffeeBeans;
+use App\TurkishCoffeeSettings;
+use App\Trainings;
 use Redirect;
 
 /**
@@ -134,10 +139,49 @@ class DashboardController extends Controller
     public function tasks(){
 
         $task_table = DB::table('tasks')->get();
+        $trai = DB::table('trainings')->get();
+
+        //dd($trai);
+        if(!is_null($trai)){
+            $trainings = DB::table('trainings')->get();
+            //dd($trainings);
+        } else {
+            
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Barista/Latte art basics';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Home Barista';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Cafe open';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Roasting';
+            $default_trainings->save();
+
+            $trainings = DB::table('trainings')->get();
+
+            //dd($trainings);
+        }
 
         return view($this->_config['view'],[
             'task_table' => $task_table,
+            'trainings' => $trainings,
         ]);
+    }
+    public function add_training(Request $request){
+        
+        //dd($request->training_name);
+
+        $new_training = new Trainings();
+        $new_training->training_name = $request->training_name;
+        $new_training->save();
+
+        return back();
     }
     public function form(){
 
@@ -147,6 +191,163 @@ class DashboardController extends Controller
             'contact_form' => $contact_form,
         ]);
     }
+    public function capsules(){
+
+        $capsules = DB::table('coffee_capsules')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+
+        return view($this->_config['view'],[
+            'capsules' => $capsules,
+            'products' => $products
+        ]);
+    }
+        public function capsules_add_prod($prod_id){
+
+            //dd($prod_id);
+
+            $capsule_prod = new CoffeeCapsules();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->save();
+
+            return back();
+
+        }
+        public function capsules_remove_prod($row_id){
+
+            //dd($prod_id);
+
+            //$remove_capsule = 
+            DB::table('coffee_capsules')->where('id', $row_id)->delete();
+
+            return back();
+        }
+
+    public function turkish(){
+
+        //$contact_form = DB::table('contact_form')->get();
+        $turkish_settings = DB::table('turkish_coffee_settings')->get();
+        $cezve = DB::table('turkish_coffee_settings')->where('link_place', 'Cezve')->first();
+        $cezve_link = $cezve->link;
+        $coffee = DB::table('turkish_coffee_settings')->where('link_place', 'Coffee')->first();
+        $coffee_link = $coffee->link;
+
+        return view($this->_config['view'],[
+            'cezve_link' => $cezve_link,
+            'coffee_link' => $coffee_link,
+        ]);
+    }
+
+        public function turk_apply_settings(Request $request){
+
+            $cezve = $request->cezve;
+            $cezve_link = DB::table('turkish_coffee_settings')->where('link_place', 'Cezve')->first();
+            if($cezve_link){
+
+                DB::table('turkish_coffee_settings')
+                ->where('link_place', 'Cezve')
+                ->limit(1)
+                ->update([
+                    'link' => $cezve,
+                    ]);
+            } else {
+                $new_cez = new TurkishCoffeeSettings();
+                $new_cez->link_place = 'Cezve';
+                $new_cez->link = $cezve;
+                $new_cez->save();
+            }
+
+            $coffee = $request->coffee;
+            $coffee_link = DB::table('turkish_coffee_settings')->where('link_place', 'Coffee')->first();
+            if($cezve_link){
+
+                DB::table('turkish_coffee_settings')
+                ->where('link_place', 'Coffee')
+                ->limit(1)
+                ->update([
+                    'link' => $coffee,
+                    ]);
+            } else {
+                $new_cof = new TurkishCoffeeSettings();
+                $new_cof->link_place = 'Coffee';
+                $new_cof->link = $coffee;
+                $new_cof->save();
+            }
+
+            //dd($coffee, $cezve);
+
+
+            return back();
+        }
+
+    public function beans(){
+
+        //$contact_form = DB::table('contact_form')->get();
+        $beans_class = DB::table('coffee_beans')->where('products_block', 'Something Classic')->get();
+        $beans_special = DB::table('coffee_beans')->where('products_block', 'Something Specialty')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+
+        return view($this->_config['view'],[
+            'beans_class' => $beans_class,
+            'beans_special' => $beans_special,
+            'products' => $products,
+        ]);
+    }
+
+        public function beans_add_prod_special($prod_id){
+
+            $capsule_prod = new CoffeeBeans();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->products_block = "Something Specialty";
+            $capsule_prod->save();
+
+            return back();
+        }
+        public function beans_add_prod_classic($prod_id){
+
+            $capsule_prod = new CoffeeBeans();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->products_block = "Something Classic";
+            $capsule_prod->save();
+
+            return back();
+        }
+        public function beans_remove_prod($row_id){
+
+            DB::table('coffee_beans')->where('id', $row_id)->delete();
+            
+            return back();
+        }
+    public function flavored(){
+
+        //$contact_form = DB::table('contact_form')->get();
+        $flavored = DB::table('flavored_coffee')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+
+        return view($this->_config['view'],[
+            'flavored' => $flavored,
+            'products' => $products
+        ]);
+    }
+        public function flavored_add_prod($prod_id){
+
+            //dd($prod_id);
+
+            $capsule_prod = new FlavoredCoffee();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->save();
+
+            return back();
+
+        }
+        public function flavored_remove_prod($row_id){
+
+            //dd($prod_id);
+
+            //$remove_capsule = 
+            DB::table('flavored_coffee')->where('id', $row_id)->delete();
+
+            return back();
+        }
     // LOYALITY 
     public function loyalty()
     {

@@ -13,25 +13,47 @@
     <div class="content-wrapper">
 
         @include ('admin::layouts.tabs')
+        <div class="row">
+            <div >
+                <h1>Add Task</h1>
 
-        <h1>Add Task</h1>
+                <form action="{{ route('tasks.store') }}" method="post">
+                {{ csrf_field() }}
+                Task name:
+                <br />
+                <input type="text" name="name" required/>
+                <br /><br />
+                Task description:
+                <br />
+                <textarea name="description" required></textarea>
+                <br /><br />
+                Start time: (format YYYY-MM-DD)
+                <br />
+                <input type="text" name="task_date" class="date" required/>
+                <br /><br />
+                <!-- <input type="text" name="training" required/> -->
+                <select name="training_name" request> 
+                    @foreach($trainings as $training)
+                        <option value="{{ $training->training_name }}">{{ $training->training_name }}</option>
+                    @endforeach
+                </select>
+                <br /><br />
+                <input type="submit" value="Save" />
+                </form>
+            </div>
+            <div style="width: 80%;">
+                <h1>Add Training</h1>
 
-        <form action="{{ route('tasks.store') }}" method="post">
-        {{ csrf_field() }}
-        Task name:
-        <br />
-        <input type="text" name="name" required/>
-        <br /><br />
-        Task description:
-        <br />
-        <textarea name="description" required></textarea>
-        <br /><br />
-        Start time: (format YYYY-MM-DD)
-        <br />
-        <input type="text" name="task_date" class="date" required/>
-        <br /><br />
-        <input type="submit" value="Save" />
-        </form>
+                <form action="{{ url('admin/tasks/add_training') }}" method="post">
+                {{ csrf_field() }}
+                Task name:
+                <br />
+                <input type="text" name="training_name" required/>
+                <br /><br />
+                <input type="submit" value="Add" />
+                </form>
+            </div>
+        </div>
 
 
         <div class="table">
@@ -43,6 +65,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Date</th>
+                                <th>Training</th>
                             </tr>
                         </thead>
 
@@ -53,6 +76,7 @@
                                     <td>{{ $task->name }}</td>
                                     <td>{{ $task->description }}</td>
                                     <td>{{ $task->task_date }}</td>
+                                    <td>{{ $task->training_name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

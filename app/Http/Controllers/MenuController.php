@@ -13,6 +13,7 @@ use Auth;
 use Validator;
 use Hash;
 use Cookie;
+use URL;
 use App\ContactForm;
 use App\Customers;
 use App\Task;
@@ -205,7 +206,19 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        $capsules_prod = DB::table('coffee_capsules')->get();
+        if($capsules_prod){
+            $cap_array = [];
+            foreach($capsules_prod as $cap){
+                $cap_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        //dd($cap_array);
+
+        $all_prod = DB::table('product_flat')->whereIn('id', $cap_array)->where('locale', $locale)->get();
+
 
         $image = DB::table('product_images')->get();
 
@@ -222,13 +235,40 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        
+        $beans_class = DB::table('coffee_beans')->where('products_block', 'Something Classic')->get();
+        $beans_spec = DB::table('coffee_beans')->where('products_block', 'Something Specialty')->get();
+        if($beans_class){
+            $bean_clas_array = [];
+            foreach($beans_class as $cap){
+                $bean_clas_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        if($beans_spec){
+            $bean_spec_array = [];
+            foreach($beans_spec as $cap){
+                $bean_spec_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+
+
+        //dd($bean_clas_array, $bean_spec_array);
+
+        $all_prod_class = DB::table('product_flat')->whereIn('id', $bean_clas_array)->where('locale', $locale)->get();
+        $all_prod_spec = DB::table('product_flat')->whereIn('id', $bean_spec_array)->where('locale', $locale)->get();
+
+        //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
 
         $image = DB::table('product_images')->get();
 
         return view('CoffeeBeans',[
 
-            'all_prod' => $all_prod,
+            'all_prod_class' => $all_prod_class,
+            'all_prod_spec' => $all_prod_spec,
             'image' => $image
 
         ]);
@@ -239,7 +279,18 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        $flavored_prod = DB::table('flavored_coffee')->get();
+        if($flavored_prod){
+            $flav_array = [];
+            foreach($flavored_prod as $cap){
+                $flav_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        //dd($flav_array);
+
+        $all_prod = DB::table('product_flat')->whereIn('id', $flav_array)->where('locale', $locale)->get();
 
         $image = DB::table('product_images')->get();
 
@@ -260,7 +311,17 @@ class MenuController extends Controller
 
     public function TurkishCoffee(){
 
-        return view('TurkishCoffee');
+        $cezve = DB::table('turkish_coffee_settings')->where('link_place', 'Cezve')->first();
+        $cezve_link = $cezve->link;
+        $coffee = DB::table('turkish_coffee_settings')->where('link_place', 'Coffee')->first();
+        $coffee_link = $coffee->link;
+
+        //dd($cezve_link);
+
+        return view('TurkishCoffee',[
+            'cezve_link' => $cezve_link,
+            'coffee_link' => $coffee_link,
+        ]);
 
     }
 
@@ -272,8 +333,52 @@ class MenuController extends Controller
     public function BaristaTrainings(){
 
         $tasks = Task::all();
+        $trai = DB::table('trainings')->get();
 
-        return view('BaristaTrainings', compact('tasks'));
+        //dd($trai);
+        if(!is_null($trai)){
+            $trainings = DB::table('trainings')->get();
+            //dd($trainings);
+        } else {
+            
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Barista/Latte art basics';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Home Barista';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Cafe open';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Roasting';
+            $default_trainings->save();
+
+            $trainings = DB::table('trainings')->get();
+
+            //dd($trainings);
+        }
+
+        return view('BaristaTrainings', compact('tasks', 'trainings'));
+    }
+
+    public function BaristaTrainingsFilter($training_name){
+
+        //dd($training_name);
+        //$tasks = Task::all();
+        $tasks = DB::table('tasks')->where('training_name', $training_name)->get();
+        $trai = DB::table('trainings')->where('training_name', $training_name)->get();
+        $trainings = DB::table('trainings')->get();
+
+        //dd($trai);
+
+        //return redirect('/baristatrainings')->with(compact('tasks', 'trainings'));
+        //return Redirect::to(URL::previous() . "#calendar")->with(compact('tasks', 'trainings'));
+        return view(('BaristaTrainings'), compact('tasks', 'trainings'));
+
     }
 
     //-- Tutorials --//

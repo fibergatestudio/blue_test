@@ -180,7 +180,7 @@
                                 <button class="btn btn-md btn-primary">{{ __('shop::app.subscription.subscribe') }}</button>
                             </div>
                         </form> -->
-                    <form action="{{ route('shop.subscribe') }}" class="subscribe-card">
+                    <form action="{{ route('shop.subscribe') }}#subform" id="subform" class="subscribe-card">
                     @csrf()
                         <svg class="subscribe-card__icon">
                             <use xlink:href="#email"></use>
@@ -596,7 +596,7 @@
             <path d="M42.141 18.695c-1.026 0-1.858.851-1.858 1.901v1.915c-.003 4.994-1.908 9.689-5.363 13.218-3.452 3.527-8.04 5.469-12.92 5.469h-.01c-10.082-.006-18.278-8.399-18.273-18.709C3.72 17.495 5.625 12.8 9.08 9.271 12.532 5.744 17.12 3.8 22 3.8h.01c2.577.002 5.077.547 7.431 1.62a1.842 1.842 0 0 0 2.454-.963c.418-.959-.003-2.083-.94-2.51A21.449 21.449 0 0 0 22.012 0H22C16.128 0 10.607 2.337 6.453 6.581 2.295 10.828.003 16.477 0 22.487c-.003 6.01 2.282 11.662 6.435 15.914 4.153 4.252 9.676 6.596 15.552 6.599H22c5.872 0 11.393-2.337 15.547-6.581 4.158-4.247 6.45-9.896 6.453-15.907v-1.916c0-1.05-.832-1.9-1.859-1.9z" fill="#64b2db"></path>
             <path d="M44.471 3.547a1.763 1.763 0 0 0-2.553 0L21.674 24.49l-4.592-4.75a1.763 1.763 0 0 0-2.553 0 1.914 1.914 0 0 0 0 2.64l5.869 6.073a1.77 1.77 0 0 0 1.277.547 1.77 1.77 0 0 0 1.276-.547l21.52-22.264a1.914 1.914 0 0 0 0-2.642z" fill="#64b2db"></path>
         </svg>
-        <p class="modal__text">Subbed!</p>
+        <p class="modal__text">Thank’s for your subscription. You can set up newsletter in your private account settings</p>
     </div>
 
     @endif

@@ -498,9 +498,10 @@
                 <div class="container">
                 <div class="events__category"><span>Trainings:</span>
                             <div class="select events__select">
-                                <select class="js-init-styleselect" name="trainingCategory">
-                                    <option value="1" selected>Barista/Latte art basics</option>
-                                    <option value="2">Lorem ipsum dolor.</option>
+                                <select class="js-init-styleselect" name="trainingCategory" onchange="location = this.value;">
+                                @foreach($trainings as $train)
+                                    <option value="{{ url('baristatrainings/'. $train->training_name.'/#calendar') }}">{{ $train->training_name }}</option>
+                                @endforeach
                                 </select>
                                 <div class="select__arrow">
                                     <svg>
@@ -511,6 +512,20 @@
                         </div>
 
                 <div id='calendar'></div>
+
+                <!-- <script type="text/javascript">
+                function showDiv(select){
+                    if(select.value==1){
+                        document.getElementById('hidden_div').style.display = "block";
+                    } else{
+                        document.getElementById('hidden_div').style.display = "none";
+                    }
+                    foreach($trainings as $traning){
+
+                    }
+                } 
+                </script> -->
+
 
                 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
                 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
@@ -547,7 +562,7 @@
                                     title : '\n {{ $task->description}}',
                                     start : '{{ $task->task_date }}',
                                     description: '{{ $task->description}}',
-                                    // url : '{{ route('tasks.edit', $task->id) }}'
+                                    url : '{{ url('/trainings/'. $task->id) }}'
                                 },
                                 @endforeach
                                 @endif

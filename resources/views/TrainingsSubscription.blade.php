@@ -36,6 +36,10 @@
                                     <li class="sidebar-order__list-item"><span class="sidebar-order__key">Subscription</span><span class="sidebar-order__val">Trainings</span>
                                         <input type="hidden" name="subscription_name" value="Trainings">
                                     </li>
+                                    <li class="sidebar-order__list-item"><span class="sidebar-order__key">Description</span><span class="sidebar-order__val">{{ $training->description }}</span>
+
+                                    <li class="sidebar-order__list-item"><span class="sidebar-order__key">Date</span><span class="sidebar-order__val">{{ $training->task_date }}</span>
+                                    </li>
                                     <li class="sidebar-order__list-item"><span class="sidebar-order__key">Term</span><span class="sidebar-order__val"> 6 months </span>
                                         <input type="hidden" name="subscription_term" value="6 Months">
                                     </li>
