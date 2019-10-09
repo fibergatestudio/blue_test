@@ -39,15 +39,10 @@ Route::get('/test', 'MenuController@test');
 
 
     //-- FAQ --//
-    Route::get('/faq', 'MenuController@FAQ'); 
-    Route::get('/faq/registration', 'MenuController@faq_registration'); 
-    Route::get('/faq/subscribe', 'MenuController@faq_subscribe'); 
-    Route::get('/faq/blue-box', 'MenuController@faq_blue_box');
-    Route::get('/faq/coffee-shop', 'MenuController@faq_coffee_shop');  
-    Route::get('/faq/loyalty-program', 'MenuController@faq_loyality_program');  
-    Route::get('/faq/payment-and-shipping', 'MenuController@faq_payment_and_shipping');  
-    Route::get('/faq/trainings', 'MenuController@faq_trainings');  
-    Route::get('/faq/for-business', 'MenuController@faq_for_business'); 
+    Route::get('/faq/{question_category?}', 'MenuController@FAQ'); 
+    Route::get('/faq-show', 'MenuController@FAQShow');
+    Route::post('/faq-add', 'MenuController@FAQAdd');
+
 
     // //-- Contacts --//
     // Route::get('/contacts', 'MenuController@Contacts');
