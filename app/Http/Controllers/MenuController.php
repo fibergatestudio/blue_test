@@ -17,13 +17,11 @@ use URL;
 use App\ContactForm;
 use App\Customers;
 use App\Task;
+use App\FaqQuestion;
 
 class MenuController extends Controller
 {
-    public function test(){
-        return view('test');
-
-    }
+    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business'];
 
     public function MainPage(Request $request){
 
@@ -82,51 +80,32 @@ class MenuController extends Controller
 
     }
 
-    public function FAQ(){
-        
-        //return view('FAQ');
-        return Redirect::to('faq/registration');
-    }   
-    public function faq_registration(){
-        
-        return view('faq.faq_registration');
 
-    }
-    public function faq_subscribe(){
+    public function FAQ($question_category=''){
         
-        return view('faq.faq_subscribe');
-
-    }
-    public function faq_blue_box(){
+        $faq_questions = FaqQuestion::all();
         
-        return view('faq.faq_blue_box');
+        return view('FAQ',['question_category' => $question_category, 'faq_categories' => $this->faq_categories, 'faq_questions' => $faq_questions]);
+    } 
 
-    }
-    public function faq_coffee_shop(){
-        
-        return view('faq.faq_coffee_shop');
 
-    }
-    public function faq_loyality_program(){
-        
-        return view('faq.faq_loyality_program');
+    public function FAQShow(){
+               
+        return view('FAQShow',['faq_categories' => $this->faq_categories]);
+    }  
 
-    }
-    public function faq_payment_and_shipping(){
-        
-        return view('faq.faq_payment_and_shipping');
 
-    }
-    public function faq_trainings(){
-        
-        return view('faq.faq_trainings');
+    public function FAQAdd(Request $request){
 
-    }
-    public function faq_for_business(){
-        
-        return view('faq.faq_for_business');
+        $faq_question = new FaqQuestion();
+        $faq_question->question = $request->question;
+        $faq_question->answer = $request->answer;
+        $faq_question->category = $request->category;
+        $faq_question->save();
+        $success = 'The question saved successfully !';
+        return view('FAQShow',['faq_categories' => $this->faq_categories, 'success' => $success]);
+    } 
 
-    }
 
     public function Contacts(){
         
