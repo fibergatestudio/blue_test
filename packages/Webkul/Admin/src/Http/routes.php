@@ -165,7 +165,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('flavored/add_prod/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@flavored_add_prod');
                 Route::get('flavored/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@flavored_remove_prod');
 
+            Route::get('faq', 'Webkul\Admin\Http\Controllers\DashboardController@faq')->defaults('_config', [
+                'view' => 'admin::dashboard.faq'
+            ])->name('admin.dashboard.faq');
 
+                Route::post('faq/faq-add', 'Webkul\Admin\Http\Controllers\DashboardController@faq_add');
+
+            Route::get('trainings_edit', 'Webkul\Admin\Http\Controllers\DashboardController@trainings_edit')->defaults('_config', [
+                'view' => 'admin::dashboard.trainings_edit'
+            ])->name('admin.dashboard.trainings_edit');
+                
+                Route::post('trainings_edit/apply_edit', 'Webkul\Admin\Http\Controllers\DashboardController@trainings_edit_apply');
 
 
             // Dashboard Route

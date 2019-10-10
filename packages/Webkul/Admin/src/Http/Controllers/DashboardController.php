@@ -18,6 +18,8 @@ use App\FlavoredCoffee;
 use App\CoffeeBeans;
 use App\TurkishCoffeeSettings;
 use App\Trainings;
+use App\TrainingsEdit;
+use App\FaqQuestion;
 use Redirect;
 
 /**
@@ -28,6 +30,8 @@ use Redirect;
  */
 class DashboardController extends Controller
 {
+
+    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business'];
     /**
      * Display a listing of the resource.
      *
@@ -347,6 +351,124 @@ class DashboardController extends Controller
             DB::table('flavored_coffee')->where('id', $row_id)->delete();
 
             return back();
+        }
+
+    public function faq(){
+
+
+        return view($this->_config['view'],[
+            'faq_categories' => $this->faq_categories,
+        ]);
+    }
+        public function faq_add(Request $request){
+
+            $faq_question = new FaqQuestion();
+            $faq_question->question = $request->question;
+            $faq_question->answer = $request->answer;
+            $faq_question->category = $request->category;
+            $faq_question->save();
+            $success = 'The question saved successfully !';
+            return back();
+            //return view('FAQShow',['faq_categories' => $this->faq_categories, 'success' => $success]);
+
+        }
+
+    public function trainings_edit(){
+
+        $training_edit = DB::table('trainings_edit')->first();
+
+        //dd($training_edit);
+
+        if(!$training_edit){
+
+            //dd("EMPTY");
+
+            // $new_training = new TrainingsEdit();
+            // $new_training->training_number = $request->training_number;
+            // $new_training->training_name = $request->training_name;
+            // $new_training->training_description = $request->training_description;
+            // $new_training->training_cost = $request->training_cost;
+            // $new_training->training_structure = $request->training_structure;
+            // $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 1";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 2";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 3";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 4";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+
+        } else {
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+            //dd("NOT_EMPTY");
+
+        }
+
+        return view($this->_config['view'],[
+            'trainings_info_1' => $trainings_info_1,
+            'trainings_info_2' => $trainings_info_2,
+            'trainings_info_3' => $trainings_info_3,
+            'trainings_info_4' => $trainings_info_4,
+            ]);
+    }
+
+        public function trainings_edit_apply(Request $request){
+
+            $training_id = $request->training_id;
+
+            //dd($training_id);
+
+            DB::table('trainings_edit')
+            ->where('id', $training_id)
+            ->limit(1)
+            ->update([
+                'training_number' => $request->training_number,
+                'training_name' => $request->training_name,
+                'training_description' => $request->training_description,
+                'training_location' => $request->training_location,
+                'training_cost' => $request->training_cost,
+                'training_structure' => $request->training_structure,
+                ]);
+
+            return back();            
         }
     // LOYALITY 
     public function loyalty()

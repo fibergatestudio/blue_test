@@ -312,10 +312,10 @@ class MenuController extends Controller
     public function BaristaTrainings(){
 
         $tasks = Task::all();
-        $trai = DB::table('trainings')->get();
+        $trai = DB::table('trainings')->first();
 
         //dd($trai);
-        if(!is_null($trai)){
+        if($trai){
             $trainings = DB::table('trainings')->get();
             //dd($trainings);
         } else {
@@ -341,7 +341,64 @@ class MenuController extends Controller
             //dd($trainings);
         }
 
-        return view('BaristaTrainings', compact('tasks', 'trainings'));
+        $training_edit = DB::table('trainings_edit')->first();
+
+        //dd($training_edit);
+
+        if(!$training_edit){
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 1";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 2";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 3";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 4";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+
+        } else {
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+            //dd("NOT_EMPTY");
+
+        }
+
+        return view('BaristaTrainings', compact('tasks', 'trainings', 'trainings_info_1', 'trainings_info_2', 'trainings_info_3', 'trainings_info_4'));
     }
 
     public function BaristaTrainingsFilter($training_name){

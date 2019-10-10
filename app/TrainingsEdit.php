@@ -8,5 +8,4 @@ class TrainingsEdit extends Model
 {
     protected $table = "trainings_edit";
 
-
 }
