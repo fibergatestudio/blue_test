@@ -7,7 +7,7 @@
 @section('content-wrapper')
 
 <div class="inner-section">
-    
+
     @include ('admin::layouts.nav-aside')
 
     <div class="content-wrapper">
@@ -32,7 +32,7 @@
                 <input type="text" name="task_date" class="date" required/>
                 <br /><br />
                 <!-- <input type="text" name="training" required/> -->
-                <select name="training_name" request> 
+                <select name="training_name" request>
                     @foreach($trainings as $training)
                         <option value="{{ $training->training_name }}">{{ $training->training_name }}</option>
                     @endforeach
@@ -110,7 +110,7 @@
         </script>
 
     </div>
-    
+
 </div>
 
 

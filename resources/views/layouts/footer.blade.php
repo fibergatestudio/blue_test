@@ -287,7 +287,19 @@
                             <!-- <input class="field__input" type="password" name="password" placeholder="Confirm password" required> -->
                             <input type="password" class="field__input control" name="password_confirmation" placeholder="Confirm password"  v-validate="'required|min:6|confirmed:password'" data-vv-as="&quot;{{ __('shop::app.customer.signup-form.confirm_pass') }}&quot;">
                         </label>
-                        <input class="button button_blue" type="submit" value="Sign Up">
+     
+                        <img id="img-captcha" src="{{ url('/captcha') }}" style="margin-bottom: -18px; margin-right: 20px;">
+                        <div id="reload-captcha" class="button button_blue">Refresh</div>
+                        
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_padlock">
+                                <use xlink:href="#padlock"></use>
+                            </svg>
+
+                            <input type="text" class="field__input control" name="captcha" placeholder="Captcha" autocomplete="off">
+                        </label>
+                        
+                        <input class="button button_blue submitSignUp" type="submit" value="Sign Up">
                     </form>
                 </div>
             </div>
@@ -331,7 +343,19 @@
                         <div>
                             <button class="account-popup__recovery js-open-popup" data-popup-id="recovery" type="button">Forgot your password?</button>
                         </div>
-                        <input class="button button_blue" type="submit" value="Log In">
+
+                        <img class="img-captcha-log-in" src="{{ url('/captcha') }}" style="margin-bottom: -18px; margin-right: 20px;">
+                        <div class="button button_blue reload-captcha-log-in">Refresh</div>
+                        
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_padlock">
+                                <use xlink:href="#padlock"></use>
+                            </svg>
+
+                            <input type="text" class="field__input control" name="captcha-log-in" placeholder="Captcha" autocomplete="off">
+                        </label>
+                        
+                        <input class="button button_blue submitLogIn" type="submit" value="Log In">
                     </form>
                 </div>
                 <div class="account-popup__additional account-popup__additional_register">
@@ -662,7 +686,70 @@
         }
 
     });
-    
+
+
+    // Captcha
+    $("#reload-captcha").click(function() {
+        $('#img-captcha').attr('src', "{{ url('/captcha') }}"+'?id='+Math.random());              
+    });
+
+    $('.submitSignUp').click(function (e){        
+        e.preventDefault();
+        let captcha = $('input[name="captcha"]').val();
+        var parent = $(this).parent();
+        $.ajax({
+                    url: "{{ url('/captcha/verify') }}",
+                    type: "POST",
+                    data: {captcha:captcha},
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data === 'true') {
+                            $('.captcha-not-valid').remove();
+                            parent.submit();
+                        }
+                        else{
+                            $("#reload-captcha").after('<span style="position: absolute; padding-top: 25px;" class="control-error captcha-not-valid">The captcha field is not valid.</span>');
+                        }
+                    },
+                    error: function (msg) {
+                        alert('Error captcha');
+                    }
+                }); 
+        
+    });
+
+    $(".reload-captcha-log-in").click(function() {
+        $('.img-captcha-log-in').attr('src', "{{ url('/captcha') }}"+'?id='+Math.random());              
+    });
+
+    $('.submitLogIn').click(function (e){        
+        e.preventDefault();
+        let captcha = $('input[name="captcha-log-in"]').val();
+        var parent = $(this).parent();
+        $.ajax({
+                    url: "{{ url('/captcha/verify') }}",
+                    type: "POST",
+                    data: {captcha:captcha},
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data === 'true') {
+                            $('.captcha-not-valid').remove();
+                            parent.submit();
+                        }
+                        else{
+                            $(".reload-captcha-log-in").after('<span style="position: absolute; padding-top: 25px;" class="control-error captcha-not-valid">The captcha field is not valid.</span>');
+                        }
+                    },
+                    error: function (msg) {
+                        alert('Error captcha');
+                    }
+                }); 
+        
+    });
     </script>
     
 

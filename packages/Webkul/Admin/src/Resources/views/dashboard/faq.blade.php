@@ -7,7 +7,7 @@
 @section('content-wrapper')
 
 <div class="inner-section">
-    
+
     @include ('admin::layouts.nav-aside')
 
     <div class="content-wrapper">
@@ -23,10 +23,10 @@
                     <h3 class="page__title">{{$success}}</h3>
                     @endif
                 <div style="display:flex;">
-                    <div class="cart faq-page">                                                
+                    <div class="cart faq-page">
                         <div class="faq-page__content">
                             <form method="post" action="{{ url('admin/faq/faq-add') }}">
-                            @csrf 
+                            @csrf
                                 <div>
                                     <label for="question">Question</label>
                                     <input type="text" name="question" id="question" required>
@@ -47,11 +47,11 @@
                             </form>
                         </div>
                     </div>
-                    <div class="cart faq-page">                                                
+                    <div class="cart faq-page">
                         <div class="faq-page__content">
                             <span>Add Category</span>
                             <form method="post" action="{{ url('admin/faq/faq-add-category') }}">
-                            @csrf 
+                            @csrf
                                 <div>
                                     <label for="category">Category</label>
                                     <input name="category_name" id="category" required>
@@ -91,10 +91,10 @@
 
                     </table>
                 </div>
-            </div> 
-       
+            </div>
+
     </div>
-    
+
 </div>
 
 

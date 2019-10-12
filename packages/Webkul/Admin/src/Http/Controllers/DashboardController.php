@@ -151,7 +151,7 @@ class DashboardController extends Controller
             $trainings = DB::table('trainings')->get();
             //dd($trainings);
         } else {
-            
+
             $default_trainings = new Trainings();
             $default_trainings->training_name = 'Barista/Latte art basics';
             $default_trainings->save();
@@ -180,7 +180,7 @@ class DashboardController extends Controller
         ]);
     }
     public function add_training(Request $request){
-        
+
         //dd($request->training_name);
 
         $new_training = new Trainings();
@@ -225,7 +225,7 @@ class DashboardController extends Controller
 
             //dd($prod_id);
 
-            //$remove_capsule = 
+            //$remove_capsule =
             DB::table('coffee_capsules')->where('id', $row_id)->delete();
 
             return back();
@@ -323,7 +323,7 @@ class DashboardController extends Controller
         public function beans_remove_prod($row_id){
 
             DB::table('coffee_beans')->where('id', $row_id)->delete();
-            
+
             return back();
         }
     public function flavored(){
@@ -352,7 +352,7 @@ class DashboardController extends Controller
 
             //dd($prod_id);
 
-            //$remove_capsule = 
+            //$remove_capsule =
             DB::table('flavored_coffee')->where('id', $row_id)->delete();
 
             return back();
@@ -361,7 +361,7 @@ class DashboardController extends Controller
 
         $homeprod = DB::table('homepage_prod')->get();
         $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
-        
+
         return view($this->_config['view'],[
             'homeprod' => $homeprod,
             'products' => $products
@@ -521,9 +521,9 @@ class DashboardController extends Controller
                 'training_structure' => $request->training_structure,
                 ]);
 
-            return back();            
+            return back();
         }
-    // LOYALITY 
+    // LOYALITY
     public function loyalty()
     {
         // Total Customers Points
@@ -572,7 +572,7 @@ class DashboardController extends Controller
             $loyal_settings = new LoyalityProgram();
             $loyal_settings->payout_percentage = $request->payout_percentage;
             $loyal_settings->save();
-            
+
         }
 
         return back();
@@ -592,7 +592,7 @@ class DashboardController extends Controller
             $loyal_settings = new LoyalityProgram();
             $loyal_settings->points_value = $request->points_value;
             $loyal_settings->save();
-            
+
         }
 
 
@@ -639,7 +639,7 @@ class DashboardController extends Controller
             $meta_title = $request->meta_title;
             $meta_descr = $request->meta_descr;
             $meta_keys = $request->meta_keys;
-    
+
             //dd($page_slug,$meta_keys);
 
             //$test = DB::table('pages')->where('slug', $page_id)->limit(1);
@@ -647,7 +647,7 @@ class DashboardController extends Controller
             // dd($page_id);
             // DB::table('pages')->where('id', '1')->update([ 'title' => 'KAPPA']);
 
-    
+
             DB::table('pages')->where('id', '=', $page_id)
             ->limit(1)
             ->update([
@@ -742,7 +742,7 @@ class DashboardController extends Controller
 
         return view($this->_config['view'], compact('statistics'))->with(
             [
-            'startDate' => $this->startDate, 
+            'startDate' => $this->startDate,
             'endDate' => $this->endDate,
             'total_customers_points' => $total_customers_points,
             'total_customers_used_points' => $total_customers_used_points,

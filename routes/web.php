@@ -134,6 +134,11 @@ Route::get('/test', 'MenuController@test');
 
     Route::get('/contacts', 'MenuController@Contacts');
 
+
+    //-- CAPTCHA --//
+    Route::get('/captcha', 'CaptchaController@create_captcha');
+    Route::post('/captcha/verify', 'CaptchaController@verify_captcha');
+
 });
 
 

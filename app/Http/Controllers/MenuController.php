@@ -19,9 +19,12 @@ use App\Customers;
 use App\Task;
 use App\FaqQuestion;
 
+use App\Trainings;
+use App\TrainingsEdit;
+
 class MenuController extends Controller
 {
-    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business','test' => 'test'];
+    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business'];
 
     public function MainPage(Request $request){
 
@@ -46,13 +49,13 @@ class MenuController extends Controller
 
 
         //referal
-                             
+
         $value = $request->cookie('name');
 
         if($value) {
 
         } else {
-            
+
         }
 
         return view('MainPage',[
@@ -82,20 +85,20 @@ class MenuController extends Controller
     }
 
     public function OnlineShop(){
-        
+
         return view('OnlineShop');
 
     }
 
     public function BlueBox(){
-        
+
         return view('BlueBox');
 
     }
 
 
     public function FAQ($question_category=''){
-        
+
         $faq_questions = FaqQuestion::all();
 
         $faq_categories = DB::table('faq_categories')->get(['slug', 'category_name']);
@@ -106,16 +109,16 @@ class MenuController extends Controller
             $cat_arr[$cat->slug] = $cat->category_name;
 
         }
-        
+
         return view('FAQ',['question_category' => $question_category, 'faq_categories' => $cat_arr, 'faq_questions' => $faq_questions]);
         //return view('FAQ',['question_category' => $question_category, 'faq_categories' => $this->faq_categories, 'faq_questions' => $faq_questions]);
-    } 
+    }
 
 
     public function FAQShow(){
-               
+
         return view('FAQShow',['faq_categories' => $this->faq_categories]);
-    }  
+    }
 
 
     public function FAQAdd(Request $request){
@@ -127,17 +130,17 @@ class MenuController extends Controller
         $faq_question->save();
         $success = 'The question saved successfully !';
         return view('FAQShow',['faq_categories' => $this->faq_categories, 'success' => $success]);
-    } 
+    }
 
 
     public function Contacts(){
-        
+
         return view('Contacts');
 
     }
 
     public function BasketBox(){
-        
+
         return view('BasketBox');
 
     }
@@ -237,7 +240,7 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        
+
         $beans_class = DB::table('coffee_beans')->where('products_block', 'Something Classic')->get();
         $beans_spec = DB::table('coffee_beans')->where('products_block', 'Something Specialty')->get();
         if($beans_class){
@@ -342,7 +345,7 @@ class MenuController extends Controller
             $trainings = DB::table('trainings')->get();
             //dd($trainings);
         } else {
-            
+
             $default_trainings = new Trainings();
             $default_trainings->training_name = 'Barista/Latte art basics';
             $default_trainings->save();
@@ -481,7 +484,7 @@ class MenuController extends Controller
         }
 
 
-        
+
         $contact = new ContactForm();
         $contact->name = $request->name;
         $contact->phone = $request->tel;
@@ -490,7 +493,7 @@ class MenuController extends Controller
         $contact->save();
 
         //return back();
-        
+
         return back()->with('message_sent', 'open');
     }
 
@@ -504,11 +507,11 @@ class MenuController extends Controller
         $validator = Validator::make($data, [
             'current_password' => 'required',
             'password' => 'required|same:password',
-            'password_confirmation' => 'required|same:password',     
+            'password_confirmation' => 'required|same:password',
         ], $messages);
 
         return $validator;
-    }  
+    }
 
     public function ChangePassword(Request $request){
 
@@ -530,33 +533,33 @@ class MenuController extends Controller
                 //return Redirect::back()->withErrors(['Re-Check Password', 'The Message']);
                 //return Redirect::back()->withInput()->withErrors($your_message_bag->all());
 
-            } else {  
- 
-                $current_password = $test->password;           
+            } else {
 
-                if(Hash::check($request_data['current_password'], $current_password)) {    
+                $current_password = $test->password;
 
-                    $user_id = $test->id;                       
+                if(Hash::check($request_data['current_password'], $current_password)) {
+
+                    $user_id = $test->id;
                     $obj_user = Customers::find($user_id);
                     $obj_user->password = Hash::make($request_data['password']);;
-                    $obj_user->save(); 
+                    $obj_user->save();
                     //return "ok";
 
                     //return Redirect::back()->withErrors(['password', 'password']);
                     return redirect()->back()->with('password', ['your message,here']);
 
-                } else {        
-                    return redirect()->back()->with('paserror', ['your message,here']);   
+                } else {
+                    return redirect()->back()->with('paserror', ['your message,here']);
                     // $error = array('current_password' => 'Please enter correct current password');
-                    // return response()->json(array('error' => $error), 400);   
+                    // return response()->json(array('error' => $error), 400);
                 }
-            }   
+            }
 
         // } else {
 
         //     return redirect()->to('/');
 
-        // }    
+        // }
     }
 
 }

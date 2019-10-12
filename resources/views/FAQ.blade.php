@@ -14,9 +14,9 @@
                 <div class="manage-account">
                     <h2 class="manage-account__title">FAQ</h2>
                     <ul class="manage-account__menu">
-                        
+
                         @foreach($faq_categories as $key => $value)
-                            @if($key === $question_category)                            
+                            @if($key === $question_category)
                                 <li class="manage-account__item manage-account__item_current">
                                     <a href="{{ url('/faq/'.$key) }}">{{$value}}</a>
                                 </li>
@@ -26,7 +26,7 @@
                                 </li>
                             @endif
                         @endforeach
-                    
+
                     </ul>
                 </div>
             </aside>
@@ -37,7 +37,7 @@
                     <ul class="breadcrumb page__breadcrumb">
                         <li class="breadcrumb__item">
                             <a href="/">Home</a>
-                        </li>                
+                        </li>
                     <?php $link = "" ?>
                     @for($i = 1; $i <= count(Request::segments()); $i++)
                         <?php $category_name = ucwords(str_replace('-',' ',Request::segment($i))); ?>
@@ -46,15 +46,15 @@
                         <li class="breadcrumb__item">
                         <a href="<?= $link ?>">{{ ucwords(str_replace('-',' ',Request::segment($i)))}}</a>
                         </li>
-                        @else 
-                        <li class="breadcrumb__item">                       
+                        @else
+                        <li class="breadcrumb__item">
                         {{ucwords(str_replace('-',' ',Request::segment($i)))}}
                         </li>
                         @endif
                     @endfor
                     </ul>
-                    <!-- End Dynamic breadcrumbs --> 
-                    
+                    <!-- End Dynamic breadcrumbs -->
+
                     <a class="back-button page__back-button" href="#">
                         <svg>
                             <use xlink:href="#long-arrow"></use>
@@ -77,7 +77,7 @@
                         </div>
                         <div class="faq-page__content">
                             <h2 class="page__title faq-page__title">{{$category_name}}</h2>
-                            
+
                             <?php $i = 1; ?>
                             @foreach($faq_questions as $faq_question)
                                 @if (isset($_GET['catalogSearch']) AND $_GET['catalogSearch'] !== '')
@@ -94,7 +94,7 @@
                                     </div>
                                     <?php $i++; ?>
                                     @endif
-                                @else                               
+                                @else
                                     @if ($question_category === '')
                                     <div class="faq-page__item">
                                         <div class="faq-page__question">
@@ -122,7 +122,7 @@
                                     @endif
                                 @endif
                             @endforeach
-                        
+
                         </div>
                     </div>
                 </div>
