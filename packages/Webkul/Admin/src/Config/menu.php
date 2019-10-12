@@ -128,6 +128,24 @@ return [
         'route' => 'admin.dashboard.flavored',
         'sort' => 9,
         'icon-class' => '',
+    ],[
+        'key' => 'sales.homeprod',
+        'name' => 'Homepage Products',
+        'route' => 'admin.dashboard.homepage_prod',
+        'sort' => 9,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.faq',
+        'name' => 'FAQ Questions',
+        'route' => 'admin.dashboard.faq',
+        'sort' => 10,
+        'icon-class' => '',
+    ],[
+        'key' => 'sales.trainings_edit',
+        'name' => 'Trainings Edit',
+        'route' => 'admin.dashboard.trainings_edit',
+        'sort' => 10,
+        'icon-class' => '',
     ],
     [
         'key' => 'catalog',
@@ -255,7 +273,7 @@ return [
         'route' => 'admin.sliders.index',
         'sort' => 7,
         'icon-class' => '',
-    ], [
+    ],[
         'key' => 'settings.taxes',
         'name' => 'admin::app.layouts.taxes',
         'route' => 'admin.tax-categories.index',

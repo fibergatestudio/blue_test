@@ -223,24 +223,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mar 12 - Jun 11</td>
-                                        <td>3 months</td>
-                                        <td>12.04.2019</td>
-                                        <td>21 600HUF</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dec 12 - Mar 11</td>
-                                        <td>3 months</td>
-                                        <td>10.11.2018</td>
-                                        <td>21 600HUF</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sep 12 - Dec 11</td>
-                                        <td>3 months</td>
-                                        <td>09.08.2018</td>
-                                        <td>21 600HUF</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>

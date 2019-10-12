@@ -186,11 +186,10 @@
                                     </picture>
                                 </div>
                                 <div class="offer-popup__header">
-                                    <h3 class="offer-popup__heading">training 1</h3>
-                                    <h4 class="title offer-popup__subheading">Barista training</h4>
+                                    <h3 class="offer-popup__heading">{{ $trainings_info_1->training_number }}</h3>
+                                    <h4 class="title offer-popup__subheading">{{ $trainings_info_1->training_name }}</h4>
                                     <div class="offer-popup__description">
-                                        <p>Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly. </p>
-                                        <p>The price and duration of the training will vary depending on the duration of the chosen modules or practice. Our Barista Training is best suited to those who are already in the business and want to acquire and develop practical skills quickly</p>
+                                        {!! $trainings_info_1->training_description !!}
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +200,7 @@
                                             <path d="M9 13.055c-2.497 0-4.528-1.96-4.528-4.368 0-2.409 2.031-4.368 4.528-4.368 2.497 0 4.528 1.96 4.528 4.368 0 2.409-2.031 4.368-4.528 4.368zM9 0C4.037 0 0 3.9 0 8.692c0 5.948 8.054 14.68 8.397 15.048a.83.83 0 0 0 1.206 0C9.946 23.372 18 14.64 18 8.692 18 3.899 13.963 0 9 0z" fill="#64b2db"></path>
                                         </svg>Location of the training:
                                     </h4>
-                                    <p>Training can take place at our own base or if necessary, at the customer's place</p>
+                                    {{ $trainings_info_1->training_location }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -212,9 +211,7 @@
                                             <path d="M17.25 17h-.5c-.414 0-.75-.504-.75-1.126v-.748c0-.36.111-.68.288-.883.13-.148.289-.243.463-.243h.498c.415 0 .751.504.751 1.126v.748c0 .621-.336 1.126-.75 1.126zm7.3-4.566a1.356 1.356 0 0 0-.484-.345 1.2 1.2 0 0 0-.448-.089h-8.236c-.763 0-1.382.742-1.382 1.656v3.688c0 .914.619 1.656 1.382 1.656h8.236c.158 0 .307-.033.448-.09.182-.072.345-.192.484-.344.276-.301.45-.739.45-1.222v-3.688c0-.483-.174-.92-.45-1.222z" fill="#64b2db"></path>
                                         </svg>Cost of education:
                                     </h4>
-                                    <p>The Barista Training duration is <strong>2 hours — Price: 20,000 HUF gross </strong>
-                                    </p>
-                                    <p>Combined package — Barista training + Barista practice = <strong>3 h/30,000 HUF, max. 4 people</strong>
+                                    {{ $trainings_info_1->training_cost }}
                                     </p>
                                 </div>
                                 <div class="offer-popup__info">
@@ -224,10 +221,7 @@
                                         </svg>Training structure:
                                     </h4>
                                     <ul>
-                                        <li>basics of coffee machine handling, setting of grinder, basic machine maintenance</li>
-                                        <li>basics of preparing espresso espresso-based drinks</li>
-                                        <li>correct milk steaming techniques: the basis for making milk cream and milk foam</li>
-                                        <li>coffee machine cleaning skills — "the secret of eternal life"</li>
+                                        {{ $trainings_info_1->training_structure }}
                                     </ul>
                                 </div>
                             </div>
@@ -248,11 +242,12 @@
                                     </picture>
                                 </div>
                                 <div class="offer-popup__header">
-                                    <h3 class="offer-popup__heading">training 2</h3>
-                                    <h4 class="title offer-popup__subheading">Barista training</h4>
+                                    <h3 class="offer-popup__heading">{{ $trainings_info_2->training_number }}</h3>
+                                    <h4 class="title offer-popup__subheading">{{ $trainings_info_2->training_name }}</h4>
                                     <div class="offer-popup__description">
-                                        <p>Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly. </p>
-                                        <p>The price and duration of the training will vary depending on the duration of the chosen modules or practice. Our Barista Training is best suited to those who are already in the business and want to acquire and develop practical skills quickly</p>
+
+                                        {!! $trainings_info_2->training_description !!}
+
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +258,7 @@
                                             <path d="M9 13.055c-2.497 0-4.528-1.96-4.528-4.368 0-2.409 2.031-4.368 4.528-4.368 2.497 0 4.528 1.96 4.528 4.368 0 2.409-2.031 4.368-4.528 4.368zM9 0C4.037 0 0 3.9 0 8.692c0 5.948 8.054 14.68 8.397 15.048a.83.83 0 0 0 1.206 0C9.946 23.372 18 14.64 18 8.692 18 3.899 13.963 0 9 0z" fill="#64b2db"></path>
                                         </svg>Location of the training:
                                     </h4>
-                                    <p>Training can take place at our own base or if necessary, at the customer's place</p>
+                                    {{ $trainings_info_2->training_location }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -274,10 +269,7 @@
                                             <path d="M17.25 17h-.5c-.414 0-.75-.504-.75-1.126v-.748c0-.36.111-.68.288-.883.13-.148.289-.243.463-.243h.498c.415 0 .751.504.751 1.126v.748c0 .621-.336 1.126-.75 1.126zm7.3-4.566a1.356 1.356 0 0 0-.484-.345 1.2 1.2 0 0 0-.448-.089h-8.236c-.763 0-1.382.742-1.382 1.656v3.688c0 .914.619 1.656 1.382 1.656h8.236c.158 0 .307-.033.448-.09.182-.072.345-.192.484-.344.276-.301.45-.739.45-1.222v-3.688c0-.483-.174-.92-.45-1.222z" fill="#64b2db"></path>
                                         </svg>Cost of education:
                                     </h4>
-                                    <p>The Barista Training duration is <strong>2 hours — Price: 20,000 HUF gross </strong>
-                                    </p>
-                                    <p>Combined package — Barista training + Barista practice = <strong>3 h/30,000 HUF, max. 4 people</strong>
-                                    </p>
+                                    {{ $trainings_info_2->training_cost }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -286,10 +278,7 @@
                                         </svg>Training structure:
                                     </h4>
                                     <ul>
-                                        <li>basics of coffee machine handling, setting of grinder, basic machine maintenance</li>
-                                        <li>basics of preparing espresso espresso-based drinks</li>
-                                        <li>correct milk steaming techniques: the basis for making milk cream and milk foam</li>
-                                        <li>coffee machine cleaning skills — "the secret of eternal life"</li>
+                                        {{ $trainings_info_2->training_structure }}
                                     </ul>
                                 </div>
                             </div>
@@ -310,11 +299,10 @@
                                     </picture>
                                 </div>
                                 <div class="offer-popup__header">
-                                    <h3 class="offer-popup__heading">training 3</h3>
-                                    <h4 class="title offer-popup__subheading">Barista training</h4>
+                                    <h3 class="offer-popup__heading">{{ $trainings_info_3->training_number }}</h3>
+                                    <h4 class="title offer-popup__subheading">{{ $trainings_info_3->training_name }}</h4>
                                     <div class="offer-popup__description">
-                                        <p>Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly. </p>
-                                        <p>The price and duration of the training will vary depending on the duration of the chosen modules or practice. Our Barista Training is best suited to those who are already in the business and want to acquire and develop practical skills quickly</p>
+                                        {!! $trainings_info_3->training_description !!}
                                     </div>
                                 </div>
                             </div>
@@ -325,7 +313,7 @@
                                             <path d="M9 13.055c-2.497 0-4.528-1.96-4.528-4.368 0-2.409 2.031-4.368 4.528-4.368 2.497 0 4.528 1.96 4.528 4.368 0 2.409-2.031 4.368-4.528 4.368zM9 0C4.037 0 0 3.9 0 8.692c0 5.948 8.054 14.68 8.397 15.048a.83.83 0 0 0 1.206 0C9.946 23.372 18 14.64 18 8.692 18 3.899 13.963 0 9 0z" fill="#64b2db"></path>
                                         </svg>Location of the training:
                                     </h4>
-                                    <p>Training can take place at our own base or if necessary, at the customer's place</p>
+                                    {{ $trainings_info_3->training_location }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -336,10 +324,7 @@
                                             <path d="M17.25 17h-.5c-.414 0-.75-.504-.75-1.126v-.748c0-.36.111-.68.288-.883.13-.148.289-.243.463-.243h.498c.415 0 .751.504.751 1.126v.748c0 .621-.336 1.126-.75 1.126zm7.3-4.566a1.356 1.356 0 0 0-.484-.345 1.2 1.2 0 0 0-.448-.089h-8.236c-.763 0-1.382.742-1.382 1.656v3.688c0 .914.619 1.656 1.382 1.656h8.236c.158 0 .307-.033.448-.09.182-.072.345-.192.484-.344.276-.301.45-.739.45-1.222v-3.688c0-.483-.174-.92-.45-1.222z" fill="#64b2db"></path>
                                         </svg>Cost of education:
                                     </h4>
-                                    <p>The Barista Training duration is <strong>2 hours — Price: 20,000 HUF gross </strong>
-                                    </p>
-                                    <p>Combined package — Barista training + Barista practice = <strong>3 h/30,000 HUF, max. 4 people</strong>
-                                    </p>
+                                    {{ $trainings_info_3->training_cost }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -348,10 +333,7 @@
                                         </svg>Training structure:
                                     </h4>
                                     <ul>
-                                        <li>basics of coffee machine handling, setting of grinder, basic machine maintenance</li>
-                                        <li>basics of preparing espresso espresso-based drinks</li>
-                                        <li>correct milk steaming techniques: the basis for making milk cream and milk foam</li>
-                                        <li>coffee machine cleaning skills — "the secret of eternal life"</li>
+                                        {{ $trainings_info_3->training_structure }}
                                     </ul>
                                 </div>
                             </div>
@@ -372,11 +354,10 @@
                                     </picture>
                                 </div>
                                 <div class="offer-popup__header">
-                                    <h3 class="offer-popup__heading">training 4</h3>
-                                    <h4 class="title offer-popup__subheading">Barista training</h4>
+                                    <h3 class="offer-popup__heading">{{ $trainings_info_4->training_number }}</h3>
+                                    <h4 class="title offer-popup__subheading">{{ $trainings_info_4->training_name }}</h4>
                                     <div class="offer-popup__description">
-                                        <p>Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly. </p>
-                                        <p>The price and duration of the training will vary depending on the duration of the chosen modules or practice. Our Barista Training is best suited to those who are already in the business and want to acquire and develop practical skills quickly</p>
+                                        {{ $trainings_info_4->training_description }}
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +368,7 @@
                                             <path d="M9 13.055c-2.497 0-4.528-1.96-4.528-4.368 0-2.409 2.031-4.368 4.528-4.368 2.497 0 4.528 1.96 4.528 4.368 0 2.409-2.031 4.368-4.528 4.368zM9 0C4.037 0 0 3.9 0 8.692c0 5.948 8.054 14.68 8.397 15.048a.83.83 0 0 0 1.206 0C9.946 23.372 18 14.64 18 8.692 18 3.899 13.963 0 9 0z" fill="#64b2db"></path>
                                         </svg>Location of the training:
                                     </h4>
-                                    <p>Training can take place at our own base or if necessary, at the customer's place</p>
+                                    {{ $trainings_info_4->training_location }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -398,10 +379,7 @@
                                             <path d="M17.25 17h-.5c-.414 0-.75-.504-.75-1.126v-.748c0-.36.111-.68.288-.883.13-.148.289-.243.463-.243h.498c.415 0 .751.504.751 1.126v.748c0 .621-.336 1.126-.75 1.126zm7.3-4.566a1.356 1.356 0 0 0-.484-.345 1.2 1.2 0 0 0-.448-.089h-8.236c-.763 0-1.382.742-1.382 1.656v3.688c0 .914.619 1.656 1.382 1.656h8.236c.158 0 .307-.033.448-.09.182-.072.345-.192.484-.344.276-.301.45-.739.45-1.222v-3.688c0-.483-.174-.92-.45-1.222z" fill="#64b2db"></path>
                                         </svg>Cost of education:
                                     </h4>
-                                    <p>The Barista Training duration is <strong>2 hours — Price: 20,000 HUF gross </strong>
-                                    </p>
-                                    <p>Combined package — Barista training + Barista practice = <strong>3 h/30,000 HUF, max. 4 people</strong>
-                                    </p>
+                                    {{ $trainings_info_4->training_cost }}
                                 </div>
                                 <div class="offer-popup__info">
                                     <h4>
@@ -410,10 +388,7 @@
                                         </svg>Training structure:
                                     </h4>
                                     <ul>
-                                        <li>basics of coffee machine handling, setting of grinder, basic machine maintenance</li>
-                                        <li>basics of preparing espresso espresso-based drinks</li>
-                                        <li>correct milk steaming techniques: the basis for making milk cream and milk foam</li>
-                                        <li>coffee machine cleaning skills — "the secret of eternal life"</li>
+                                        {{ $trainings_info_4->training_structure}}
                                     </ul>
                                 </div>
                             </div>

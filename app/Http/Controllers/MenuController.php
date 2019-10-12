@@ -21,13 +21,26 @@ use App\FaqQuestion;
 
 class MenuController extends Controller
 {
-    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business'];
+    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business','test' => 'test'];
 
     public function MainPage(Request $request){
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        $homepage_prod = DB::table('homepage_prod')->get();
+        if($homepage_prod){
+            $prod_array = [];
+            foreach($homepage_prod as $cap){
+                $prod_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        //dd($prod_array);
+
+        //$all_prod = DB::table('product_flat')->whereIn('id', $flav_array)->where('locale', $locale)->get();
+
+        $all_prod = DB::table('product_flat')->whereIn('id', $prod_array)->where('locale', $locale)->get();
 
         $image = DB::table('product_images')->get();
 
@@ -84,8 +97,18 @@ class MenuController extends Controller
     public function FAQ($question_category=''){
         
         $faq_questions = FaqQuestion::all();
+
+        $faq_categories = DB::table('faq_categories')->get(['slug', 'category_name']);
+
+        $cat_arr = [];
+        foreach($faq_categories as $cat){
+
+            $cat_arr[$cat->slug] = $cat->category_name;
+
+        }
         
-        return view('FAQ',['question_category' => $question_category, 'faq_categories' => $this->faq_categories, 'faq_questions' => $faq_questions]);
+        return view('FAQ',['question_category' => $question_category, 'faq_categories' => $cat_arr, 'faq_questions' => $faq_questions]);
+        //return view('FAQ',['question_category' => $question_category, 'faq_categories' => $this->faq_categories, 'faq_questions' => $faq_questions]);
     } 
 
 
@@ -312,10 +335,10 @@ class MenuController extends Controller
     public function BaristaTrainings(){
 
         $tasks = Task::all();
-        $trai = DB::table('trainings')->get();
+        $trai = DB::table('trainings')->first();
 
         //dd($trai);
-        if(!is_null($trai)){
+        if($trai){
             $trainings = DB::table('trainings')->get();
             //dd($trainings);
         } else {
@@ -341,7 +364,64 @@ class MenuController extends Controller
             //dd($trainings);
         }
 
-        return view('BaristaTrainings', compact('tasks', 'trainings'));
+        $training_edit = DB::table('trainings_edit')->first();
+
+        //dd($training_edit);
+
+        if(!$training_edit){
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 1";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 2";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 3";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 4";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+
+        } else {
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+            //dd("NOT_EMPTY");
+
+        }
+
+        return view('BaristaTrainings', compact('tasks', 'trainings', 'trainings_info_1', 'trainings_info_2', 'trainings_info_3', 'trainings_info_4'));
     }
 
     public function BaristaTrainingsFilter($training_name){
@@ -369,7 +449,11 @@ class MenuController extends Controller
         //-- Tutorials - Aeropress --//
         public function Aeropress(){
 
-            return view('tutorials.Aeropress');
+            $pages = DB::table('pages')->get();
+
+            return view('tutorials.Aeropress',[
+                'pages' => $pages,
+            ]);
 
         }
 
@@ -437,8 +521,9 @@ class MenuController extends Controller
             $request_data = $request->All();
             //dd($request_data);
             $validator = $this->admin_credential_rules($request_data);
-
+            //dd($validator);
             if($validator->fails()) {
+                dd("Failed");
                 return redirect()->back()->with('paserror', ['your message,here']);
 
                 //return response()->json(array('error' => $validator->getMessageBag()->toArray()), 400);
@@ -460,9 +545,10 @@ class MenuController extends Controller
                     //return Redirect::back()->withErrors(['password', 'password']);
                     return redirect()->back()->with('password', ['your message,here']);
 
-                } else {           
-                    $error = array('current_password' => 'Please enter correct current password');
-                    return response()->json(array('error' => $error), 400);   
+                } else {        
+                    return redirect()->back()->with('paserror', ['your message,here']);   
+                    // $error = array('current_password' => 'Please enter correct current password');
+                    // return response()->json(array('error' => $error), 400);   
                 }
             }   
 

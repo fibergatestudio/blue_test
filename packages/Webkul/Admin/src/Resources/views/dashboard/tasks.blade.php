@@ -15,15 +15,15 @@
         @include ('admin::layouts.tabs')
         <div class="row">
             <div >
-                <h1>Add Task</h1>
+                <h1>Add Training</h1>
 
                 <form action="{{ route('tasks.store') }}" method="post">
                 {{ csrf_field() }}
-                Task name:
+                Training name:
                 <br />
                 <input type="text" name="name" required/>
                 <br /><br />
-                Task description:
+                Training description:
                 <br />
                 <textarea name="description" required></textarea>
                 <br /><br />
@@ -46,9 +46,12 @@
 
                 <form action="{{ url('admin/tasks/add_training') }}" method="post">
                 {{ csrf_field() }}
-                Task name:
+                Training name:
                 <br />
                 <input type="text" name="training_name" required/>
+                <br /><br />
+                Training price:<br />
+                <input type="text" name="training_price" required/>
                 <br /><br />
                 <input type="submit" value="Add" />
                 </form>
@@ -66,9 +69,9 @@
                                 <th>Description</th>
                                 <th>Date</th>
                                 <th>Training</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
-
                         <tbody style="text-align: center;">
                             @foreach($task_table as $task)
                                 <tr>
@@ -77,6 +80,13 @@
                                     <td>{{ $task->description }}</td>
                                     <td>{{ $task->task_date }}</td>
                                     <td>{{ $task->training_name }}</td>
+                                    <td>
+                                    @foreach($trai as $t)
+                                        @if($task->training_name == $t->training_name)
+                                            {{ $t->training_price }}
+                                        @endif
+                                    @endforeach
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

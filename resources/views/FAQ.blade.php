@@ -30,7 +30,7 @@
                     </ul>
                 </div>
             </aside>
-            <div class="page__content">
+            <div style="min-height: 800px;" class="page__content">
                 <div class="container page__container">
 
                     <!-- Dynamic breadcrumbs -->

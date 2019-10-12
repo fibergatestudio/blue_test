@@ -58,7 +58,12 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <?php 
+                                                    
+                                    $item_name = DB::table('order_items')->where('order_id', $order->id)->get();
 
+                                    ?>
+                                    @foreach ($item_name as $item)
                                     <div class="purchase__details" id="purchaseDeatails{{ $order->id }}">
                                         <div class="cart-product purchase__product">
                                             <div class="cart-product__image">
@@ -70,27 +75,29 @@
                                             </div>
                                             <div class="cart-product__info">
                                                 <div class="cart-product__text">
-                                                    <?php 
-                                                    
-                                                    $item_name = DB::table('order_items')->where('order_id', $order->id)->get();
-             
-                                                    ?>
+
                                                     <h3 class="cart-product__title">
-                                                    @foreach ($item_name as $item)
+
                                                     {{ $item->name }}
-                                                    @endforeach
+
                                                     </h3>
                                                     <p class="cart-product__desc">Spice, Nutty, Dark chocolate, Cocoa, Bitter sweet</p>
                                                 </div>
-                                                <div class="cart-product__price"><span class="cart-product__mob-quantity">4&nbsp;x&nbsp;</span><span>{{ $order->base_price }}</span>
+                                                <div class="cart-product__price"><span class="cart-product__mob-quantity">4&nbsp;x&nbsp;</span>
+                                                <span>
+
+                                                    {{ core()->currency($item->price) }}
+
+                                                </span>
                                                 </div>
-                                                <div class="cart-product__quantity"><span>{{ $order->total_qty_ordered }}</span>
+                                                <div class="cart-product__quantity"><span>Q-ty: {{ $order->total_qty_ordered }}</span>
                                                 </div>
                                                 <div class="cart-product__total-price"><span>{{ core()->currency($order->grand_total) }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
 
                                 </div>
                                 @endforeach

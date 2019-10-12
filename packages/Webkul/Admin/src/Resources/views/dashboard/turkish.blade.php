@@ -22,7 +22,7 @@
             <input type="text" name="cezve" @if($cezve_link) value="{{ $cezve_link }} @endif"></input><br>
 
             <label>Coffee link: (exmpl 'categories/coffee')</label><br>
-            <input type="text" name="coffee" @if($coffee_link)  value="{{ $coffee_link }} @endif""></input><br>
+            <input type="text" name="coffee" @if($coffee_link) value="{{ $coffee_link }} @endif"></input><br>
 
             <button type="submit">Save</button>
         </form>

@@ -26,7 +26,7 @@
                                     <a href="{{ url('/categories/coffee') }}">Shop</a>
                                 </li>
                                 <li class="breadcrumb__item">
-                                    <a href="{{ url('/product/'. $product->url_key) }}">{{ $product->name }}</a>
+                                    <a href="{{ url('/products/'. $product->url_key) }}">{{ $product->name }}</a>
                                 </li>
                             </ul>
                             <a class="back-button page__back-button" href="#">

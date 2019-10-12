@@ -174,6 +174,15 @@
                                             <a class="button button_blue tutorial-tile__button" href="#">Start guide</a>
                                         </div>
                                     </div>
+                                    @foreach($pages as $p)
+                                    <div class="tutorial-tile tutorial-tile_mini swiper-slide" style="background-image: url({{ url('assets/img/tutorials/'.$p->image)}})">
+                                        <div class="tutorial-tile__wrapper">
+                                            <div class="tutorial-tile__title">{{ $p->meta_title }}</div>
+                                            <div class="tutorial-tile__desc">{{ $p->meta_descr }}</div>
+                                            <a class="button button_blue tutorial-tile__button" href="{{ url('/pages/'.$p->slug) }}">Start guide</a>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </div>
                                 <div class="swiper-pagination"></div>
                             </div>

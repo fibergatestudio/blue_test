@@ -145,16 +145,16 @@ use Illuminate\Http\Request;
 
         if($filter){
 
-            $all_prod = DB::table('product_flat')->whereIn('CoffeeWeight_label', $filter)->where('locale', $locale)->whereNotNull('url_key')->groupBy('parent_id')->get(); //Add url to products
+            $all_prod = DB::table('product_flat')->whereIn('CoffeeWeight_label', $filter)->where('locale', $locale)->whereNotNull('url_key')->groupBy('parent_id')->paginate(2); //Add url to products
             //dd($filter, $all_prod);
 
         } else if($search_term) {
 
-            $all_prod = DB::table('product_flat')->where('name', $search_term)->where('locale', $locale)->whereNotNull('url_key')->get();
+            $all_prod = DB::table('product_flat')->where('name', $search_term)->where('locale', $locale)->whereNotNull('url_key')->paginate(2);
 
         } else {
 
-            $all_prod = DB::table('product_flat')->whereNotNull('url_key')->whereNotNull('name')->where('locale', $locale)->get();
+            $all_prod = DB::table('product_flat')->whereNotNull('url_key')->whereNotNull('name')->where('locale', $locale)->paginate(2);
 
         }
 

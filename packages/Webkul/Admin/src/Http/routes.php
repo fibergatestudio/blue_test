@@ -165,7 +165,25 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('flavored/add_prod/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@flavored_add_prod');
                 Route::get('flavored/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@flavored_remove_prod');
 
+            Route::get('homepage_prod', 'Webkul\Admin\Http\Controllers\DashboardController@homeprod')->defaults('_config', [
+                'view' => 'admin::dashboard.homepage_prod'
+            ])->name('admin.dashboard.homepage_prod');
 
+                Route::get('homeprod/add_prod/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@homeprod_add');
+                Route::get('homeprod/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@homeprod_remove');
+
+            Route::get('faq', 'Webkul\Admin\Http\Controllers\DashboardController@faq')->defaults('_config', [
+                'view' => 'admin::dashboard.faq'
+            ])->name('admin.dashboard.faq');
+
+                Route::post('faq/faq-add', 'Webkul\Admin\Http\Controllers\DashboardController@faq_add');
+                Route::post('faq/faq-add-category', 'Webkul\Admin\Http\Controllers\DashboardController@faq_add_category');
+
+            Route::get('trainings_edit', 'Webkul\Admin\Http\Controllers\DashboardController@trainings_edit')->defaults('_config', [
+                'view' => 'admin::dashboard.trainings_edit'
+            ])->name('admin.dashboard.trainings_edit');
+                
+                Route::post('trainings_edit/apply_edit', 'Webkul\Admin\Http\Controllers\DashboardController@trainings_edit_apply');
 
 
             // Dashboard Route
