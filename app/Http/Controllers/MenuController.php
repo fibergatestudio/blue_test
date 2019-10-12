@@ -13,22 +13,36 @@ use Auth;
 use Validator;
 use Hash;
 use Cookie;
+use URL;
 use App\ContactForm;
 use App\Customers;
 use App\Task;
+use App\FaqQuestion;
+use App\Trainings;
+use App\TrainingsEdit;
 
 class MenuController extends Controller
 {
-    public function test(){
-        return view('test');
-
-    }
+    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business'];
 
     public function MainPage(Request $request){
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        $homepage_prod = DB::table('homepage_prod')->get();
+        if($homepage_prod){
+            $prod_array = [];
+            foreach($homepage_prod as $cap){
+                $prod_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        //dd($prod_array);
+
+        //$all_prod = DB::table('product_flat')->whereIn('id', $flav_array)->where('locale', $locale)->get();
+
+        $all_prod = DB::table('product_flat')->whereIn('id', $prod_array)->where('locale', $locale)->get();
 
         $image = DB::table('product_images')->get();
 
@@ -81,51 +95,32 @@ class MenuController extends Controller
 
     }
 
-    public function FAQ(){
-        
-        //return view('FAQ');
-        return Redirect::to('faq/registration');
-    }   
-    public function faq_registration(){
-        
-        return view('faq.faq_registration');
 
-    }
-    public function faq_subscribe(){
+    public function FAQ($question_category=''){
         
-        return view('faq.faq_subscribe');
-
-    }
-    public function faq_blue_box(){
+        $faq_questions = FaqQuestion::all();
         
-        return view('faq.faq_blue_box');
+        return view('FAQ',['question_category' => $question_category, 'faq_categories' => $this->faq_categories, 'faq_questions' => $faq_questions]);
+    } 
 
-    }
-    public function faq_coffee_shop(){
-        
-        return view('faq.faq_coffee_shop');
 
-    }
-    public function faq_loyality_program(){
-        
-        return view('faq.faq_loyality_program');
+    public function FAQShow(){
+               
+        return view('FAQShow',['faq_categories' => $this->faq_categories]);
+    }  
 
-    }
-    public function faq_payment_and_shipping(){
-        
-        return view('faq.faq_payment_and_shipping');
 
-    }
-    public function faq_trainings(){
-        
-        return view('faq.faq_trainings');
+    public function FAQAdd(Request $request){
 
-    }
-    public function faq_for_business(){
-        
-        return view('faq.faq_for_business');
+        $faq_question = new FaqQuestion();
+        $faq_question->question = $request->question;
+        $faq_question->answer = $request->answer;
+        $faq_question->category = $request->category;
+        $faq_question->save();
+        $success = 'The question saved successfully !';
+        return view('FAQShow',['faq_categories' => $this->faq_categories, 'success' => $success]);
+    } 
 
-    }
 
     public function Contacts(){
         
@@ -205,7 +200,19 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        $capsules_prod = DB::table('coffee_capsules')->get();
+        if($capsules_prod){
+            $cap_array = [];
+            foreach($capsules_prod as $cap){
+                $cap_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        //dd($cap_array);
+
+        $all_prod = DB::table('product_flat')->whereIn('id', $cap_array)->where('locale', $locale)->get();
+
 
         $image = DB::table('product_images')->get();
 
@@ -222,13 +229,40 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        
+        $beans_class = DB::table('coffee_beans')->where('products_block', 'Something Classic')->get();
+        $beans_spec = DB::table('coffee_beans')->where('products_block', 'Something Specialty')->get();
+        if($beans_class){
+            $bean_clas_array = [];
+            foreach($beans_class as $cap){
+                $bean_clas_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        if($beans_spec){
+            $bean_spec_array = [];
+            foreach($beans_spec as $cap){
+                $bean_spec_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+
+
+        //dd($bean_clas_array, $bean_spec_array);
+
+        $all_prod_class = DB::table('product_flat')->whereIn('id', $bean_clas_array)->where('locale', $locale)->get();
+        $all_prod_spec = DB::table('product_flat')->whereIn('id', $bean_spec_array)->where('locale', $locale)->get();
+
+        //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
 
         $image = DB::table('product_images')->get();
 
         return view('CoffeeBeans',[
 
-            'all_prod' => $all_prod,
+            'all_prod_class' => $all_prod_class,
+            'all_prod_spec' => $all_prod_spec,
             'image' => $image
 
         ]);
@@ -239,7 +273,18 @@ class MenuController extends Controller
 
         $locale = app()->getLocale();
 
-        $all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        $flavored_prod = DB::table('flavored_coffee')->get();
+        if($flavored_prod){
+            $flav_array = [];
+            foreach($flavored_prod as $cap){
+                $flav_array[] = $cap->prod_id;
+            }
+        } else {
+            //$all_prod = DB::table('product_flat')->whereNotNull('url_key')->where('locale', $locale)->get();
+        }
+        //dd($flav_array);
+
+        $all_prod = DB::table('product_flat')->whereIn('id', $flav_array)->where('locale', $locale)->get();
 
         $image = DB::table('product_images')->get();
 
@@ -260,7 +305,17 @@ class MenuController extends Controller
 
     public function TurkishCoffee(){
 
-        return view('TurkishCoffee');
+        $cezve = DB::table('turkish_coffee_settings')->where('link_place', 'Cezve')->first();
+        $cezve_link = $cezve->link;
+        $coffee = DB::table('turkish_coffee_settings')->where('link_place', 'Coffee')->first();
+        $coffee_link = $coffee->link;
+
+        //dd($cezve_link);
+
+        return view('TurkishCoffee',[
+            'cezve_link' => $cezve_link,
+            'coffee_link' => $coffee_link,
+        ]);
 
     }
 
@@ -272,8 +327,109 @@ class MenuController extends Controller
     public function BaristaTrainings(){
 
         $tasks = Task::all();
+        $trai = DB::table('trainings')->first();
 
-        return view('BaristaTrainings', compact('tasks'));
+        //dd($trai);
+        if($trai){
+            $trainings = DB::table('trainings')->get();
+            //dd($trainings);
+        } else {
+            
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Barista/Latte art basics';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Home Barista';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Cafe open';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Roasting';
+            $default_trainings->save();
+
+            $trainings = DB::table('trainings')->get();
+
+            //dd($trainings);
+        }
+
+        $training_edit = DB::table('trainings_edit')->first();
+
+        //dd($training_edit);
+
+        if(!$training_edit){
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 1";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 2";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 3";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 4";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+
+        } else {
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+            //dd("NOT_EMPTY");
+
+        }
+
+        return view('BaristaTrainings', compact('tasks', 'trainings', 'trainings_info_1', 'trainings_info_2', 'trainings_info_3', 'trainings_info_4'));
+    }
+
+    public function BaristaTrainingsFilter($training_name){
+
+        //dd($training_name);
+        //$tasks = Task::all();
+        $tasks = DB::table('tasks')->where('training_name', $training_name)->get();
+        $trai = DB::table('trainings')->where('training_name', $training_name)->get();
+        $trainings = DB::table('trainings')->get();
+
+        //dd($trai);
+
+        //return redirect('/baristatrainings')->with(compact('tasks', 'trainings'));
+        //return Redirect::to(URL::previous() . "#calendar")->with(compact('tasks', 'trainings'));
+        return view(('BaristaTrainings'), compact('tasks', 'trainings'));
+
     }
 
     //-- Tutorials --//

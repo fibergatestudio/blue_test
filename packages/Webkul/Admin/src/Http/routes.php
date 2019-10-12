@@ -127,9 +127,64 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('tasks', 'Webkul\Admin\Http\Controllers\DashboardController@tasks')->defaults('_config', [
                 'view' => 'admin::dashboard.tasks'
             ])->name('admin.dashboard.tasks');
+
+                Route::post('tasks/add_training', 'Webkul\Admin\Http\Controllers\DashboardController@add_training');
+
             Route::get('form', 'Webkul\Admin\Http\Controllers\DashboardController@form')->defaults('_config', [
                 'view' => 'admin::dashboard.form'
             ])->name('admin.dashboard.form');
+
+
+            //CoffeeForAdminPanel
+            Route::get('capsules', 'Webkul\Admin\Http\Controllers\DashboardController@capsules')->defaults('_config', [
+                'view' => 'admin::dashboard.capsules'
+            ])->name('admin.dashboard.capsules');
+
+                Route::get('capsules/add_prod/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@capsules_add_prod');
+                Route::get('capsules/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@capsules_remove_prod');
+
+            Route::get('turkish', 'Webkul\Admin\Http\Controllers\DashboardController@turkish')->defaults('_config', [
+                'view' => 'admin::dashboard.turkish'
+            ])->name('admin.dashboard.turkish');
+
+                Route::post('turkish/turk_apply_settings', 'Webkul\Admin\Http\Controllers\DashboardController@turk_apply_settings');
+
+            Route::get('beans', 'Webkul\Admin\Http\Controllers\DashboardController@beans')->defaults('_config', [
+                'view' => 'admin::dashboard.beans'
+            ])->name('admin.dashboard.beans');
+
+                Route::get('beans/add_prod_classic/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@beans_add_prod_classic');
+                Route::get('beans/add_prod_special/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@beans_add_prod_special');
+                Route::get('beans/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@beans_remove_prod');
+
+            Route::get('flavored', 'Webkul\Admin\Http\Controllers\DashboardController@flavored')->defaults('_config', [
+                'view' => 'admin::dashboard.flavored'
+            ])->name('admin.dashboard.flavored');
+
+            
+                Route::get('flavored/add_prod/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@flavored_add_prod');
+                Route::get('flavored/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@flavored_remove_prod');
+
+            Route::get('homepage_prod', 'Webkul\Admin\Http\Controllers\DashboardController@homeprod')->defaults('_config', [
+                'view' => 'admin::dashboard.homepage_prod'
+            ])->name('admin.dashboard.homepage_prod');
+
+                Route::get('homeprod/add_prod/{prod_id}', 'Webkul\Admin\Http\Controllers\DashboardController@homeprod_add');
+                Route::get('homeprod/remove_prod/{row_id}', 'Webkul\Admin\Http\Controllers\DashboardController@homeprod_remove');
+
+            Route::get('faq', 'Webkul\Admin\Http\Controllers\DashboardController@faq')->defaults('_config', [
+                'view' => 'admin::dashboard.faq'
+            ])->name('admin.dashboard.faq');
+
+                Route::post('faq/faq-add', 'Webkul\Admin\Http\Controllers\DashboardController@faq_add');
+
+            Route::get('trainings_edit', 'Webkul\Admin\Http\Controllers\DashboardController@trainings_edit')->defaults('_config', [
+                'view' => 'admin::dashboard.trainings_edit'
+            ])->name('admin.dashboard.trainings_edit');
+                
+                Route::post('trainings_edit/apply_edit', 'Webkul\Admin\Http\Controllers\DashboardController@trainings_edit_apply');
+
+
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\DashboardController@index')->defaults('_config', [
                 'view' => 'admin::dashboard.index'

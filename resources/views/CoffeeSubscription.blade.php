@@ -304,13 +304,13 @@
                 <li class="business-offer__card" style="background-image: url({{ url('assets/img/coffee-subscription/coffee-subs-1.jpg') }})">
                     <div class="business-offer__wrapper">
                         <p class="business-offer__text">We are an office, can we ask our own offer?</p>
-                        <button class="button button_blue">Get an offer</button>
+                        <button class="button button_blue js-box-trigger" data-target-id="regModal1">Get an offer</button>
                     </div>
                 </li>
                 <li class="business-offer__card" style="background-image: url({{ url('assets/img/coffee-subscription/coffee-subs-2.jpg') }})">
                     <div class="business-offer__wrapper">
                         <p class="business-offer__text">We are a small cafe, can we ask our own offer?</p>
-                        <button class="button button_blue">Get an offer</button>
+                        <button class="button button_blue js-box-trigger" data-target-id="regModal2">Get an offer</button>
                     </div>
                 </li>
             </ul>
@@ -436,5 +436,87 @@
             <path d="M21.764 8.67a1 1 0 0 0 .735.33 1 1 0 0 0 .736-.33c.584-.63 1.281-2.324.196-4.673-.642-1.388-.216-2.04-.169-2.105.38-.442.37-1.132-.026-1.562a.985.985 0 0 0-1.471 0c-.584.631-1.281 2.324-.196 4.673.661 1.428.192 2.077.196 2.077a1.188 1.188 0 0 0-.001 1.59z"></path>
         </symbol>
     </svg>
+
+    <div style="z-index: 999; padding-bottom: 0px; padding: 0px;" class="modal modal_reg" id="regModal1">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+        
+                <form action="{{ url('/form_sumbit') }}" method="POST" class="lets-work__form form">
+                    @csrf()
+                    <input type="hidden" name="page_from" value="Coffee Subscribtion - Offices">
+                    <p class="lets-work__note">Write to us what we can help</p>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_user">
+                                <use xlink:href="#user"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="name" placeholder="Name" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_phone-call">
+                                <use xlink:href="#phone-call"></use>
+                            </svg>
+                            <input class="field__input" type="tel" name="tel" placeholder="Phone" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_envelope">
+                                <use xlink:href="#envelope"></use>
+                            </svg>
+                            <input class="field__input" type="email" name="email" placeholder="Email" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_comment">
+                                <use xlink:href="#chat-comment"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="symptom" placeholder="Comments" required>
+                        </label>
+                        <input class="button button_blue" type="submit" value="Send">
+                    </form>
+        </div>
+
+         <!-- Office-Caffe -->
+        <!-- Modal - modal-->
+        <div style="z-index: 999; padding-bottom: 0px; padding: 0px;" class="modal modal_reg" id="regModal2">
+            <button class="modal__close js-close-modal">
+                <svg>
+                    <use xlink:href="#rounded-close"></use>
+                </svg>
+            </button>
+        
+                <form action="{{ url('/form_sumbit') }}" method="POST" class="lets-work__form form">
+                    @csrf()
+                    <input type="hidden" name="page_from" value="Coffee Subscribtion - Small Cafe">
+                    <p class="lets-work__note">Write to us what we can help</p>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_user">
+                                <use xlink:href="#user"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="name" placeholder="Name" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_phone-call">
+                                <use xlink:href="#phone-call"></use>
+                            </svg>
+                            <input class="field__input" type="tel" name="tel" placeholder="Phone" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_envelope">
+                                <use xlink:href="#envelope"></use>
+                            </svg>
+                            <input class="field__input" type="email" name="email" placeholder="Email" required>
+                        </label>
+                        <label class="form__field field">
+                            <svg class="field__icon field__icon_comment">
+                                <use xlink:href="#chat-comment"></use>
+                            </svg>
+                            <input class="field__input" type="text" name="symptom" placeholder="Comments" required>
+                        </label>
+                        <input class="button button_blue" type="submit" value="Send">
+                    </form>
+        </div>
+
+
 </main>
 @endsection

@@ -13,6 +13,14 @@ use Webkul\Customer\Repositories\CustomerRepository as Customer;
 use Webkul\Product\Repositories\ProductInventoryRepository as ProductInventory;
 
 use App\LoyalityProgram;
+use App\CoffeeCapsules;
+use App\FlavoredCoffee;
+use App\CoffeeBeans;
+use App\TurkishCoffeeSettings;
+use App\Trainings;
+use App\TrainingsEdit;
+use App\FaqQuestion;
+use App\HomepageProd;
 use Redirect;
 
 /**
@@ -23,6 +31,8 @@ use Redirect;
  */
 class DashboardController extends Controller
 {
+
+    protected $faq_categories = ['registration' => 'Registration','subscribe' => 'Subscribe','coffee-shop' => 'Coffee Shop','blue-box' => 'Blue Box','loyalty-program' => 'Loyalty Program','payment-and-shipping' => 'Payment and Shipping','trainings' => 'Trainings','for-business' => 'For Business'];
     /**
      * Display a listing of the resource.
      *
@@ -134,10 +144,49 @@ class DashboardController extends Controller
     public function tasks(){
 
         $task_table = DB::table('tasks')->get();
+        $trai = DB::table('trainings')->get();
+
+        //dd($trai);
+        if(!is_null($trai)){
+            $trainings = DB::table('trainings')->get();
+            //dd($trainings);
+        } else {
+            
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Barista/Latte art basics';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Home Barista';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Cafe open';
+            $default_trainings->save();
+
+            $default_trainings = new Trainings();
+            $default_trainings->training_name = 'Roasting';
+            $default_trainings->save();
+
+            $trainings = DB::table('trainings')->get();
+
+            //dd($trainings);
+        }
 
         return view($this->_config['view'],[
             'task_table' => $task_table,
+            'trainings' => $trainings,
         ]);
+    }
+    public function add_training(Request $request){
+        
+        //dd($request->training_name);
+
+        $new_training = new Trainings();
+        $new_training->training_name = $request->training_name;
+        $new_training->save();
+
+        return back();
     }
     public function form(){
 
@@ -147,6 +196,306 @@ class DashboardController extends Controller
             'contact_form' => $contact_form,
         ]);
     }
+    public function capsules(){
+
+        $capsules = DB::table('coffee_capsules')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+
+        return view($this->_config['view'],[
+            'capsules' => $capsules,
+            'products' => $products
+        ]);
+    }
+        public function capsules_add_prod($prod_id){
+
+            //dd($prod_id);
+
+            $capsule_prod = new CoffeeCapsules();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->save();
+
+            return back();
+
+        }
+        public function capsules_remove_prod($row_id){
+
+            //dd($prod_id);
+
+            //$remove_capsule = 
+            DB::table('coffee_capsules')->where('id', $row_id)->delete();
+
+            return back();
+        }
+
+    public function turkish(){
+
+        //$contact_form = DB::table('contact_form')->get();
+        $turkish_settings = DB::table('turkish_coffee_settings')->get();
+        $cezve = DB::table('turkish_coffee_settings')->where('link_place', 'Cezve')->first();
+        $cezve_link = $cezve->link;
+        $coffee = DB::table('turkish_coffee_settings')->where('link_place', 'Coffee')->first();
+        $coffee_link = $coffee->link;
+
+        return view($this->_config['view'],[
+            'cezve_link' => $cezve_link,
+            'coffee_link' => $coffee_link,
+        ]);
+    }
+
+        public function turk_apply_settings(Request $request){
+
+            $cezve = $request->cezve;
+            $cezve_link = DB::table('turkish_coffee_settings')->where('link_place', 'Cezve')->first();
+            if($cezve_link){
+
+                DB::table('turkish_coffee_settings')
+                ->where('link_place', 'Cezve')
+                ->limit(1)
+                ->update([
+                    'link' => $cezve,
+                    ]);
+            } else {
+                $new_cez = new TurkishCoffeeSettings();
+                $new_cez->link_place = 'Cezve';
+                $new_cez->link = $cezve;
+                $new_cez->save();
+            }
+
+            $coffee = $request->coffee;
+            $coffee_link = DB::table('turkish_coffee_settings')->where('link_place', 'Coffee')->first();
+            if($cezve_link){
+
+                DB::table('turkish_coffee_settings')
+                ->where('link_place', 'Coffee')
+                ->limit(1)
+                ->update([
+                    'link' => $coffee,
+                    ]);
+            } else {
+                $new_cof = new TurkishCoffeeSettings();
+                $new_cof->link_place = 'Coffee';
+                $new_cof->link = $coffee;
+                $new_cof->save();
+            }
+
+            //dd($coffee, $cezve);
+
+
+            return back();
+        }
+
+    public function beans(){
+
+        //$contact_form = DB::table('contact_form')->get();
+        $beans_class = DB::table('coffee_beans')->where('products_block', 'Something Classic')->get();
+        $beans_special = DB::table('coffee_beans')->where('products_block', 'Something Specialty')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+
+        return view($this->_config['view'],[
+            'beans_class' => $beans_class,
+            'beans_special' => $beans_special,
+            'products' => $products,
+        ]);
+    }
+
+        public function beans_add_prod_special($prod_id){
+
+            $capsule_prod = new CoffeeBeans();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->products_block = "Something Specialty";
+            $capsule_prod->save();
+
+            return back();
+        }
+        public function beans_add_prod_classic($prod_id){
+
+            $capsule_prod = new CoffeeBeans();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->products_block = "Something Classic";
+            $capsule_prod->save();
+
+            return back();
+        }
+        public function beans_remove_prod($row_id){
+
+            DB::table('coffee_beans')->where('id', $row_id)->delete();
+            
+            return back();
+        }
+    public function flavored(){
+
+        //$contact_form = DB::table('contact_form')->get();
+        $flavored = DB::table('flavored_coffee')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+
+        return view($this->_config['view'],[
+            'flavored' => $flavored,
+            'products' => $products
+        ]);
+    }
+        public function flavored_add_prod($prod_id){
+
+            //dd($prod_id);
+
+            $capsule_prod = new FlavoredCoffee();
+            $capsule_prod->prod_id = $prod_id;
+            $capsule_prod->save();
+
+            return back();
+
+        }
+        public function flavored_remove_prod($row_id){
+
+            //dd($prod_id);
+
+            //$remove_capsule = 
+            DB::table('flavored_coffee')->where('id', $row_id)->delete();
+
+            return back();
+        }
+    public function homeprod(){
+
+        $homeprod = DB::table('homepage_prod')->get();
+        $products = DB::table('product_flat')->whereNotNull('name')->groupBy('url_key')->get();
+        
+        return view($this->_config['view'],[
+            'homeprod' => $homeprod,
+            'products' => $products
+        ]);
+
+    }
+        public function homeprod_add($prod_id){
+
+            $homepage_prod = new HomepageProd();
+            $homepage_prod->prod_id = $prod_id;
+            $homepage_prod->save();
+
+            return back();
+        }
+        public function homeprod_remove($row_id){
+
+            DB::table('homepage_prod')->where('id', $row_id)->delete();
+
+            return back();
+        }
+
+    public function faq(){
+
+
+        return view($this->_config['view'],[
+            'faq_categories' => $this->faq_categories,
+        ]);
+    }
+        public function faq_add(Request $request){
+
+            $faq_question = new FaqQuestion();
+            $faq_question->question = $request->question;
+            $faq_question->answer = $request->answer;
+            $faq_question->category = $request->category;
+            $faq_question->save();
+            $success = 'The question saved successfully !';
+            return back();
+            //return view('FAQShow',['faq_categories' => $this->faq_categories, 'success' => $success]);
+
+        }
+
+    public function trainings_edit(){
+
+        $training_edit = DB::table('trainings_edit')->first();
+
+        //dd($training_edit);
+
+        if(!$training_edit){
+
+            //dd("EMPTY");
+
+            // $new_training = new TrainingsEdit();
+            // $new_training->training_number = $request->training_number;
+            // $new_training->training_name = $request->training_name;
+            // $new_training->training_description = $request->training_description;
+            // $new_training->training_cost = $request->training_cost;
+            // $new_training->training_structure = $request->training_structure;
+            // $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 1";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 2";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 3";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $new_training = new TrainingsEdit();
+            $new_training->training_number = "TRAINING 4";
+            $new_training->training_name = "Barista training";
+            $new_training->training_description = "Our company has many years of experience and we are happy to deliver it individually through our intensive training sessions. Our Barista Trainings we recommend for those who want to learn practical skills quickly.";
+            $new_training->training_location = "Training can take place at our own base or if necessary, at the customer's place";
+            $new_training->training_cost = "The Barista Training duration is 2 hours — Price: 20,000 HUF gross";
+            $new_training->training_structure = "basics of coffee machine handling, setting of grinder, basic machine maintenance";
+            $new_training->save();
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+
+        } else {
+
+            $trainings_info_1 = DB::table('trainings_edit')->where('id','1')->first();
+            $trainings_info_2 = DB::table('trainings_edit')->where('id','2')->first();
+            $trainings_info_3 = DB::table('trainings_edit')->where('id','3')->first();
+            $trainings_info_4 = DB::table('trainings_edit')->where('id','4')->first();
+            //dd("NOT_EMPTY");
+
+        }
+
+        return view($this->_config['view'],[
+            'trainings_info_1' => $trainings_info_1,
+            'trainings_info_2' => $trainings_info_2,
+            'trainings_info_3' => $trainings_info_3,
+            'trainings_info_4' => $trainings_info_4,
+            ]);
+    }
+
+        public function trainings_edit_apply(Request $request){
+
+            $training_id = $request->training_id;
+
+            //dd($training_id);
+
+            DB::table('trainings_edit')
+            ->where('id', $training_id)
+            ->limit(1)
+            ->update([
+                'training_number' => $request->training_number,
+                'training_name' => $request->training_name,
+                'training_description' => $request->training_description,
+                'training_location' => $request->training_location,
+                'training_cost' => $request->training_cost,
+                'training_structure' => $request->training_structure,
+                ]);
+
+            return back();            
+        }
     // LOYALITY 
     public function loyalty()
     {

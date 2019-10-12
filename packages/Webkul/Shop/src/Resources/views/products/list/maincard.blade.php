@@ -36,11 +36,11 @@
                                 @if(!empty($imagePath))
                                 <source srcset="{{ url('/cache/large/' . $imagePath) }}" type="image/webp">
                                 <source srcset="{{ url('/cache/large/' . $imagePath) }}" type="image/png">
-                                <img style="height: 339px; width: 226px;" src="{{ url('/cache/large/' . $imagePath) }}" onerror="this.src='{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" alt="product image">
+                                <img style="height: 336px; width: 230px;" src="{{ url('/cache/large/' . $imagePath) }}" onerror="this.src='{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" alt="product image">
                                 @else 
                                 <source srcset="{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" type="image/webp">
                                 <source srcset="{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" type="image/png">
-                                <img style="height: 339px; width: 226px;" src="{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" alt="product image">
+                                <img style="height: 336px; width: 230px;" src="{{ asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" alt="product image">
                                 @endif
                             @endif
                           

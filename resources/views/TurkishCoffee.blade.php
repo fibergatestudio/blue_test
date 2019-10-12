@@ -104,7 +104,12 @@
                             </div>
                             <div class="alt-product-tile__text">
                                 <h3 class="alt-product-tile__title">Cezve</h3><span class="alt-product-tile__info">300 ml</span><span class="alt-product-tile__price">1000 HUF</span>
+                                @if($cezve_link)
+                                <a href="{{ url('/'.$cezve_link) }}"><button class="button button_blue alt-product-tile__button">Buy</button></a>
+                                @else
                                 <a href="{{ url('/categories/coffee') }}"><button class="button button_blue alt-product-tile__button">Buy</button></a>
+                                @endif
+
                             </div>
                         </li>
                         <li class="alt-product-tile">
@@ -117,7 +122,11 @@
                             </div>
                             <div class="alt-product-tile__text">
                                 <h3 class="alt-product-tile__title">Coffee</h3><span class="alt-product-tile__info">300 ml</span><span class="alt-product-tile__price">1000 HUF</span>
+                                @if($coffee_link)
+                                <a href="{{ url('/'.$coffee_link) }}"><button class="button button_blue alt-product-tile__button">Buy</button></a>
+                                @else
                                 <a href="{{ url('/categories/coffee') }}"><button class="button button_blue alt-product-tile__button">Buy</button></a>
+                                @endif
                             </div>
                         </li>
                     </ul>

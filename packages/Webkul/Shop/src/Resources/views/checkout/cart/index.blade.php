@@ -149,6 +149,7 @@
                                             <input class="coupon__input" type="text" name="coupon" placeholder="Coupon Code">
                                             <button class="button button_blue coupon__button">Apply</button>
                                         </div><br>
+                                        @if($customer_points)
                                         <div style="padding-bottom: 10px;" class="">
                                         Your Points: <b>
                                             <?php 
@@ -168,6 +169,7 @@
                                             <input class="coupon__input" style="width: 100%;" type="number" min="0" max="<?php echo $final_points ?>" name="new_points" placeholder="{{ $cart->points }}" value="{{ $cart->points }}">
                                             <button class="button button_blue coupon__button" type="submit" >Update Points</button>
                                         </div>
+                                        @endif
                                     </div>
                                     <div class="cart__total total">
                                         <!-- Loyalty POINTS -->
@@ -201,12 +203,14 @@
                                         ?>
                                         <!-- END Loyalty POINTS -->
                                         <div class="total__container">
+                                        @if($customer_points)
                                             <div class="total__row">
                                                 <h3>Input use points:</h3> <span id="totalSum"> {{ $cart->points }} </span>
                                             </div>
                                             <div class="total__row">
                                                 <h3>Points (Converted):</h3> <span id="totalSum"> {{ core()->currency($cart->points_converted) }}</span>
                                             </div>
+                                        @endif
                                             <div class="total__row">
                                                 <h3>Subtotal:</h3> <span id="subtotalSum">{{ core()->currency($cart->base_sub_total) }}</span>
                                             </div>

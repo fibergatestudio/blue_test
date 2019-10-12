@@ -33,21 +33,16 @@ Route::get('/test', 'MenuController@test');
         Route::post('/coffeesubscription/subscribe', 'CoffeeSubscriptionController@subscribe');
 
     //-- Tranings --//
-    Route::get('/trainings', 'TrainingsController@index');
+    Route::get('/trainings/{training_id}', 'TrainingsController@index');
         //-- Tranings Subscription POST --//
         Route::post('/trainings/subscribe', 'TrainingsController@subscribe');
 
 
     //-- FAQ --//
-    Route::get('/faq', 'MenuController@FAQ'); 
-    Route::get('/faq/registration', 'MenuController@faq_registration'); 
-    Route::get('/faq/subscribe', 'MenuController@faq_subscribe'); 
-    Route::get('/faq/blue-box', 'MenuController@faq_blue_box');
-    Route::get('/faq/coffee-shop', 'MenuController@faq_coffee_shop');  
-    Route::get('/faq/loyalty-program', 'MenuController@faq_loyality_program');  
-    Route::get('/faq/payment-and-shipping', 'MenuController@faq_payment_and_shipping');  
-    Route::get('/faq/trainings', 'MenuController@faq_trainings');  
-    Route::get('/faq/for-business', 'MenuController@faq_for_business'); 
+    Route::get('/faq/{question_category?}', 'MenuController@FAQ'); 
+    Route::get('/faq-show', 'MenuController@FAQShow');
+    Route::post('/faq-add', 'MenuController@FAQAdd');
+
 
     // //-- Contacts --//
     // Route::get('/contacts', 'MenuController@Contacts');
@@ -111,6 +106,7 @@ Route::get('/test', 'MenuController@test');
 
     //-- BaristaTrainings --//
     Route::get('/baristatrainings', 'MenuController@BaristaTrainings');
+    Route::get('/baristatrainings/{training_name}', 'MenuController@BaristaTrainingsFilter');
         //--BARISTA TASKS--//
         Route::resource('tasks', 'TasksController');
 
@@ -137,6 +133,11 @@ Route::get('/test', 'MenuController@test');
     Route::get('/referal/{user_id}', 'MenuController@Referal');
 
     Route::get('/contacts', 'MenuController@Contacts');
+
+
+    //-- CAPTCHA --//
+    Route::get('/captcha', 'CaptchaController@create_captcha');
+    Route::post('/captcha/verify', 'CaptchaController@verify_captcha');
 
 });
 

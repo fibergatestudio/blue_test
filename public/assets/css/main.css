@@ -16685,3 +16685,9 @@ iframe.wait-autoplay {
 .main-container-wrapper .product-card {
   /* padding: 0; */
 }
+
+.test-icon{
+    background-image: url("https://image.flaticon.com/icons/svg/149/149398.svg");
+    width: 255px;
+    height: 255px;
+}
